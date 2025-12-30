@@ -1,0 +1,1267 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -scheme AIskin -destination "platform=iOS Simulator,name=iPhone 17 Pro" "-only-testing:AIskinTests/RealImageTests"
+
+2025-11-05 17:29:30.632 xcodebuild[89815:10550347] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (3 targets)
+    Target 'AIskinUITests' in project 'AIskin'
+        ➜ Explicit dependency on target 'AIskin' in project 'AIskin'
+    Target 'AIskinTests' in project 'AIskin'
+        ➜ Explicit dependency on target 'AIskin' in project 'AIskin'
+    Target 'AIskin' in project 'AIskin' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskin/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: 5bde4f6d2962aedc68ff9955862f6424
+Build description path: /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/XCBuildData/5bde4f6d2962aedc68ff9955862f6424.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk /Users/terry/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.0-23A339-26257891a6c027eb51374368541b8346.sdkstatcache
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskin.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -o /Users/terry/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.0-23A339-26257891a6c027eb51374368541b8346.sdkstatcache
+
+ProcessInfoPlistFile /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/Info.plist /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskin.build/empty-AIskin.plist (in target 'AIskin' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-infoPlistUtility /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskin.build/empty-AIskin.plist -producttype com.apple.product-type.application -genpkginfo /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskin.build/assetcatalog_generated_info.plist -o /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/Info.plist
+
+CopySwiftLibs /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app (in target 'AIskin' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/AIskin.debug.dylib --scan-folder /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/Frameworks --scan-folder /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns --scan-folder /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/SystemExtensions --scan-folder /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskin.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+SwiftDriver AIskinTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name AIskinTests -Onone -enforce-exclusivity\=checked @/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-upcoming-feature DisableOutwardActorInference -enable-upcoming-feature InferSendableFromCaptures -enable-upcoming-feature GlobalActorIsolatedTypesUsability -enable-upcoming-feature MemberImportVisibility -enable-upcoming-feature InferIsolatedConformances -enable-upcoming-feature NonisolatedNonsendingByDefault -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /Users/terry/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -index-store-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk/Developer/Library/Frameworks -c -j8 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/terry/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.0-23A339-26257891a6c027eb51374368541b8346.sdkstatcache -output-file-map /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/terry/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/terry/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/terry/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/AIskinTests-generated-files.hmap -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/AIskinTests-own-target-headers.hmap -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/AIskinTests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/AIskinTests-project-headers.hmap -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/DerivedSources/arm64 -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests-Swift.h -working-directory /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin -experimental-emit-module-separately -disable-cmo
+
+ProcessInfoPlistFile /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest/Info.plist /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/empty-AIskinTests.plist (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-infoPlistUtility /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/empty-AIskinTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -format binary -platform iphonesimulator -o /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest/Info.plist
+
+SwiftCompile normal arm64 Compiling\ PlanApiServiceTests.swift /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+
+SwiftCompile normal arm64 /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:80:33: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertFalse(plan.id.isEmpty, "方案ID不应该为空")
+AIskin.SkinPlan.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:81:33: warning: main actor-isolated property 'name' can not be referenced from a nonisolated autoclosure
+            XCTAssertFalse(plan.name.isEmpty, "方案名称不应该为空")
+AIskin.SkinPlan.name:2:25: note: property declared here
+@MainActor internal var name: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:82:34: warning: main actor-isolated property 'morning' can not be referenced from a nonisolated autoclosure
+            XCTAssertNotNil(plan.morning, "应该有早晨步骤")
+AIskin.SkinPlan.morning:2:25: note: property declared here
+@MainActor internal var morning: [AIskin.RoutineItem]}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:83:34: warning: main actor-isolated property 'evening' can not be referenced from a nonisolated autoclosure
+            XCTAssertNotNil(plan.evening, "应该有晚间步骤")
+AIskin.SkinPlan.evening:2:25: note: property declared here
+@MainActor internal var evening: [AIskin.RoutineItem]}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:86:42: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 方案ID: \(plan.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:87:46: warning: main actor-isolated property 'name' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 方案名称: \(plan.name)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:88:49: warning: main actor-isolated property 'morning' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 早晨步骤数: \(plan.morning.count)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:89:49: warning: main actor-isolated property 'evening' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 晚间步骤数: \(plan.evening.count)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:90:49: warning: main actor-isolated property 'recommendations' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 推荐建议数: \(plan.recommendations.count)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:118:40: warning: main actor-isolated property 'name' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                print("     • \(plan.name) (ID: \(plan.id))")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:118:58: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                print("     • \(plan.name) (ID: \(plan.id))")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:152:33: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(plan.id, planId, "方案ID应该匹配")
+AIskin.SkinPlan.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:153:33: warning: main actor-isolated property 'name' can not be referenced from a nonisolated autoclosure
+            XCTAssertFalse(plan.name.isEmpty, "方案名称不应该为空")
+AIskin.SkinPlan.name:2:25: note: property declared here
+@MainActor internal var name: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:139:27: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            planId = plan.id
+                     ~~~~~^~
+                     await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:156:42: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 方案ID: \(plan.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:157:46: warning: main actor-isolated property 'name' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 方案名称: \(plan.name)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:196:33: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertFalse(plan.id.isEmpty, "方案ID不应该为空")
+AIskin.SkinPlan.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:197:33: warning: main actor-isolated property 'morning' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(plan.morning.count, morningSteps.count, "早晨步骤数应该匹配")
+AIskin.SkinPlan.morning:2:25: note: property declared here
+@MainActor internal var morning: [AIskin.RoutineItem]}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:198:33: warning: main actor-isolated property 'evening' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(plan.evening.count, eveningSteps.count, "晚间步骤数应该匹配")
+AIskin.SkinPlan.evening:2:25: note: property declared here
+@MainActor internal var evening: [AIskin.RoutineItem]}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:201:42: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 方案ID: \(plan.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:202:46: warning: main actor-isolated property 'name' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 方案名称: \(plan.name)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/PlanApiServiceTests.swift:222:27: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            planId = plan.id
+                     ~~~~~^~
+                     await 
+
+SwiftCompile normal arm64 Compiling\ ProductApiServiceTests.swift /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+SwiftCompile normal arm64 /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:58:31: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            testUserId = user.id
+                         ~~~~~^~
+                         await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:60:54: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("✅ 测试用户已创建: \(user.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:86:36: warning: main actor-isolated property 'name' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(product.name, productName, "产品名称应该匹配")
+AIskin.Product.name:2:25: note: property declared here
+@MainActor internal var name: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:87:36: warning: main actor-isolated property 'label' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(product.label, productLabel, "产品标签应该匹配")
+AIskin.Product.label:2:25: note: property declared here
+@MainActor internal var label: String?}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:88:36: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertFalse(product.id.isEmpty, "产品ID不应该为空")
+AIskin.Product.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:91:45: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 产品ID: \(product.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:92:49: warning: main actor-isolated property 'name' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 产品名称: \(product.name)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:93:49: warning: main actor-isolated property 'label' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 产品标签: \(product.label ?? "无")")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:121:43: warning: main actor-isolated property 'name' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                print("     • \(product.name) (ID: \(product.id))")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:121:64: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                print("     • \(product.name) (ID: \(product.id))")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:157:36: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(product.id, productId, "产品ID应该匹配")
+AIskin.Product.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:158:36: warning: main actor-isolated property 'name' can not be referenced from a nonisolated autoclosure
+            XCTAssertFalse(product.name.isEmpty, "产品名称不应该为空")
+AIskin.Product.name:2:25: note: property declared here
+@MainActor internal var name: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:144:33: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            productId = product.id
+                        ~~~~~~~~^~
+                        await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:161:45: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 产品ID: \(product.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:162:49: warning: main actor-isolated property 'name' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 产品名称: \(product.name)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:203:43: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(updatedProduct.id, productId, "产品ID不应该改变")
+AIskin.Product.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:204:43: warning: main actor-isolated property 'name' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(updatedProduct.name, newName, "产品名称应该已更新")
+AIskin.Product.name:2:25: note: property declared here
+@MainActor internal var name: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:205:43: warning: main actor-isolated property 'label' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(updatedProduct.label, newLabel, "产品标签应该已更新")
+AIskin.Product.label:2:25: note: property declared here
+@MainActor internal var label: String?}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:184:33: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            productId = product.id
+                        ~~~~~~~~^~
+                        await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:208:52: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 产品ID: \(updatedProduct.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:209:53: warning: main actor-isolated property 'name' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 新名称: \(updatedProduct.name)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:231:33: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            productId = product.id
+                        ~~~~~~~~^~
+                        await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ProductApiServiceTests.swift:272:33: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            productId = product.id
+                        ~~~~~~~~^~
+                        await 
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ AIskinTests (in target 'AIskinTests' from project 'AIskin')
+
+EmitSwiftModule normal arm64 (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+
+SwiftCompile normal arm64 Compiling\ AIskinTests.swift,\ APIClientTests.swift /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/AIskinTests.swift /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/APIClientTests.swift (in target 'AIskinTests' from project 'AIskin')
+
+SwiftCompile normal arm64 /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/AIskinTests.swift (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+
+SwiftCompile normal arm64 /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/APIClientTests.swift (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/APIClientTests.swift:34:13: warning: initialization of immutable value 'expectedBaseURL' was never used; consider replacing with assignment to '_' or removing it
+        let expectedBaseURL = "http://localhost:5000/api"
+        ~~~~^~~~~~~~~~~~~~~
+        _
+
+SwiftCompile normal arm64 Compiling\ SkinAnalysisApiServiceTests.swift /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+SwiftCompile normal arm64 /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:81:37: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertFalse(analysis.id.isEmpty, "分析ID不应该为空")
+AIskin.SkinAnalysis.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:82:38: warning: main actor-isolated property 'overallAssessment' can not be referenced from a nonisolated autoclosure
+            XCTAssertNotNil(analysis.overallAssessment, "应该有整体评估")
+AIskin.SkinAnalysis.overallAssessment:2:25: note: property declared here
+@MainActor internal var overallAssessment: AIskin.OverallAssessment}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:83:68: warning: main actor-isolated property 'healthScore' can not be referenced from a nonisolated autoclosure
+            XCTAssertGreaterThanOrEqual(analysis.overallAssessment.healthScore, 0, "健康评分应该在0-100之间")
+AIskin.OverallAssessment.healthScore:2:25: note: property declared here
+@MainActor internal var healthScore: Double}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:83:50: warning: main actor-isolated property 'overallAssessment' can not be referenced from a nonisolated autoclosure
+            XCTAssertGreaterThanOrEqual(analysis.overallAssessment.healthScore, 0, "健康评分应该在0-100之间")
+AIskin.SkinAnalysis.overallAssessment:2:25: note: property declared here
+@MainActor internal var overallAssessment: AIskin.OverallAssessment}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:84:65: warning: main actor-isolated property 'healthScore' can not be referenced from a nonisolated autoclosure
+            XCTAssertLessThanOrEqual(analysis.overallAssessment.healthScore, 100, "健康评分应该在0-100之间")
+AIskin.OverallAssessment.healthScore:2:25: note: property declared here
+@MainActor internal var healthScore: Double}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:84:47: warning: main actor-isolated property 'overallAssessment' can not be referenced from a nonisolated autoclosure
+            XCTAssertLessThanOrEqual(analysis.overallAssessment.healthScore, 100, "健康评分应该在0-100之间")
+AIskin.SkinAnalysis.overallAssessment:2:25: note: property declared here
+@MainActor internal var overallAssessment: AIskin.OverallAssessment}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:85:38: warning: main actor-isolated property 'skinType' can not be referenced from a nonisolated autoclosure
+            XCTAssertNotNil(analysis.skinType, "应该有皮肤类型")
+AIskin.SkinAnalysis.skinType:2:25: note: property declared here
+@MainActor internal var skinType: AIskin.SkinType}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:88:46: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 分析ID: \(analysis.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:89:41: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 健康评分: \(analysis.overallAssessment.healthScore)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:89:41: note: property access is 'async'
+            print("   - 健康评分: \(analysis.overallAssessment.healthScore)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:89:41: note: property access is 'async'
+            print("   - 健康评分: \(analysis.overallAssessment.healthScore)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:90:41: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 皮肤类型: \(analysis.skinType.type)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:90:41: note: property access is 'async'
+            print("   - 皮肤类型: \(analysis.skinType.type)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:90:41: note: property access is 'async'
+            print("   - 皮肤类型: \(analysis.skinType.type)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:91:41: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 皮肤状况: \(analysis.overallAssessment.skinCondition)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:91:41: note: property access is 'async'
+            print("   - 皮肤状况: \(analysis.overallAssessment.skinCondition)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:91:41: note: property access is 'async'
+            print("   - 皮肤状况: \(analysis.overallAssessment.skinCondition)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:118:50: warning: main actor-isolated property 'total' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                print("   - 总数: \(pagination.total)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:119:53: warning: main actor-isolated property 'page' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                print("   - 当前页: \(pagination.page)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:123:54: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                print("     • 分析ID: \(analysis.id), 健康评分: \(analysis.overallAssessment.healthScore)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:123:75: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+                print("     • 分析ID: \(analysis.id), 健康评分: \(analysis.overallAssessment.healthScore)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:123:75: note: property access is 'async'
+                print("     • 分析ID: \(analysis.id), 健康评分: \(analysis.overallAssessment.healthScore)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:123:75: note: property access is 'async'
+                print("     • 分析ID: \(analysis.id), 健康评分: \(analysis.overallAssessment.healthScore)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:159:37: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(analysis.id, analysisId, "分析ID应该匹配")
+AIskin.SkinAnalysis.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:160:38: warning: main actor-isolated property 'overallAssessment' can not be referenced from a nonisolated autoclosure
+            XCTAssertNotNil(analysis.overallAssessment, "应该有整体评估")
+AIskin.SkinAnalysis.overallAssessment:2:25: note: property declared here
+@MainActor internal var overallAssessment: AIskin.OverallAssessment}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:161:38: warning: main actor-isolated property 'skinType' can not be referenced from a nonisolated autoclosure
+            XCTAssertNotNil(analysis.skinType, "应该有皮肤类型")
+AIskin.SkinAnalysis.skinType:2:25: note: property declared here
+@MainActor internal var skinType: AIskin.SkinType}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:146:35: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            analysisId = analysis.id
+                         ~~~~~~~~~^~
+                         await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:164:46: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 分析ID: \(analysis.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:165:41: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 健康评分: \(analysis.overallAssessment.healthScore)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:165:41: note: property access is 'async'
+            print("   - 健康评分: \(analysis.overallAssessment.healthScore)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:165:41: note: property access is 'async'
+            print("   - 健康评分: \(analysis.overallAssessment.healthScore)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:166:41: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 皮肤类型: \(analysis.skinType.type)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:166:41: note: property access is 'async'
+            print("   - 皮肤类型: \(analysis.skinType.type)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:166:41: note: property access is 'async'
+            print("   - 皮肤类型: \(analysis.skinType.type)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:167:40: warning: main actor-isolated property 'moisture' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            if let moisture = analysis.moisture {
+                              ~~~~~~~~~^~~~~~~~
+                              await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:170:42: warning: main actor-isolated property 'glossiness' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            if let glossiness = analysis.glossiness {
+                                ~~~~~~~~~^~~~~~~~~~
+                                await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:196:41: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+                XCTAssertFalse(analysis.id.isEmpty, "分析ID不应该为空")
+AIskin.SkinAnalysis.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:198:50: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                print("   - 分析ID: \(analysis.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:199:45: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+                print("   - 健康评分: \(analysis.overallAssessment.healthScore)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:199:45: note: property access is 'async'
+                print("   - 健康评分: \(analysis.overallAssessment.healthScore)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:199:45: note: property access is 'async'
+                print("   - 健康评分: \(analysis.overallAssessment.healthScore)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:200:54: warning: main actor-isolated property 'createdAt' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                print("   - 创建时间: \(analysis.createdAt?.description ?? "未知")")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:226:47: warning: main actor-isolated property 'totalAnalyses' can not be referenced from a nonisolated autoclosure
+            XCTAssertGreaterThanOrEqual(stats.totalAnalyses, 0, "总分析次数应该>=0")
+AIskin.SkinAnalysisStats.totalAnalyses:2:25: note: property declared here
+@MainActor internal var totalAnalyses: Int}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:229:50: warning: main actor-isolated property 'totalAnalyses' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 总分析次数: \(stats.totalAnalyses)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:230:37: warning: main actor-isolated property 'averageHealthScore' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            if let avgScore = stats.averageHealthScore {
+                              ~~~~~~^~~~~~~~~~~~~~~~~~
+                              await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/SkinAnalysisApiServiceTests.swift:233:44: warning: main actor-isolated property 'latestSkinCondition' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            if let latestCondition = stats.latestSkinCondition {
+                                     ~~~~~~^~~~~~~~~~~~~~~~~~~
+                                     await 
+
+SwiftCompile normal arm64 Compiling\ AuthServiceTests.swift,\ ConflictApiServiceTests.swift /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/AuthServiceTests.swift /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+SwiftCompile normal arm64 /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/AuthServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/AuthServiceTests.swift:354:14: warning: immutable value 'originalUserId' was never used; consider replacing with '_' or removing it
+        let (originalUserId, originalToken) = await MainActor.run {
+             ^~~~~~~~~~~~~~
+             _
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/AuthServiceTests.swift:354:30: warning: immutable value 'originalToken' was never used; consider replacing with '_' or removing it
+        let (originalUserId, originalToken) = await MainActor.run {
+                             ^~~~~~~~~~~~~
+                             _
+
+SwiftCompile normal arm64 /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:67:26: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            productIds = [product1.id, product2.id]
+                         ^~~~~~~~~~~~~~~~~~~~~~~~~~
+                         await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:67:27: note: property access is 'async'
+            productIds = [product1.id, product2.id]
+                          ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:67:40: note: property access is 'async'
+            productIds = [product1.id, product2.id]
+                                       ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:70:48: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 产品1 ID: \(product1.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:71:48: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 产品2 ID: \(product2.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:99:50: warning: main actor-isolated property 'conflictId' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 冲突记录ID: \(result.conflictId ?? "未知")")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:100:51: warning: main actor-isolated property 'conflicts' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 发现冲突数: \(result.conflicts?.count ?? 0)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:101:51: warning: main actor-isolated property 'safeCombo' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 安全组合数: \(result.safeCombo?.count ?? 0)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:103:39: warning: main actor-isolated property 'conflicts' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            if let conflicts = result.conflicts {
+                               ~~~~~~~^~~~~~~~~
+                               await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:105:62: warning: main actor-isolated property 'components' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                    print("     • 冲突成分: \(conflict.components.joined(separator: ", "))")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:106:60: warning: main actor-isolated property 'severity' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                    print("       严重程度: \(conflict.severity)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:136:54: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                print("     • 记录ID: \(conflict.id ?? "未知")")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:137:53: warning: main actor-isolated property 'conflicts' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                print("       冲突数: \(conflict.conflicts?.count ?? 0)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:181:37: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(conflict.id, conflictId, "冲突记录ID应该匹配")
+AIskin.ConflictRecord.id:2:25: note: property declared here
+@MainActor internal var id: String?}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:182:38: warning: main actor-isolated property 'conflicts' can not be referenced from a nonisolated autoclosure
+            XCTAssertNotNil(conflict.conflicts, "应该有冲突信息")
+AIskin.ConflictRecord.conflicts:2:25: note: property declared here
+@MainActor internal var conflicts: [AIskin.Conflict]?}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:163:33: warning: main actor-isolated property 'conflictId' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            conflictId = result.conflictId
+                         ~~~~~~~^~~~~~~~~~
+                         await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:185:52: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 冲突记录ID: \(conflict.id ?? "未知")")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:186:53: warning: main actor-isolated property 'products' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 涉及产品数: \(conflict.products?.count ?? 0)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/ConflictApiServiceTests.swift:187:50: warning: main actor-isolated property 'conflicts' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 冲突数量: \(conflict.conflicts?.count ?? 0)")
+
+SwiftCompile normal arm64 Compiling\ UserApiServiceTests.swift /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+
+SwiftCompile normal arm64 /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:61:33: warning: main actor-isolated property 'email' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(user.email, testEmail, "用户邮箱应该匹配")
+AIskin.User.email:2:25: note: property declared here
+@MainActor internal var email: String?}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:62:33: warning: main actor-isolated property 'name' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(user.name, testName, "用户名称应该匹配")
+AIskin.User.name:2:25: note: property declared here
+@MainActor internal var name: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:63:33: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertFalse(user.id.isEmpty, "用户ID不应该为空")
+AIskin.User.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:66:42: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 用户ID: \(user.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:139:33: warning: main actor-isolated property 'email' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(user.email, testEmail, "用户邮箱应该匹配")
+AIskin.User.email:2:25: note: property declared here
+@MainActor internal var email: String?}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:140:33: warning: main actor-isolated property 'name' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(user.name, testName, "用户名称应该匹配")
+AIskin.User.name:2:25: note: property declared here
+@MainActor internal var name: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:143:42: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 用户ID: \(user.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:214:33: warning: main actor-isolated property 'email' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(user.email, testEmail, "用户邮箱应该匹配")
+AIskin.User.email:2:25: note: property declared here
+@MainActor internal var email: String?}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:215:33: warning: main actor-isolated property 'name' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(user.name, testName, "用户名称应该匹配")
+AIskin.User.name:2:25: note: property declared here
+@MainActor internal var name: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:216:33: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertFalse(user.id.isEmpty, "用户ID不应该为空")
+AIskin.User.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:219:42: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 用户ID: \(user.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:220:43: warning: main actor-isolated property 'name' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 用户名: \(user.name)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:261:40: warning: main actor-isolated property 'name' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(updatedUser.name, newName, "用户名应该已更新")
+AIskin.User.name:2:25: note: property declared here
+@MainActor internal var name: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:262:40: warning: main actor-isolated property 'email' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(updatedUser.email, testEmail, "邮箱不应该改变")
+AIskin.User.email:2:25: note: property declared here
+@MainActor internal var email: String?}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:265:53: warning: main actor-isolated property 'name' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 新用户名: \(updatedUser.name)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:303:40: warning: main actor-isolated property 'gender' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(updatedUser.gender, "female", "性别应该已更新")
+AIskin.User.gender:2:25: note: property declared here
+@MainActor internal var gender: String?}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/UserApiServiceTests.swift:306:50: warning: main actor-isolated property 'gender' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 新性别: \(updatedUser.gender ?? "未设置")")
+
+SwiftCompile normal arm64 Compiling\ IngredientAnalysisApiServiceTests.swift,\ IntegrationTests.swift /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift (in target 'AIskinTests' from project 'AIskin')
+
+SwiftCompile normal arm64 /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:66:37: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            testProductId = product.id
+                            ~~~~~~~~^~
+                            await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:94:50: warning: main actor-isolated property 'safetyIndex' can not be referenced from a nonisolated autoclosure
+            XCTAssertGreaterThanOrEqual(analysis.safetyIndex, 0, "安全性指数应该在0-100之间")
+AIskin.IngredientAnalysis.safetyIndex:2:25: note: property declared here
+@MainActor internal var safetyIndex: Double}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:95:47: warning: main actor-isolated property 'safetyIndex' can not be referenced from a nonisolated autoclosure
+            XCTAssertLessThanOrEqual(analysis.safetyIndex, 100, "安全性指数应该在0-100之间")
+AIskin.IngredientAnalysis.safetyIndex:2:25: note: property declared here
+@MainActor internal var safetyIndex: Double}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:96:50: warning: main actor-isolated property 'efficacyScore' can not be referenced from a nonisolated autoclosure
+            XCTAssertGreaterThanOrEqual(analysis.efficacyScore, 0, "功效评分应该在0-5之间")
+AIskin.IngredientAnalysis.efficacyScore:2:25: note: property declared here
+@MainActor internal var efficacyScore: Double}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:97:47: warning: main actor-isolated property 'efficacyScore' can not be referenced from a nonisolated autoclosure
+            XCTAssertLessThanOrEqual(analysis.efficacyScore, 5, "功效评分应该在0-5之间")
+AIskin.IngredientAnalysis.efficacyScore:2:25: note: property declared here
+@MainActor internal var efficacyScore: Double}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:98:50: warning: main actor-isolated property 'activeIngredients' can not be referenced from a nonisolated autoclosure
+            XCTAssertGreaterThanOrEqual(analysis.activeIngredients, 0, "活性成分数应该>=0")
+AIskin.IngredientAnalysis.activeIngredients:2:25: note: property declared here
+@MainActor internal var activeIngredients: Int}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:101:53: warning: main actor-isolated property 'safetyIndex' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 安全性指数: \(analysis.safetyIndex)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:102:50: warning: main actor-isolated property 'efficacyScore' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 功效评分: \(analysis.efficacyScore)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:103:53: warning: main actor-isolated property 'activeIngredients' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 活性成分数: \(analysis.activeIngredients)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:104:50: warning: main actor-isolated property 'overallRating' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 整体评级: \(analysis.overallRating)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:105:41: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 痘痘风险: \(analysis.acneRisk.level) (\(analysis.acneRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:105:41: note: property access is 'async'
+            print("   - 痘痘风险: \(analysis.acneRisk.level) (\(analysis.acneRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:105:41: note: property access is 'async'
+            print("   - 痘痘风险: \(analysis.acneRisk.level) (\(analysis.acneRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:105:69: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 痘痘风险: \(analysis.acneRisk.level) (\(analysis.acneRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:105:69: note: property access is 'async'
+            print("   - 痘痘风险: \(analysis.acneRisk.level) (\(analysis.acneRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:105:69: note: property access is 'async'
+            print("   - 痘痘风险: \(analysis.acneRisk.level) (\(analysis.acneRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:106:41: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 刺激风险: \(analysis.irritationRisk.level) (\(analysis.irritationRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:106:41: note: property access is 'async'
+            print("   - 刺激风险: \(analysis.irritationRisk.level) (\(analysis.irritationRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:106:41: note: property access is 'async'
+            print("   - 刺激风险: \(analysis.irritationRisk.level) (\(analysis.irritationRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:106:75: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 刺激风险: \(analysis.irritationRisk.level) (\(analysis.irritationRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:106:75: note: property access is 'async'
+            print("   - 刺激风险: \(analysis.irritationRisk.level) (\(analysis.irritationRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:106:75: note: property access is 'async'
+            print("   - 刺激风险: \(analysis.irritationRisk.level) (\(analysis.irritationRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:107:41: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 过敏风险: \(analysis.allergyRisk.level) (\(analysis.allergyRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:107:41: note: property access is 'async'
+            print("   - 过敏风险: \(analysis.allergyRisk.level) (\(analysis.allergyRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:107:41: note: property access is 'async'
+            print("   - 过敏风险: \(analysis.allergyRisk.level) (\(analysis.allergyRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:107:72: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 过敏风险: \(analysis.allergyRisk.level) (\(analysis.allergyRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:107:72: note: property access is 'async'
+            print("   - 过敏风险: \(analysis.allergyRisk.level) (\(analysis.allergyRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:107:72: note: property access is 'async'
+            print("   - 过敏风险: \(analysis.allergyRisk.level) (\(analysis.allergyRisk.percentage)%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:136:36: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(product.id, productId, "产品ID应该匹配")
+AIskin.Product.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:137:50: warning: main actor-isolated property 'safetyIndex' can not be referenced from a nonisolated autoclosure
+            XCTAssertGreaterThanOrEqual(analysis.safetyIndex, 0, "安全性指数应该在0-100之间")
+AIskin.IngredientAnalysis.safetyIndex:2:25: note: property declared here
+@MainActor internal var safetyIndex: Double}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:138:47: warning: main actor-isolated property 'safetyIndex' can not be referenced from a nonisolated autoclosure
+            XCTAssertLessThanOrEqual(analysis.safetyIndex, 100, "安全性指数应该在0-100之间")
+AIskin.IngredientAnalysis.safetyIndex:2:25: note: property declared here
+@MainActor internal var safetyIndex: Double}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:141:49: warning: main actor-isolated property 'name' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 产品名称: \(product.name)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:142:49: warning: main actor-isolated property 'ingredients' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 成分数量: \(product.ingredients.count)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:143:53: warning: main actor-isolated property 'safetyIndex' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 安全性指数: \(analysis.safetyIndex)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IngredientAnalysisApiServiceTests.swift:144:50: warning: main actor-isolated property 'efficacyScore' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 功效评分: \(analysis.efficacyScore)")
+
+SwiftCompile normal arm64 /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:103:13: warning: variable 'productId' was written to, but never read
+        var productId: String?
+            ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:128:13: warning: variable 'planId' was written to, but never read
+        var planId: String?
+            ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:81:39: warning: main actor-isolated property 'isAuthenticated' can not be referenced from a nonisolated autoclosure
+            XCTAssertTrue(authService.isAuthenticated, "注册后应该已认证")
+AIskin.AuthService.isAuthenticated:2:36: note: property declared here
+@Published @MainActor internal var isAuthenticated: Bool { get set }}
+                                   ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:82:41: warning: main actor-isolated property 'currentUser' can not be referenced from a nonisolated autoclosure
+            XCTAssertNotNil(authService.currentUser, "应该有当前用户")
+AIskin.AuthService.currentUser:2:36: note: property declared here
+@Published @MainActor internal var currentUser: AIskin.User? { get set }}
+                                   ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:95:41: warning: main actor-isolated property 'currentUser' can not be referenced from a nonisolated autoclosure
+            XCTAssertNotNil(authService.currentUser, "应该有当前用户")
+AIskin.AuthService.currentUser:2:36: note: property declared here
+@Published @MainActor internal var currentUser: AIskin.User? { get set }}
+                                   ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:110:36: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertFalse(product.id.isEmpty, "产品ID不应该为空")
+AIskin.Product.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:135:33: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertFalse(plan.id.isEmpty, "方案ID不应该为空")
+AIskin.SkinPlan.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:155:40: warning: main actor-isolated property 'isAuthenticated' can not be referenced from a nonisolated autoclosure
+            XCTAssertFalse(authService.isAuthenticated, "登出后应该未认证")
+AIskin.AuthService.isAuthenticated:2:36: note: property declared here
+@Published @MainActor internal var isAuthenticated: Bool { get set }}
+                                   ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:156:38: warning: main actor-isolated property 'currentUser' can not be referenced from a nonisolated autoclosure
+            XCTAssertNil(authService.currentUser, "应该清除当前用户")
+AIskin.AuthService.currentUser:2:36: note: property declared here
+@Published @MainActor internal var currentUser: AIskin.User? { get set }}
+                                   ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:109:33: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            productId = product.id
+                        ~~~~~~~~^~
+                        await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:111:57: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   ✅ 产品创建成功: \(product.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:134:27: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            planId = plan.id
+                     ~~~~~^~
+                     await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:136:54: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   ✅ 方案创建成功: \(plan.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:296:43: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(fetchedProduct.id, createdProduct!.id, "产品ID应该一致")
+AIskin.Product.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:296:63: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(fetchedProduct.id, createdProduct!.id, "产品ID应该一致")
+AIskin.Product.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:297:43: warning: main actor-isolated property 'name' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(fetchedProduct.name, createdProduct!.name, "产品名称应该一致")
+AIskin.Product.name:2:25: note: property declared here
+@MainActor internal var name: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:297:65: warning: main actor-isolated property 'name' can not be referenced from a nonisolated autoclosure
+            XCTAssertEqual(fetchedProduct.name, createdProduct!.name, "产品名称应该一致")
+AIskin.Product.name:2:25: note: property declared here
+@MainActor internal var name: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:283:59: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("✅ 产品已创建: \(createdProduct!.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:300:62: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 创建的产品ID: \(createdProduct!.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/IntegrationTests.swift:301:61: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 获取的产品ID: \(fetchedProduct.id)")
+
+SwiftCompile normal arm64 Compiling\ RealImageTests.swift /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift (in target 'AIskinTests' from project 'AIskin')
+SwiftCompile normal arm64 /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:167:37: warning: main actor-isolated property 'id' can not be referenced from a nonisolated autoclosure
+            XCTAssertFalse(analysis.id.isEmpty, "分析ID不应该为空")
+AIskin.SkinAnalysis.id:2:25: note: property declared here
+@MainActor internal var id: String}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:168:38: warning: main actor-isolated property 'overallAssessment' can not be referenced from a nonisolated autoclosure
+            XCTAssertNotNil(analysis.overallAssessment, "应该有整体评估")
+AIskin.SkinAnalysis.overallAssessment:2:25: note: property declared here
+@MainActor internal var overallAssessment: AIskin.OverallAssessment}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:169:68: warning: main actor-isolated property 'healthScore' can not be referenced from a nonisolated autoclosure
+            XCTAssertGreaterThanOrEqual(analysis.overallAssessment.healthScore, 0, "健康评分应该在0-100之间")
+AIskin.OverallAssessment.healthScore:2:25: note: property declared here
+@MainActor internal var healthScore: Double}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:169:50: warning: main actor-isolated property 'overallAssessment' can not be referenced from a nonisolated autoclosure
+            XCTAssertGreaterThanOrEqual(analysis.overallAssessment.healthScore, 0, "健康评分应该在0-100之间")
+AIskin.SkinAnalysis.overallAssessment:2:25: note: property declared here
+@MainActor internal var overallAssessment: AIskin.OverallAssessment}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:170:65: warning: main actor-isolated property 'healthScore' can not be referenced from a nonisolated autoclosure
+            XCTAssertLessThanOrEqual(analysis.overallAssessment.healthScore, 100, "健康评分应该在0-100之间")
+AIskin.OverallAssessment.healthScore:2:25: note: property declared here
+@MainActor internal var healthScore: Double}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:170:47: warning: main actor-isolated property 'overallAssessment' can not be referenced from a nonisolated autoclosure
+            XCTAssertLessThanOrEqual(analysis.overallAssessment.healthScore, 100, "健康评分应该在0-100之间")
+AIskin.SkinAnalysis.overallAssessment:2:25: note: property declared here
+@MainActor internal var overallAssessment: AIskin.OverallAssessment}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:171:38: warning: main actor-isolated property 'skinType' can not be referenced from a nonisolated autoclosure
+            XCTAssertNotNil(analysis.skinType, "应该有皮肤类型")
+AIskin.SkinAnalysis.skinType:2:25: note: property declared here
+@MainActor internal var skinType: AIskin.SkinType}
+                        ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:178:46: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 分析ID: \(analysis.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:180:41: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 健康评分: \(analysis.overallAssessment.healthScore)/100")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:180:41: note: property access is 'async'
+            print("   - 健康评分: \(analysis.overallAssessment.healthScore)/100")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:180:41: note: property access is 'async'
+            print("   - 健康评分: \(analysis.overallAssessment.healthScore)/100")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:181:41: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 皮肤类型: \(analysis.skinType.type)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:181:41: note: property access is 'async'
+            print("   - 皮肤类型: \(analysis.skinType.type)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:181:41: note: property access is 'async'
+            print("   - 皮肤类型: \(analysis.skinType.type)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:182:30: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            if let subtype = analysis.skinType.subtype {
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~
+                             await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:182:30: note: property access is 'async'
+            if let subtype = analysis.skinType.subtype {
+                             ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:182:30: note: property access is 'async'
+            if let subtype = analysis.skinType.subtype {
+                             ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:185:41: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 皮肤状况: \(analysis.overallAssessment.skinCondition)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:185:41: note: property access is 'async'
+            print("   - 皮肤状况: \(analysis.overallAssessment.skinCondition)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:185:41: note: property access is 'async'
+            print("   - 皮肤状况: \(analysis.overallAssessment.skinCondition)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:186:35: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 总结: \(analysis.overallAssessment.summary)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:186:35: note: property access is 'async'
+            print("   - 总结: \(analysis.overallAssessment.summary)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:186:35: note: property access is 'async'
+            print("   - 总结: \(analysis.overallAssessment.summary)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:188:40: warning: main actor-isolated property 'moisture' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            if let moisture = analysis.moisture {
+                              ~~~~~~~~~^~~~~~~~
+                              await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:191:42: warning: main actor-isolated property 'glossiness' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            if let glossiness = analysis.glossiness {
+                                ~~~~~~~~~^~~~~~~~~~
+                                await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:194:42: warning: main actor-isolated property 'elasticity' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            if let elasticity = analysis.elasticity {
+                                ~~~~~~~~~^~~~~~~~~~
+                                await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:199:42: warning: main actor-isolated property 'blackheads' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            if let blackheads = analysis.blackheads {
+                                ~~~~~~~~~^~~~~~~~~~
+                                await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:200:50: warning: main actor-isolated property 'severity' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                print("   - 黑头: \(blackheads.severity)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:202:36: warning: main actor-isolated property 'acne' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            if let acne = analysis.acne {
+                          ~~~~~~~~~^~~~
+                          await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:203:44: warning: main actor-isolated property 'count' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                print("   - 痘痘: \(acne.count)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:205:37: warning: main actor-isolated property 'pores' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            if let pores = analysis.pores {
+                           ~~~~~~~~~^~~~~
+                           await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:206:45: warning: main actor-isolated property 'severity' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                print("   - 毛孔: \(pores.severity)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:210:38: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            if let recommendations = analysis.overallAssessment.recommendations, !recommendations.isEmpty {
+                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                     await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:210:38: note: property access is 'async'
+            if let recommendations = analysis.overallAssessment.recommendations, !recommendations.isEmpty {
+                                     ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:210:38: note: property access is 'async'
+            if let recommendations = analysis.overallAssessment.recommendations, !recommendations.isEmpty {
+                                     ^
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:266:33: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            productId = product.id
+                        ~~~~~~~~^~
+                        await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:267:57: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   ✅ 产品创建成功: \(product.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:334:53: warning: main actor-isolated property 'safetyIndex' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 安全性指数: \(analysis.safetyIndex)/100")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:335:50: warning: main actor-isolated property 'efficacyScore' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 功效评分: \(analysis.efficacyScore)/5.0")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:336:53: warning: main actor-isolated property 'activeIngredients' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 活性成分数: \(analysis.activeIngredients)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:337:50: warning: main actor-isolated property 'overallRating' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 整体评级: \(analysis.overallRating)/5.0")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:340:41: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 痘痘风险: \(analysis.acneRisk.level) (\(String(format: "%.1f", analysis.acneRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:340:41: note: property access is 'async'
+            print("   - 痘痘风险: \(analysis.acneRisk.level) (\(String(format: "%.1f", analysis.acneRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:340:41: note: property access is 'async'
+            print("   - 痘痘风险: \(analysis.acneRisk.level) (\(String(format: "%.1f", analysis.acneRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:340:69: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 痘痘风险: \(analysis.acneRisk.level) (\(String(format: "%.1f", analysis.acneRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:340:92: note: property access is 'async'
+            print("   - 痘痘风险: \(analysis.acneRisk.level) (\(String(format: "%.1f", analysis.acneRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:340:92: note: property access is 'async'
+            print("   - 痘痘风险: \(analysis.acneRisk.level) (\(String(format: "%.1f", analysis.acneRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:341:41: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 刺激风险: \(analysis.irritationRisk.level) (\(String(format: "%.1f", analysis.irritationRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:341:41: note: property access is 'async'
+            print("   - 刺激风险: \(analysis.irritationRisk.level) (\(String(format: "%.1f", analysis.irritationRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:341:41: note: property access is 'async'
+            print("   - 刺激风险: \(analysis.irritationRisk.level) (\(String(format: "%.1f", analysis.irritationRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:341:75: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 刺激风险: \(analysis.irritationRisk.level) (\(String(format: "%.1f", analysis.irritationRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:341:98: note: property access is 'async'
+            print("   - 刺激风险: \(analysis.irritationRisk.level) (\(String(format: "%.1f", analysis.irritationRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:341:98: note: property access is 'async'
+            print("   - 刺激风险: \(analysis.irritationRisk.level) (\(String(format: "%.1f", analysis.irritationRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:342:41: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 过敏风险: \(analysis.allergyRisk.level) (\(String(format: "%.1f", analysis.allergyRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:342:41: note: property access is 'async'
+            print("   - 过敏风险: \(analysis.allergyRisk.level) (\(String(format: "%.1f", analysis.allergyRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:342:41: note: property access is 'async'
+            print("   - 过敏风险: \(analysis.allergyRisk.level) (\(String(format: "%.1f", analysis.allergyRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:342:72: warning: expression is 'async' but is not marked with 'await'; this is an error in the Swift 6 language mode
+            print("   - 过敏风险: \(analysis.allergyRisk.level) (\(String(format: "%.1f", analysis.allergyRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:342:95: note: property access is 'async'
+            print("   - 过敏风险: \(analysis.allergyRisk.level) (\(String(format: "%.1f", analysis.allergyRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:342:95: note: property access is 'async'
+            print("   - 过敏风险: \(analysis.allergyRisk.level) (\(String(format: "%.1f", analysis.allergyRisk.percentage))%)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:345:26: warning: main actor-isolated property 'efficacyAnalysis' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            if !analysis.efficacyAnalysis.isEmpty {
+               ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+               await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:347:51: warning: main actor-isolated property 'efficacyAnalysis' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                for (index, efficacy) in analysis.efficacyAnalysis.enumerated() {
+                                         ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                         await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:352:26: warning: main actor-isolated property 'potentialRisks' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            if !analysis.potentialRisks.isEmpty {
+               ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+               await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:355:47: warning: main actor-isolated property 'potentialRisks' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                for (index, risk) in analysis.potentialRisks.enumerated() {
+                                     ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                     await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:360:26: warning: main actor-isolated property 'recommendations' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            if !analysis.recommendations.isEmpty {
+               ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+               await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:363:57: warning: main actor-isolated property 'recommendations' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+                for (index, recommendation) in analysis.recommendations.enumerated() {
+                                               ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                               await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:370:34: warning: main actor-isolated property 'summary' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   \(analysis.summary)")
+                        ~~~~~~~~~^~~~~~~
+                        await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:407:33: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            productId = product.id
+                        ~~~~~~~~^~
+                        await 
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:438:45: warning: main actor-isolated property 'id' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 产品ID: \(product.id)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:439:49: warning: main actor-isolated property 'name' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 产品名称: \(product.name)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:440:49: warning: main actor-isolated property 'label' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 产品标签: \(product.label ?? "无")")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:441:49: warning: main actor-isolated property 'ingredients' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 成分数量: \(product.ingredients.count)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:445:53: warning: main actor-isolated property 'safetyIndex' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 安全性指数: \(analysis.safetyIndex)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:446:50: warning: main actor-isolated property 'efficacyScore' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 功效评分: \(analysis.efficacyScore)")
+/Users/terry/Desktop/coding/projiect/skin/skintest/AIskin/AIskinTests/RealImageTests.swift:447:50: warning: main actor-isolated property 'overallRating' cannot be accessed from outside of the actor; this is an error in the Swift 6 language mode
+            print("   - 整体评级: \(analysis.overallRating)")
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for AIskinTests (in target 'AIskinTests' from project 'AIskin')
+
+SwiftDriver\ Compilation\ Requirements AIskinTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name AIskinTests -Onone -enforce-exclusivity\=checked @/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-upcoming-feature DisableOutwardActorInference -enable-upcoming-feature InferSendableFromCaptures -enable-upcoming-feature GlobalActorIsolatedTypesUsability -enable-upcoming-feature MemberImportVisibility -enable-upcoming-feature InferIsolatedConformances -enable-upcoming-feature NonisolatedNonsendingByDefault -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /Users/terry/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -index-store-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk/Developer/Library/Frameworks -c -j8 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/terry/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.0-23A339-26257891a6c027eb51374368541b8346.sdkstatcache -output-file-map /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/terry/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/terry/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/terry/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/AIskinTests-generated-files.hmap -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/AIskinTests-own-target-headers.hmap -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/AIskinTests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/AIskinTests-project-headers.hmap -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/DerivedSources/arm64 -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests-Swift.h -working-directory /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Compiling PlanApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+
+SwiftMergeGeneratedHeaders /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/DerivedSources/AIskinTests-Swift.h /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests-Swift.h (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-swiftHeaderTool -arch arm64 /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests-Swift.h -o /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/DerivedSources/AIskinTests-Swift.h
+
+Copy /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinTests.swiftmodule/arm64-apple-ios-simulator.swiftmodule /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.swiftmodule (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.swiftmodule /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinTests.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+Copy /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinTests.swiftmodule/arm64-apple-ios-simulator.swiftdoc /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.swiftdoc (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.swiftdoc /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinTests.swiftmodule/arm64-apple-ios-simulator.swiftdoc
+
+Copy /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinTests.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.abi.json (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.abi.json /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinTests.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Copy /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.swiftsourceinfo (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.swiftsourceinfo /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+SwiftDriverJobDiscovery normal arm64 Compiling AIskinTests.swift, APIClientTests.swift (in target 'AIskinTests' from project 'AIskin')
+
+SwiftDriverJobDiscovery normal arm64 Compiling UserApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ProductApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+
+SwiftDriverJobDiscovery normal arm64 Compiling SkinAnalysisApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+
+SwiftDriverJobDiscovery normal arm64 Compiling IngredientAnalysisApiServiceTests.swift, IntegrationTests.swift (in target 'AIskinTests' from project 'AIskin')
+
+SwiftDriverJobDiscovery normal arm64 Compiling AuthServiceTests.swift, ConflictApiServiceTests.swift (in target 'AIskinTests' from project 'AIskin')
+
+SwiftDriverJobDiscovery normal arm64 Compiling RealImageTests.swift (in target 'AIskinTests' from project 'AIskin')
+
+SwiftDriver\ Compilation AIskinTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name AIskinTests -Onone -enforce-exclusivity\=checked @/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-upcoming-feature DisableOutwardActorInference -enable-upcoming-feature InferSendableFromCaptures -enable-upcoming-feature GlobalActorIsolatedTypesUsability -enable-upcoming-feature MemberImportVisibility -enable-upcoming-feature InferIsolatedConformances -enable-upcoming-feature NonisolatedNonsendingByDefault -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /Users/terry/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -profile-coverage-mapping -profile-generate -enable-testing -index-store-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk/Developer/Library/Frameworks -c -j8 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/terry/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.0-23A339-26257891a6c027eb51374368541b8346.sdkstatcache -output-file-map /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/terry/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/terry/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/terry/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/AIskinTests-generated-files.hmap -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/AIskinTests-own-target-headers.hmap -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/AIskinTests-all-target-headers.hmap -Xcc -iquote -Xcc /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/AIskinTests-project-headers.hmap -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/DerivedSources/arm64 -Xcc -I/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests-Swift.h -working-directory /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest/AIskinTests normal (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -O0 -L/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk/Developer/Library/Frameworks -filelist /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.LinkFileList -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -bundle_loader /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/AIskin -Xlinker -object_path_lto -Xlinker /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -debug_variant -Xlinker -dependency_info -Xlinker /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests_dependency_info.dat -fobjc-link-runtime -fprofile-instr-generate -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.swiftmodule @/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests-linker-args.resp -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/AIskin.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest/AIskinTests
+
+CopySwiftLibs /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest/AIskinTests --scan-folder /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest/Frameworks --scan-folder /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest/PlugIns --scan-folder /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest/SystemExtensions --scan-folder /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name AIskinTests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk --xcode-version 17A400 --platform-family iOS --deployment-target 26.0 --bundle-identifier personal.AIskinTests --output /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest --target-triple arm64-apple-ios26.0-simulator --binary-file /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest/AIskinTests --dependency-file /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests_dependency_info.dat --stringsdata-file /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.SwiftFileList --metadata-file-list /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/AIskinTests.DependencyMetadataFileList --static-metadata-file-list /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/AIskinTests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/Objects-normal/arm64/AIskinTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2025-11-05 17:29:35.449 appintentsmetadataprocessor[89927:10550909] Starting appintentsmetadataprocessor export
+2025-11-05 17:29:35.450 appintentsmetadataprocessor[89927:10550909] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+AppIntentsSSUTraining (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest/Info.plist --temp-dir-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/ssu --bundle-id personal.AIskinTests --product-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest --extracted-metadata-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest/Metadata.appintents --metadata-file-list /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinTests.build/AIskinTests.DependencyMetadataFileList --archive-ssu-assets
+2025-11-05 17:29:35.467 appintentsnltrainingprocessor[89928:10550961] Parsing options for appintentsnltrainingprocessor
+2025-11-05 17:29:35.468 appintentsnltrainingprocessor[89928:10550961] No AppShortcuts found - Skipping.
+
+CodeSign /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest
+
+RegisterExecutionPolicyException /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-RegisterExecutionPolicyException /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest
+
+Touch /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest (in target 'AIskinTests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    /usr/bin/touch -c /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/PlugIns/AIskinTests.xctest
+
+CodeSign /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/AIskin.debug.dylib (in target 'AIskin' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/AIskin.debug.dylib
+
+CodeSign /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/__preview.dylib (in target 'AIskin' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/__preview.dylib
+
+CodeSign /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app (in target 'AIskin' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app
+
+Validate /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app (in target 'AIskin' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-validationUtility /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app -shallow-bundle -infoplist-subpath Info.plist
+
+Ld /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest/AIskinUITests normal (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -O0 -L/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk/Developer/Library/Frameworks -filelist /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/Objects-normal/arm64/AIskinUITests.LinkFileList -Xlinker -rpath -Xlinker @loader_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/Objects-normal/arm64/AIskinUITests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -debug_variant -Xlinker -dependency_info -Xlinker /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/Objects-normal/arm64/AIskinUITests_dependency_info.dat -fobjc-link-runtime -fprofile-instr-generate -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/Objects-normal/arm64/AIskinUITests.swiftmodule @/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/Objects-normal/arm64/AIskinUITests-linker-args.resp -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/AIskinUITests.xctest-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/AIskinUITests.xctest-Simulated.xcent.der -Xlinker -no_adhoc_codesign -o /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest/AIskinUITests
+
+ProcessInfoPlistFile /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest/Info.plist /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/empty-AIskinUITests.plist (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-infoPlistUtility /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/empty-AIskinUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/ProductTypeInfoPlistAdditions.plist -o /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest/Info.plist
+
+CopySwiftLibs /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest/AIskinUITests --scan-folder /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest/Frameworks --scan-folder /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest/PlugIns --scan-folder /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest/SystemExtensions --scan-folder /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name AIskinUITests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk --xcode-version 17A400 --platform-family iOS --deployment-target 26.0 --bundle-identifier personal.AIskinUITests --output /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest --target-triple arm64-apple-ios26.0-simulator --binary-file /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest/AIskinUITests --dependency-file /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/Objects-normal/arm64/AIskinUITests_dependency_info.dat --stringsdata-file /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/Objects-normal/arm64/AIskinUITests.SwiftFileList --metadata-file-list /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/AIskinUITests.DependencyMetadataFileList --static-metadata-file-list /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/AIskinUITests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/Objects-normal/arm64/AIskinUITests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2025-11-05 17:29:35.826 appintentsmetadataprocessor[89936:10551372] Starting appintentsmetadataprocessor export
+2025-11-05 17:29:35.827 appintentsmetadataprocessor[89936:10551372] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+AppIntentsSSUTraining (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest/Info.plist --temp-dir-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/ssu --bundle-id personal.AIskinUITests --product-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest --extracted-metadata-path /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest/Metadata.appintents --metadata-file-list /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Intermediates.noindex/AIskin.build/Debug-iphonesimulator/AIskinUITests.build/AIskinUITests.DependencyMetadataFileList --archive-ssu-assets
+2025-11-05 17:29:35.841 appintentsnltrainingprocessor[89937:10551373] Parsing options for appintentsnltrainingprocessor
+2025-11-05 17:29:35.841 appintentsnltrainingprocessor[89937:10551373] No AppShortcuts found - Skipping.
+
+Copy /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PkgInfo /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Xcode/Agents/XCTRunner.app/PkgInfo (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Xcode/Agents/XCTRunner.app/PkgInfo /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app
+
+CopyPlistFile /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Info.plist /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Xcode/Agents/XCTRunner.app/Info.plist (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-copyPlist --validate --convert xml1 --macro-expansion WRAPPEDPRODUCTNAME AIskinUITests-Runner --macro-expansion WRAPPEDPRODUCTBUNDLEIDENTIFIER personal.AIskinUITests.xctrunner --macro-expansion TESTPRODUCTNAME AIskinUITests --macro-expansion TESTPRODUCTBUNDLEIDENTIFIER personal.AIskinUITests --copy-value UIDeviceFamily /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest/Info.plist --outdir /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app -- /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Xcode/Agents/XCTRunner.app/Info.plist
+
+MkDir /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    /bin/mkdir -p /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app
+
+Copy /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks/XCUIAutomation.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks
+
+Copy /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks/XCTestSupport.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestSupport.framework (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestSupport.framework /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks
+
+CopyAndPreserveArchs /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/AIskinUITests-Runner (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Xcode/Agents/XCTRunner.app/XCTRunner -output /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/AIskinUITests-Runner -extract arm64
+
+Copy /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks/libXCTestSwiftSupport.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks
+
+Copy /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks/XCUnit.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCUnit.framework (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCUnit.framework /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks
+
+Copy /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks/XCTestCore.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestCore.framework (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTestCore.framework /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks
+
+Copy /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks/XCTest.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks
+
+Copy /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks/XCTAutomationSupport.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks
+
+Copy /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks/Testing.framework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/Testing.framework (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/Testing.framework /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/Frameworks
+
+CodeSign /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest
+
+CodeSign /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app
+/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app: replacing existing signature
+
+RegisterExecutionPolicyException /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    builtin-RegisterExecutionPolicyException /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest
+
+Touch /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest (in target 'AIskinUITests' from project 'AIskin')
+    cd /Users/terry/Desktop/coding/projiect/skin/skintest/AIskin
+    /usr/bin/touch -c /Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskinUITests-Runner.app/PlugIns/AIskinUITests.xctest
+
+2025-11-05 17:30:17.355 xcodebuild[89815:10553291]  iOSSimulator: 132C6D01-7021-4B84-A185-285E2A21B89F: Failed to launch app with identifier: personal.AIskin and options: {
+    "activate_suspended" = 0;
+    arguments =     (
+    );
+    environment =     {
+        "APP_DISTRIBUTOR_ID_OVERRIDE" = "com.apple.AppStore";
+        "CA_ASSERT_MAIN_THREAD_TRANSACTIONS" = 0;
+        "CA_DEBUG_TRANSACTIONS" = 0;
+        "DYLD_FRAMEWORK_PATH" = "/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks";
+        "DYLD_INSERT_LIBRARIES" = "/usr/lib/libRPAC.dylib:/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/Frameworks/libXCTestBundleInject.dylib:/Library/Developer/CoreSimulator/Volumes/iOS_23A8464/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.0.simruntime/Contents/Resources/RuntimeRoot/usr/lib/libMainThreadChecker.dylib:/usr/lib/libRPAC.dylib";
+        "DYLD_LIBRARY_PATH" = "/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib";
+        "LLVM_PROFILE_FILE" = "/var/folders/bf/9tj9p6w53mb9qtfc1p0xncm00000gp/T/personal.AIskin/2AF84E2E-8EDC-49B8-A891-09F5E64692D7-89815-0000035951679FA0/46B67371-6D15-4CFB-A4DC-36682B5EC177-%p%c.profraw";
+        NSApplicationQuitWithoutSuddenTermination = YES;
+        NSUnbufferedIO = YES;
+        "OS_ACTIVITY_DT_MODE" = YES;
+        "PERFC_ENABLE_EXTENDED_DIAGNOSTIC_FORMAT" = 1;
+        "PERFC_ENABLE_PROFILE_MODE" = 1;
+        "PERFC_RESET_INSERT_LIBRARIES" = 1;
+        "PERFC_SUPPRESS_SYSTEM_REPORTS" = 1;
+        "RUN_DESTINATION_DEVICE_NAME" = "Clone 1 of iPhone 17 Pro";
+        "RUN_DESTINATION_DEVICE_PLATFORM_IDENTIFIER" = "com.apple.platform.iphonesimulator";
+        "RUN_DESTINATION_DEVICE_UDID" = "132C6D01-7021-4B84-A185-285E2A21B89F";
+        "SQLITE_ENABLE_THREAD_ASSERTIONS" = 1;
+        TERM = dumb;
+        XCInjectBundleInto = unused;
+        "XCODE_SCHEME_NAME" = AIskin;
+        "XCODE_TEST_PLAN_NAME" = AIskin;
+        XCTestBundleInjectPath = "/usr/lib/libRPAC.dylib:/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator/AIskin.app/Frameworks/libXCTestBundleInject.dylib:/Library/Developer/CoreSimulator/Volumes/iOS_23A8464/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.0.simruntime/Contents/Resources/RuntimeRoot/usr/lib/libMainThreadChecker.dylib:/usr/lib/libRPAC.dylib";
+        XCTestBundlePath = "PlugIns/AIskinTests.xctest";
+        XCTestConfigurationFilePath = "";
+        XCTestSessionIdentifier = "378CE775-6853-476B-9BF5-4C32A6BE3000";
+        "__XCODE_BUILT_PRODUCTS_DIR_PATHS" = "/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator";
+        "__XPC_DYLD_FRAMEWORK_PATH" = "/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator";
+        "__XPC_DYLD_LIBRARY_PATH" = "/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Build/Products/Debug-iphonesimulator";
+        "__XPC_LLVM_PROFILE_FILE" = "/var/folders/bf/9tj9p6w53mb9qtfc1p0xncm00000gp/T/personal.AIskin/2AF84E2E-8EDC-49B8-A891-09F5E64692D7-89815-0000035951679FA0/46B67371-6D15-4CFB-A4DC-36682B5EC177-%p%c.profraw";
+    };
+    stderr = "/dev/ttys005";
+    stdout = "/dev/ttys005";
+    "terminate_running_process" = 1;
+    "wait_for_debugger" = 1;
+} (error = Error Domain=NSPOSIXErrorDomain Code=3 "No such process" UserInfo={SimCallingSelector=launchApplicationWithID:options:pid:error:, NSLocalizedDescription=Simulator device failed to launch personal.AIskin., NSUnderlyingError=0xa872f3630 {Error Domain=NSPOSIXErrorDomain Code=3 "No such process" UserInfo={NSLocalizedDescription=Application launch for 'personal.AIskin' did not return a process handle nor launch error.}}})
+2025-11-05 17:30:17.403 xcodebuild[89815:10550347] [MT] IDELaunchReport: 93fb3961233c7000:93fb3961233c7000: Finished with error: Simulator device failed to launch personal.AIskin.
+Domain: NSPOSIXErrorDomain
+Code: 3
+Failure Reason: No such process
+User Info: {
+    DVTErrorCreationDateKey = "2025-11-05 09:30:17 +0000";
+    IDERunOperationFailingWorker = IDELaunchiPhoneSimulatorLauncher;
+    SimCallingSelector = "launchApplicationWithID:options:pid:error:";
+}
+--
+Application launch for 'personal.AIskin' did not return a process handle nor launch error.
+Domain: NSPOSIXErrorDomain
+Code: 3
+Failure Reason: No such process
+--
+
+2025-11-05 17:30:17.403 xcodebuild[89815:10550347] [MT] IDELaunchReport: 93fb3961233c7000:93fb3961233c7000: com.apple.dt.IDERunOperationWorkerFinished {
+    "device_identifier" = "752ABFA8-46D8-44DC-8E95-0B5C22DF92D2";
+    "device_model" = "iPhone18,1";
+    "device_osBuild" = "26.0.1 (23A8464)";
+    "device_osBuild_monotonic" = 2300846400;
+    "device_os_variant" = 1;
+    "device_platform" = "com.apple.platform.iphonesimulator";
+    "device_platform_family" = 2;
+    "device_reality" = 2;
+    "device_thinningType" = "iPhone18,1";
+    "device_transport" = 4;
+    "launchSession_schemeCommand" = Test;
+    "launchSession_schemeCommand_enum" = 2;
+    "launchSession_targetArch" = arm64;
+    "launchSession_targetArch_enum" = 6;
+    "operation_duration_ms" = 25042;
+    "operation_errorCode" = 3;
+    "operation_errorDomain" = NSPOSIXErrorDomain;
+    "operation_errorWorker" = IDELaunchiPhoneSimulatorLauncher;
+    "operation_error_reportable" = 1;
+    "operation_name" = IDERunOperationWorkerGroup;
+    "param_consoleMode" = 0;
+    "param_debugger_attachToExtensions" = 0;
+    "param_debugger_attachToXPC" = 0;
+    "param_debugger_type" = 1;
+    "param_destination_isProxy" = 0;
+    "param_destination_platform" = "com.apple.platform.iphonesimulator";
+    "param_diag_MTE_enable" = 0;
+    "param_diag_MainThreadChecker_stopOnIssue" = 0;
+    "param_diag_MallocStackLogging_enableDuringAttach" = 0;
+    "param_diag_MallocStackLogging_enableForXPC" = 0;
+    "param_diag_allowLocationSimulation" = 1;
+    "param_diag_checker_mtc_enable" = 0;
+    "param_diag_checker_tpc_enable" = 1;
+    "param_diag_gpu_frameCapture_enable" = 3;
+    "param_diag_gpu_shaderValidation_enable" = 0;
+    "param_diag_gpu_validation_enable" = 1;
+    "param_diag_guardMalloc_enable" = 0;
+    "param_diag_memoryGraphOnResourceException" = 0;
+    "param_diag_queueDebugging_enable" = 1;
+    "param_diag_runtimeProfile_generate" = 1;
+    "param_diag_sanitizer_asan_enable" = 0;
+    "param_diag_sanitizer_tsan_enable" = 0;
+    "param_diag_sanitizer_tsan_stopOnIssue" = 0;
+    "param_diag_sanitizer_ubsan_enable" = 0;
+    "param_diag_sanitizer_ubsan_stopOnIssue" = 0;
+    "param_diag_showNonLocalizedStrings" = 0;
+    "param_diag_viewDebugging_enabled" = 0;
+    "param_diag_viewDebugging_insertDylibOnLaunch" = 0;
+    "param_install_style" = 2;
+    "param_launcher_UID" = 2;
+    "param_launcher_allowDeviceSensorReplayData" = 0;
+    "param_launcher_kind" = 0;
+    "param_launcher_style" = 0;
+    "param_launcher_substyle" = 0;
+    "param_lldbVersion_component_idx_1" = 0;
+    "param_lldbVersion_monotonic" = 170300310002;
+    "param_runnable_appExtensionHostRunMode" = 0;
+    "param_runnable_productType" = "com.apple.product-type.application";
+    "param_testing_launchedForTesting" = 1;
+    "param_testing_suppressSimulatorApp" = 1;
+    "param_testing_usingCLI" = 0;
+    "sdk_canonicalName" = "iphonesimulator26.0";
+    "sdk_osVersion" = "26.0";
+    "sdk_platformID" = 7;
+    "sdk_variant" = iphonesimulator;
+    "sdk_version_monotonic" = 2300033900;
+}
+2025-11-05 17:30:36.715 xcodebuild[89815:10550347] [MT] IDETestOperationsObserverDebug: 60.775 elapsed -- Testing started completed.
+2025-11-05 17:30:36.715 xcodebuild[89815:10550347] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2025-11-05 17:30:36.715 xcodebuild[89815:10550347] [MT] IDETestOperationsObserverDebug: 60.776 sec, +60.776 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/terry/Library/Developer/Xcode/DerivedData/AIskin-fahvagvcllfabqaamghkmqwrcccb/Logs/Test/Test-AIskin-2025.11.05_17-29-30-+0800.xcresult
+
+Testing failed:
+	Simulator device failed to launch personal.AIskin.
+	AIskin encountered an error (Failed to install or launch the test runner. (Underlying Error: Simulator device failed to launch personal.AIskin. No such process. (Underlying Error: Application launch for 'personal.AIskin' did not return a process handle nor launch error. No such process)))
+
+** TEST FAILED **
+
+Testing started

@@ -1,0 +1,179 @@
+单元测试是确保代码质量的重要手段，而运行和调试测试是开发者必备的技能。本文将介绍如何在 Xcode 中运行单元测试，并使用调试和日志工具来发现和解决问题。
+
+运行单元测试
+1. 设置测试目标
+在 Xcode 中，为项目添加一个新的测试目标：
+
+打开 Xcode 项目，选择菜单栏中的 File > New > Target。
+选择 iOS Unit Testing Bundle 或 macOS Unit Testing Bundle，点击 Next。
+输入测试目标的名称，确保勾选 Include Unit Tests 选项，点击 Finish。
+2. 编写测试用例
+在测试目标中，编写继承自 XCTestCase 的测试类，并添加测试方法。例如：
+
+#import <XCTest/XCTest.h>
+#import "Calculator.h"
+ 
+@interface CalculatorTests : XCTestCase
+@property (nonatomic, strong) Calculator *calculator;
+@end
+ 
+@implementation CalculatorTests
+ 
+- (void)setUp {
+    [super setUp];
+    self.calculator = [[Calculator alloc] init];
+}
+ 
+- (void)tearDown {
+    self.calculator = nil;
+    [super tearDown];
+}
+ 
+- (void)testAddition {
+    NSInteger result = [self.calculator add:2 to:3];
+    XCTAssertEqual(result, 5, @"Addition method failed");
+}
+ 
+@end
+AI写代码
+
+3. 运行测试
+在 Xcode 中，选择测试目标并点击运行按钮或使用快捷键 Cmd + U 运行所有测试。Xcode 会显示测试结果，包括通过的测试、失败的测试和相关的错误信息。
+
+调试单元测试
+1. 使用断点
+断点是调试代码的基本工具。通过在测试代码中设置断点，可以在测试运行时暂停执行，检查变量的值和程序的状态。
+
+设置断点：在代码行号的左侧点击即可设置断点。
+运行测试：在设置了断点的情况下运行测试，当程序执行到断点处时会自动暂停。
+2. 检查变量
+当测试暂停在断点处时，可以使用 Xcode 的调试窗口检查变量的值。调试窗口显示了当前作用域内的所有变量，并允许开发者手动检查和修改变量值。
+
+查看变量值：在调试窗口中，展开变量列表即可查看变量的当前值。
+修改变量值：右键点击变量并选择 Edit Value 可以修改变量的值。
+3. 单步执行
+单步执行允许开发者逐行执行代码，以便详细检查每一行代码的执行情况。
+
+Step Over (F6)：执行当前行代码，并暂停在下一行。
+Step Into (F7)：进入当前行代码调用的方法内部，并暂停在方法的第一行。
+Step Out (F8)：执行完当前方法，返回到调用该方法的地方并暂停。
+使用日志调试
+日志是调试代码的另一种有效手段。通过在代码中添加日志语句，可以记录程序的执行过程和变量的值，帮助开发者理解程序的行为。
+
+1. 添加日志语句
+Objective-C 中可以使用 NSLog 函数来添加日志语句。例如：
+
+- (void)testAddition {
+    NSInteger result = [self.calculator add:2 to:3];
+    NSLog(@"Result of addition: %ld", (long)result);
+    XCTAssertEqual(result, 5, @"Addition method failed");
+}
+AI写代码
+2. 查看日志输出
+在 Xcode 的调试控制台中，可以查看运行测试时的日志输出。调试控制台显示了 NSLog 函数输出的所有日志信息，帮助开发者跟踪程序的执行过程。
+
+常见调试技巧
+1. 使用期望断言
+XCTest 提供了多种断言方法，可以用于验证测试结果。使用期望断言可以快速定位测试失败的原因。例如：
+
+- (void)testAddition {
+    NSInteger result = [self.calculator add:2 to:3];
+    XCTAssertEqual(result, 5, @"Expected 5 but got %ld", (long)result);
+}
+AI写代码
+2. 检查依赖项
+确保所有测试依赖项正确设置。例如，检查测试对象的初始化和释放，避免在测试中使用未初始化或已经释放的对象。
+
+- (void)setUp {
+    [super setUp];
+    self.calculator = [[Calculator alloc] init];
+    XCTAssertNotNil(self.calculator, @"Calculator object should not be nil");
+}
+ 
+- (void)tearDown {
+    self.calculator = nil;
+    [super tearDown];
+}
+AI写代码
+
+3. 使用异步测试
+对于异步操作，可以使用 XCTestExpectation 来等待操作完成。例如：
+
+- (void)testAsyncOperation {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Async operation"];
+    
+    [self.calculator performAsyncOperationWithCompletion:^(BOOL success) {
+        XCTAssertTrue(success, @"Async operation failed");
+        [expectation fulfill];
+    }];
+    
+    [self waitForExpectationsWithTimeout:5 handler:nil];
+}
+AI写代码
+
+在 Xcode 中运行和调试单元测试是确保代码质量的重要步骤。通过使用断点、单步执行和日志，开发者可以有效地发现和解决代码中的问题。希望本文能够帮助你更好地理解和应用这些调试技巧，提高代码的可靠性和稳定性。
+
+
+
+以协助你在不同的抽象层次上编写测试。优秀的测试策略会结合使用多种类型的测试，以充分利用每种测试的优点。
+
+以实现“金字塔式”测试分布为目标，如下图所示。用大量速度快、隔离良好的单元测试来涵盖 App 的逻辑，用较少数量的集成测试来证明较小的部件相互连接妥当，并通过 UI 测试来断言常见用例行为正确。
+
+示意图显示了一个项目中应含有的单元测试、集成测试和 UI 测试的相对数量。
+UI 测试是衡量 App 是否能以你期望的方式为用户工作的最终指标，但与其他类型的测试相比，该测试运行所需的时间比较长。有多种不同的 App 变量可能导致同一 UI 测试中出现错误。测试金字塔中均衡地使用高保真测试和有明确目标的测试，其中前者可以证明用户能够完成他们的任务，而后者可以就 App 中逻辑的正确性和所做更改的影响快速地向你提供反馈。
+
+除了测试金字塔外，还应编写性能测试来提供对代码中性能关键区域的回归覆盖。“改进 App 的性能”中介绍了识别性能关键代码的流程。
+
+编写单元测试
+每个单元测试均应断言项目中某个方法或函数的单个路径的预期行为。要涵盖多个路径，请为每种场景编写一个测试。例如，如果某个函数会接收一个可选参数，那么应当针对该参数为 nil 的场景编写一个测试，同时针对该参数为非 nil 值的场景编写一个测试。识别代码中的边界条件和逻辑分支，并编写单元测试来涵盖这些条件的每一种组合。
+
+选取要测试的类或函数，然后创建一个 XCTestCase (英文) 的子类来包含针对该类或函数的测试。在你的 XCTestCase 子类中添加一个不使用任何参数并返回 Void 的方法，为该方法指定一个以“test”一词开头的名称。在 Xcode 中，选取“New File”(新建文件)，然后选择“Unit Test Case Class”(单元测试用例类) 模板来自动创建适当的类。
+
+测试方法应包含三个步骤，顺序如下所述：
+
+安排。创建你所试验的代码路径将要使用的任何对象或数据结构。将复杂的依赖项替换为易于配置的“存根”，确保测试能够快速运行并具有确定的结果。采用面向协议的编程方法确保 App 中对象之间的关系足够灵活，从而支持以真实实现来代替存根。
+
+执行。利用你在“安排”阶段中配置的参数和属性，调用你要测试的方法或函数。
+
+断言。使用测试断言 (英文) 来比较“执行”阶段中所试验代码的行为和你对应该发生什么情况的预期。任何条件为 false 的断言都会导致测试失败。
+
+所得到的测试方法与本例中类似。
+
+class MyAPITests : XCTestCase {
+  func testMyAPIWorks() {
+    // Arrange: create the necessary dependencies.
+    // Act: call my API, using the dependencies created above.
+    XCTAssertTrue(/* … */, "The result wasn't what I expected")
+  }
+}
+
+编写集成测试
+集成测试与单元测试非常相似，使用相同的 API，也遵循同样的“安排-执行-断言”模式。单元测试和集成测试的差别在于它们的范围。单元测试涵盖 App 逻辑中一个非常小的部分，集成测试则检查更大子系统的行为，或者多个类和函数的组合。在集成测试的“安排”步骤中，用较少的存根对象来拓宽待测真实项目代码的范围。
+
+集成测试不像单元测试那样尝试涵盖每一种不同的情况或边界条件，而是断言多个组件能够一起达成重要情形中的 App 目标。例如，测试从控制器收到的值是否正确储存在模型中，以及网络请求产生的错误是否传递到用户界面并在用户界面上显示出来。
+
+编写 UI 测试
+UI 测试的工作方式与单元测试和集成测试不同，但仍然作为 XCTestCase 子类中的方法来组织。Xcode 中用于新建文件的“UI Test Case Class”(UI 测试用例类) 模板包含 UI 测试的常见起点。UI 测试不直接执行 App 的代码，而是像真实用户那样使用 App 的用户界面控件，来判断用户能不能使用 App 完成特定的任务。
+
+你可以创建 UI 测试来验证重要的用户任务能够在 App 中完成，并且没有引入会破坏 UI 控件行为的错误。重现真实用户活动的 UI 测试可让你确信 App 能够用于完成预期的任务。对于基于文稿的 App，UI 测试可以验证用户能够创建新文稿，编辑文稿的内容，然后删除这个文稿。
+
+要在 XCTestCase 子类的方法中创建 UI 测试，请通过 Xcode 的“Record UI Test”(记录 UI 测试) 功能记录你与 App 的交互。你可以设计 UI 测试来重现中断时会给用户造成最大影响的最重要工作流程，并重现报告的错误，从而让你能够避免性能下降。
+
+图像显示了 Xcode 中的“Record UI Test”(记录 UI 测试) 按钮。
+
+在记录执行待测功能的工作流程后，你可以使用测试断言函数来确保根据所记录互动期间完成的操作，UI 的最终状态与你的预期相符。
+
+当 UI 测试模拟由多个不同步骤组成的复杂工作流程时，可以使用 XCTActivity (英文) 来组织和命名共享的步骤。你可以创建帮助程序方法来共享在多个步骤中使用的活动的实现。
+
+编写性能测试
+你可以编写性能测试来收集一段代码执行所用的时间、执行期间所用的内存或所写的数据这些方面的信息。XCTest 会多次运行你的代码来测量请求的指标。你可以为指标设置一个基准预期，如果测得的值比基准值差太多，XCTest 会报告测试失败。
+
+要测试你的代码运行所用的时间，可以在测试方法中调用 measure(_:) (英文)，并在 measure(_:) 的 block 参数中运行你的代码。要使用其他指标测量性能，包括内存用量和写入磁盘的数据量等，请调用 measure(metrics:block:) (英文)。
+
+class PerformanceTests : XCTestCase {
+  func testCodeIsFastEnough() {
+    self.measure() {
+      // performance-sensitive code here
+    }
+  }
+}
