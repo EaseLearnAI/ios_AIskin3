@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="析肤AI帮助与支持：联系邮箱、常见问题、问题反馈和账号删除帮助。">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#f8f6f0">
+  <title>帮助与支持｜析肤AI</title>
+  <style>
+    :root {
+      --canvas: #f4f2ec;
+      --paper: #fffefa;
+      --ink: #20241f;
+      --muted: #697068;
+      --line: #dde1d9;
+      --green: #214f3a;
+      --green-soft: #edf3ee;
+      --rose: #b96770;
+      --rose-soft: #fbefee;
+      --shadow: 0 22px 70px rgba(31, 54, 40, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-width: 320px;
+      background: var(--canvas);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 85% 0%, rgba(185, 103, 112, 0.10), transparent 25rem),
+        var(--canvas);
+      font-family: "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+      font-size: 16px;
+      line-height: 1.82;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: var(--green);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.2em;
+      overflow-wrap: anywhere;
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: var(--rose);
+    }
+
+    a:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid rgba(33, 79, 58, 0.22);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    .site-header {
+      width: min(900px, calc(100% - 40px));
+      min-height: 76px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(33, 79, 58, 0.16);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--ink);
+      font-weight: 650;
+      letter-spacing: 0.06em;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      color: #fffefa;
+      background: var(--green);
+      border-radius: 50% 50% 46% 54% / 46% 50% 50% 54%;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 20px;
+      box-shadow: 0 7px 18px rgba(33, 79, 58, 0.2);
+    }
+
+    .page-shell {
+      width: min(860px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: clamp(38px, 7vw, 78px) 0 clamp(58px, 9vw, 100px);
+    }
+
+    .document {
+      width: 100%;
+      padding: clamp(34px, 7vw, 72px);
+      background: rgba(255, 254, 250, 0.97);
+      border: 1px solid rgba(33, 79, 58, 0.12);
+      border-radius: 3px 38px 3px 3px;
+      box-shadow: var(--shadow);
+    }
+
+    .document-header {
+      margin-bottom: clamp(34px, 6vw, 54px);
+      padding-bottom: clamp(30px, 5vw, 44px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(38px, 6vw, 58px);
+      line-height: 1.12;
+      letter-spacing: -0.045em;
+    }
+
+    .lede {
+      max-width: 620px;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2.2vw, 18px);
+    }
+
+    .meta {
+      margin-top: 24px;
+      display: flex;
+      gap: 6px 22px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta span + span::before {
+      content: "·";
+      margin-right: 22px;
+      color: var(--rose);
+    }
+
+    .notice {
+      margin: 0 0 38px;
+      padding: 18px 20px;
+      color: #33443a;
+      background: var(--green-soft);
+      border-left: 3px solid var(--green);
+      border-radius: 0 10px 10px 0;
+      font-size: 14px;
+    }
+
+    .notice.warning {
+      color: #604143;
+      background: var(--rose-soft);
+      border-left-color: var(--rose);
+    }
+
+    .notice strong {
+      color: inherit;
+    }
+
+    .document section {
+      scroll-margin-top: 24px;
+    }
+
+    .document section + section {
+      margin-top: 42px;
+      padding-top: 38px;
+      border-top: 1px solid var(--line);
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: clamp(23px, 3.6vw, 29px);
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      margin: 26px 0 8px;
+      font-size: 18px;
+      line-height: 1.45;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+
+    ul,
+    ol {
+      margin: 13px 0;
+      padding-left: 1.35em;
+    }
+
+    li + li {
+      margin-top: 9px;
+    }
+
+    .data-table {
+      width: 100%;
+      margin: 22px 0 12px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .data-table th,
+    .data-table td {
+      padding: 14px 13px;
+      vertical-align: top;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .data-table th {
+      color: var(--green);
+      background: rgba(33, 79, 58, 0.055);
+      font-weight: 650;
+    }
+
+    .steps {
+      margin: 24px 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: legal-steps;
+    }
+
+    .steps li {
+      position: relative;
+      min-height: 54px;
+      padding: 5px 0 22px 62px;
+      counter-increment: legal-steps;
+    }
+
+    .steps li::before {
+      content: counter(legal-steps, decimal-leading-zero);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      color: #fffefa;
+      background: var(--green);
+      border-radius: 50%;
+      font-family: Georgia, serif;
+      font-size: 13px;
+    }
+
+    .steps li:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 41px;
+      bottom: 0;
+      left: 19px;
+      width: 1px;
+      background: var(--line);
+    }
+
+    .path {
+      display: inline-block;
+      margin: 10px 0 14px;
+      padding: 9px 15px;
+      color: var(--green);
+      background: var(--green-soft);
+      border: 1px solid rgba(33, 79, 58, 0.17);
+      border-radius: 999px;
+      font-weight: 650;
+    }
+
+    .contact-card {
+      margin-top: 22px;
+      padding: 22px;
+      color: #fffefa;
+      background: var(--green);
+      border-radius: 3px 18px 3px 3px;
+    }
+
+    .contact-card a {
+      color: #fff4d5;
+      font-weight: 650;
+    }
+
+    .contact-card p {
+      margin: 3px 0;
+    }
+
+    .faq {
+      border-top: 1px solid var(--line);
+    }
+
+    .faq details {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .faq summary {
+      position: relative;
+      padding: 17px 34px 17px 0;
+      cursor: pointer;
+      font-weight: 650;
+      list-style: none;
+    }
+
+    .faq summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq summary::after {
+      content: "+";
+      position: absolute;
+      top: 11px;
+      right: 4px;
+      color: var(--rose);
+      font-family: Georgia, serif;
+      font-size: 27px;
+      font-weight: 400;
+    }
+
+    .faq details[open] summary::after {
+      content: "−";
+    }
+
+    .faq details p {
+      margin: -3px 0 19px;
+      color: var(--muted);
+    }
+
+    .site-footer {
+      padding: 0 20px 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 640px) {
+      html,
+      body {
+        background: #fffefa;
+      }
+
+      .site-header {
+        width: calc(100% - 32px);
+        min-height: 66px;
+      }
+
+      .brand-mark {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+      }
+
+      .page-shell {
+        width: 100%;
+        padding: 0;
+      }
+
+      .document {
+        padding: 38px 20px 48px;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .document-header {
+        margin-bottom: 30px;
+        padding-bottom: 28px;
+      }
+
+      h1 {
+        font-size: clamp(34px, 10vw, 44px);
+      }
+
+      .lede {
+        margin-top: 18px;
+      }
+
+      .meta {
+        display: grid;
+        gap: 3px;
+      }
+
+      .meta span + span::before {
+        content: none;
+      }
+
+      .document section + section {
+        margin-top: 34px;
+        padding-top: 30px;
+      }
+
+      .notice {
+        margin-bottom: 30px;
+        padding: 16px;
+      }
+
+      .data-table,
+      .data-table tbody,
+      .data-table tr,
+      .data-table td {
+        display: block;
+      }
+
+      .data-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+      }
+
+      .data-table tr {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .data-table td {
+        padding: 4px 0;
+        border: 0;
+      }
+
+      .data-table td::before {
+        content: attr(data-label) "：";
+        color: var(--green);
+        font-weight: 650;
+      }
+
+      .steps li {
+        padding-left: 56px;
+      }
+
+      .site-footer {
+        padding: 24px 20px 32px;
+        border-top: 1px solid var(--line);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    @media print {
+      html,
+      body {
+        background: white;
+      }
+
+      .site-header,
+      .site-footer {
+        display: none;
+      }
+
+      .page-shell {
+        width: 100%;
+        padding: 0;
+      }
+
+      .document {
+        padding: 0;
+        border: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand" aria-label="析肤AI"><span class="brand-mark" aria-hidden="true">析</span><span>析肤AI</span></div>
+  </header>
+
+  <main class="page-shell">
+    <article class="document">
+      <header class="document-header">
+        <p class="eyebrow">Help &amp; support</p>
+        <h1>帮助与支持</h1>
+        <p class="lede">遇到登录、图片分析、结果或数据问题？这里给出最快的处理方式。</p>
+        <div class="meta"><span>产品名称：析肤AI</span><span>支持邮箱：abc1567849@gmail.com</span><span>页面更新：2026年8月25日</span></div>
+      </header>
+
+      <p class="notice"><strong>我们不会索要：</strong>登录密码、短信验证码或完整登录令牌。请不要在邮件或反馈中发送这些信息。</p>
+
+      <section id="contact">
+        <h2>联系析肤AI支持</h2>
+        <p>遇到无法登录、上传失败、分析异常、内容错误、隐私或账号删除问题，请发送邮件。一般问题会在15个工作日内回复；紧急安全问题会优先处理。</p>
+        <div class="contact-card"><p>支持与问题反馈邮箱</p><p><a href="mailto:abc1567849@gmail.com?subject=%E6%9E%90%E8%82%A4AI%E9%97%AE%E9%A2%98%E5%8F%8D%E9%A6%88">abc1567849@gmail.com</a></p></div>
+      </section>
+
+      <section id="feedback">
+        <h2>如何提交有效反馈</h2>
+        <ol class="steps">
+          <li><strong>应用内反馈</strong><br>打开“我的”，选择“帮助与反馈”，填写问题标题、类别和详细描述后提交。</li>
+          <li><strong>无法进入应用时</strong><br>直接发送邮件至支持邮箱，主题注明“析肤AI问题反馈”。</li>
+          <li><strong>建议附上</strong><br>设备型号、系统版本、App版本、发生时间、操作步骤、错误提示和必要截图。图片请先遮挡无关个人信息。</li>
+        </ol>
+      </section>
+
+      <section id="faq">
+        <h2>常见问题</h2>
+        <div class="faq">
+          <details open><summary>为什么无法登录或注册？</summary><p>请确认网络正常，手机号或邮箱格式正确，密码符合页面要求。多次失败后可稍后再试；仍无法解决时，请将发生时间和错误提示发送至支持邮箱。</p></details>
+          <details><summary>为什么图片上传或分析失败？</summary><p>请使用清晰、光线均匀且主体完整的图片，检查网络后重新提交。服务依赖云端对象存储和AI服务，维护或网络波动可能造成临时失败。请勿重复快速点击提交。</p></details>
+          <details><summary>肌肤分析结果是医疗诊断吗？</summary><p>不是。结果由人工智能辅助生成，仅供日常护肤参考，可能存在错误或遗漏。如有持续不适、过敏、感染或明显皮损，请咨询合格医生。</p></details>
+          <details><summary>如何反馈错误的分析结果？</summary><p>在“我的 → 帮助与反馈”提交，或发送邮件并注明分析发生时间、结果页面和你认为不准确的部分。请不要发送密码或验证码。</p></details>
+          <details><summary>如何删除单条记录？</summary><p>如当前 App 版本在记录详情页提供删除按钮，可直接操作。找不到入口时，请通过支持邮箱说明需要删除的记录类型和大致时间，我们会在核验账号后协助处理。</p></details>
+          <details><summary>如何永久删除账号？</summary><p>登录后依次进入“我的 → 注销账户 → 确定注销”。注销不可撤销，主数据库中的账号与关联业务数据会在请求成功后删除。</p></details>
+          <details><summary>注销后还能恢复账号吗？</summary><p>不能。注销是不可逆操作；成功后原账号和主数据库中的关联业务数据无法恢复。再次使用需要重新注册。</p></details>
+        </div>
+      </section>
+
+      <section id="safety">
+        <h2>健康与信息安全提醒</h2>
+        <ul>
+          <li>AI护肤建议不能替代医生诊断、治疗或用药建议。</li>
+          <li>上传图片前，请确认你有权处理该图片，并移除无关敏感信息。</li>
+          <li>客服不会要求你通过邮件提供密码、验证码或完整令牌。</li>
+          <li>隐私与数据处理方式以析肤AI App 内展示的《隐私政策》为准。</li>
+        </ul>
+      </section>
+    </article>
+  </main>
+
+  <footer class="site-footer">© 2026 析肤AI</footer>
+</body>
+</html>

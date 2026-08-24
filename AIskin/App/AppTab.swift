@@ -1,11 +1,10 @@
 import SwiftUI
 
-/// The four stable, top-level destinations in AIskin.
+/// The three stable, top-level destinations in AIskin.
 enum AppTab: Int, CaseIterable, Hashable, Identifiable {
     case home
     case products
     case skinAnalysis
-    case profile
 
     var id: Self { self }
 
@@ -14,7 +13,6 @@ enum AppTab: Int, CaseIterable, Hashable, Identifiable {
         case .home: "首页"
         case .products: "产品分析"
         case .skinAnalysis: "肌肤检测"
-        case .profile: "我的"
         }
     }
 
@@ -23,7 +21,6 @@ enum AppTab: Int, CaseIterable, Hashable, Identifiable {
         case .home: "house"
         case .products: "shippingbox"
         case .skinAnalysis: "sparkles"
-        case .profile: "person"
         }
     }
 
@@ -32,7 +29,6 @@ enum AppTab: Int, CaseIterable, Hashable, Identifiable {
         case .home: "house.fill"
         case .products: "shippingbox.fill"
         case .skinAnalysis: "sparkles"
-        case .profile: "person.fill"
         }
     }
 

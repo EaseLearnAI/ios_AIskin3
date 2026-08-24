@@ -25,71 +25,58 @@ struct HomeView: View {
     }
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color(red: 1.0, green: 0.976, blue: 0.984)
-                    .ignoresSafeArea()
-                
-                ScrollView {
-                    VStack(spacing: 0) {
-                        // Header
-                        AppHeader(
-                            title: "析肤护肤助手",
-                            icon: "pawprint.fill",
-                            rightIcon: "bell.fill"
+        ZStack {
+            Color(red: 1.0, green: 0.976, blue: 0.984)
+                .ignoresSafeArea()
+
+            ScrollView {
+                VStack(spacing: 16) {
+                    // Core Features
+                    CoreFeaturesView(
+                        selectedTab: $selectedTab,
+                        shouldEnableConflictMode: $shouldEnableConflictMode,
+                        planStore: planStore
+                    )
+                    .padding(.horizontal, 16)
+                    .padding(.top, 16)
+
+                    // 21 Day Plan Card
+                    NavigationLink(destination: Text("21天计划页面")) {
+                        TwentyOneDayPlanCardView()
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .padding(.horizontal, 16)
+
+                    // Daily Routine
+                    if loading {
+                        ProgressView()
+                            .padding(.top, 40)
+                    } else if hasPlan {
+                        DailyRoutineView(
+                            planStore: planStore,
+                            planId: planId,
+                            morningRoutine: $morningRoutine,
+                            eveningRoutine: $eveningRoutine,
+                            recommendations: $recommendations,
+                            onSaveRoutine: {
+                                saveRoutineToStorage()
+                            },
+                            onAutoCheckin: {
+                                handleAutoCheckin()
+                            }
                         )
-                        
-                        // Main Content
-                        VStack(spacing: 16) {
-                            // Core Features
-                            CoreFeaturesView(
-                                selectedTab: $selectedTab,
-                                shouldEnableConflictMode: $shouldEnableConflictMode,
-                                planStore: planStore
-                            )
-                                .padding(.horizontal, 16)
-                                .padding(.top, 16)
-                            
-                            // 21 Day Plan Card
-                            NavigationLink(destination: Text("21天计划页面")) {
-                                TwentyOneDayPlanCardView()
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .padding(.horizontal, 16)
-                            
-                            // Daily Routine
-                            if loading {
-                                ProgressView()
-                                    .padding(.top, 40)
-                            } else if hasPlan {
-                                DailyRoutineView(
-                                    planStore: planStore,
-                                    planId: planId,
-                                    morningRoutine: $morningRoutine,
-                                    eveningRoutine: $eveningRoutine,
-                                    recommendations: $recommendations,
-                                    onSaveRoutine: {
-                                        saveRoutineToStorage()
-                                    },
-                                    onAutoCheckin: {
-                                        handleAutoCheckin()
-                                    }
-                                )
-                                .padding(.horizontal, 16)
-                            } else {
-                                Text("暂无护肤计划")
-                                    .font(.system(size: 18))
-                                    .foregroundColor(.gray)
-                                    .padding(.top, 40)
-                            }
-                        }
-                        .padding(.bottom, 80)
+                        .padding(.horizontal, 16)
+                    } else {
+                        Text("暂无护肤计划")
+                            .font(.system(size: 18))
+                            .foregroundColor(.gray)
+                            .padding(.top, 40)
                     }
                 }
+                .padding(.bottom, 80)
             }
-            .navigationBarHidden(true)
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        .toolbar(.hidden, for: .navigationBar)
         .task {
             await fetchRoutine()
         }

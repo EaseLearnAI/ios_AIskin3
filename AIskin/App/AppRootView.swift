@@ -4,6 +4,7 @@ import SwiftUI
 /// previewed and tested without authentication or live network services.
 struct AppTabShell<HomeContent: View, ProductsContent: View, SkinContent: View, ProfileContent: View>: View {
     let router: AppRouter
+    @State private var isProfilePresented = false
     private let homeContent: () -> HomeContent
     private let productsContent: () -> ProductsContent
     private let skinContent: () -> SkinContent
@@ -24,18 +25,32 @@ struct AppTabShell<HomeContent: View, ProductsContent: View, SkinContent: View, 
     }
 
     var body: some View {
-        TabView(selection: router.selectedTabBinding()) {
-            ForEach(AppTab.allCases) { tab in
-                NavigationStack(path: router.pathBinding(for: tab)) {
-                    rootContent(for: tab)
+        VStack(spacing: 0) {
+            MainTabHeader(
+                title: router.selectedTab.title,
+                onProfileTap: { isProfilePresented = true }
+            )
+
+            TabView(selection: router.selectedTabBinding()) {
+                ForEach(AppTab.allCases) { tab in
+                    NavigationStack(path: router.pathBinding(for: tab)) {
+                        rootContent(for: tab)
+                    }
+                    .tabItem { tab.label }
+                    .tag(tab)
+                    .accessibilityIdentifier("app.tab.\(tab.legacyIndex)")
                 }
-                .tabItem { tab.label }
-                .tag(tab)
-                .accessibilityIdentifier("app.tab.\(tab.legacyIndex)")
             }
+            .tint(AISkinColor.brand)
+            .lookinName("app.main-tabs")
         }
-        .tint(AISkinColor.brand)
-        .lookinName("app.main-tabs")
+        .background(AISkinColor.background.ignoresSafeArea())
+        .sheet(isPresented: $isProfilePresented) {
+            NavigationStack {
+                profileContent()
+            }
+            .presentationDragIndicator(.visible)
+        }
     }
 
     @ViewBuilder
@@ -44,7 +59,6 @@ struct AppTabShell<HomeContent: View, ProductsContent: View, SkinContent: View, 
         case .home: homeContent()
         case .products: productsContent()
         case .skinAnalysis: skinContent()
-        case .profile: profileContent()
         }
     }
 }

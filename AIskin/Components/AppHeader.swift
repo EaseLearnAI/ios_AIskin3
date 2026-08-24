@@ -7,6 +7,47 @@
 
 import SwiftUI
 
+/// Shared header for the three main tabs. Its background matches the app shell,
+/// so the status-bar safe area and the visible header read as one surface.
+struct MainTabHeader: View {
+    let title: String
+    let onProfileTap: () -> Void
+
+    var body: some View {
+        ZStack {
+            Text(title)
+                .font(AISkinTypography.screenTitle)
+                .foregroundStyle(AISkinColor.textPrimary)
+                .lineLimit(1)
+
+            HStack {
+                Button(action: onProfileTap) {
+                    Image(systemName: "person.crop.circle.fill")
+                        .font(.system(size: 30, weight: .medium))
+                        .foregroundStyle(AISkinColor.textPrimary)
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("我的")
+                .accessibilityHint("打开个人中心")
+                .accessibilityIdentifier("app.header.profile")
+
+                Spacer()
+
+                // Mirror the leading control so the title remains optically centered.
+                Color.clear
+                    .frame(width: 44, height: 44)
+                    .accessibilityHidden(true)
+            }
+        }
+        .frame(minHeight: 56)
+        .padding(.horizontal, AISkinSpacing.medium)
+        .background(AISkinColor.background)
+        .lookinName("shared.main-tab-header.\(title)")
+    }
+}
+
 struct AppHeader: View {
     var title: String
     var icon: String? = nil

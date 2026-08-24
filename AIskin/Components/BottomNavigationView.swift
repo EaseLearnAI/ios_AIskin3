@@ -33,12 +33,6 @@ struct BottomNavigationView: View {
                 action: { selectedTab = 2 }
             )
             
-            TabButton(
-                icon: "person.fill",
-                label: "我的",
-                isSelected: selectedTab == 3,
-                action: { selectedTab = 3 }
-            )
         }
         .frame(height: 60)
         .background(
@@ -83,8 +77,6 @@ struct TabButton: View {
             return "navigation.tab.product"
         case "肌肤检测":
             return "navigation.tab.skin-analysis"
-        case "我的":
-            return "navigation.tab.profile"
         default:
             return "navigation.tab.\(label)"
         }
