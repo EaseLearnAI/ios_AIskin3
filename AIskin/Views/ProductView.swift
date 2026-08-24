@@ -30,13 +30,6 @@ struct ProductView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // Header
-                AppHeader(
-                    title: "护肤产品库",
-                    icon: "pawprint.fill"
-                )
-                .lookinName("product.header")
-                
                 ScrollView {
                     VStack(spacing: 16) {
                         // Add Product Card

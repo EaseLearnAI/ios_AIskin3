@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="析肤AI隐私政策：说明账号、图片、分析结果等数据的收集、保存、使用、共享和删除方式。">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#f8f6f0">
+  <title>隐私政策｜析肤AI</title>
+  <style>
+    :root {
+      --canvas: #f4f2ec;
+      --paper: #fffefa;
+      --ink: #20241f;
+      --muted: #697068;
+      --line: #dde1d9;
+      --green: #214f3a;
+      --green-soft: #edf3ee;
+      --rose: #b96770;
+      --rose-soft: #fbefee;
+      --shadow: 0 22px 70px rgba(31, 54, 40, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-width: 320px;
+      background: var(--canvas);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 85% 0%, rgba(185, 103, 112, 0.10), transparent 25rem),
+        var(--canvas);
+      font-family: "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+      font-size: 16px;
+      line-height: 1.82;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: var(--green);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.2em;
+      overflow-wrap: anywhere;
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: var(--rose);
+    }
+
+    a:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid rgba(33, 79, 58, 0.22);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    .site-header {
+      width: min(900px, calc(100% - 40px));
+      min-height: 76px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(33, 79, 58, 0.16);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--ink);
+      font-weight: 650;
+      letter-spacing: 0.06em;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      color: #fffefa;
+      background: var(--green);
+      border-radius: 50% 50% 46% 54% / 46% 50% 50% 54%;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 20px;
+      box-shadow: 0 7px 18px rgba(33, 79, 58, 0.2);
+    }
+
+    .page-shell {
+      width: min(860px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: clamp(38px, 7vw, 78px) 0 clamp(58px, 9vw, 100px);
+    }
+
+    .document {
+      width: 100%;
+      padding: clamp(34px, 7vw, 72px);
+      background: rgba(255, 254, 250, 0.97);
+      border: 1px solid rgba(33, 79, 58, 0.12);
+      border-radius: 3px 38px 3px 3px;
+      box-shadow: var(--shadow);
+    }
+
+    .document-header {
+      margin-bottom: clamp(34px, 6vw, 54px);
+      padding-bottom: clamp(30px, 5vw, 44px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(38px, 6vw, 58px);
+      line-height: 1.12;
+      letter-spacing: -0.045em;
+    }
+
+    .lede {
+      max-width: 620px;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2.2vw, 18px);
+    }
+
+    .meta {
+      margin-top: 24px;
+      display: flex;
+      gap: 6px 22px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta span + span::before {
+      content: "·";
+      margin-right: 22px;
+      color: var(--rose);
+    }
+
+    .notice {
+      margin: 0 0 38px;
+      padding: 18px 20px;
+      color: #33443a;
+      background: var(--green-soft);
+      border-left: 3px solid var(--green);
+      border-radius: 0 10px 10px 0;
+      font-size: 14px;
+    }
+
+    .notice.warning {
+      color: #604143;
+      background: var(--rose-soft);
+      border-left-color: var(--rose);
+    }
+
+    .notice strong {
+      color: inherit;
+    }
+
+    .document section {
+      scroll-margin-top: 24px;
+    }
+
+    .document section + section {
+      margin-top: 42px;
+      padding-top: 38px;
+      border-top: 1px solid var(--line);
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: clamp(23px, 3.6vw, 29px);
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      margin: 26px 0 8px;
+      font-size: 18px;
+      line-height: 1.45;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+
+    ul,
+    ol {
+      margin: 13px 0;
+      padding-left: 1.35em;
+    }
+
+    li + li {
+      margin-top: 9px;
+    }
+
+    .data-table {
+      width: 100%;
+      margin: 22px 0 12px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .data-table th,
+    .data-table td {
+      padding: 14px 13px;
+      vertical-align: top;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .data-table th {
+      color: var(--green);
+      background: rgba(33, 79, 58, 0.055);
+      font-weight: 650;
+    }
+
+    .steps {
+      margin: 24px 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: legal-steps;
+    }
+
+    .steps li {
+      position: relative;
+      min-height: 54px;
+      padding: 5px 0 22px 62px;
+      counter-increment: legal-steps;
+    }
+
+    .steps li::before {
+      content: counter(legal-steps, decimal-leading-zero);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      color: #fffefa;
+      background: var(--green);
+      border-radius: 50%;
+      font-family: Georgia, serif;
+      font-size: 13px;
+    }
+
+    .steps li:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 41px;
+      bottom: 0;
+      left: 19px;
+      width: 1px;
+      background: var(--line);
+    }
+
+    .path {
+      display: inline-block;
+      margin: 10px 0 14px;
+      padding: 9px 15px;
+      color: var(--green);
+      background: var(--green-soft);
+      border: 1px solid rgba(33, 79, 58, 0.17);
+      border-radius: 999px;
+      font-weight: 650;
+    }
+
+    .contact-card {
+      margin-top: 22px;
+      padding: 22px;
+      color: #fffefa;
+      background: var(--green);
+      border-radius: 3px 18px 3px 3px;
+    }
+
+    .contact-card a {
+      color: #fff4d5;
+      font-weight: 650;
+    }
+
+    .contact-card p {
+      margin: 3px 0;
+    }
+
+    .faq {
+      border-top: 1px solid var(--line);
+    }
+
+    .faq details {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .faq summary {
+      position: relative;
+      padding: 17px 34px 17px 0;
+      cursor: pointer;
+      font-weight: 650;
+      list-style: none;
+    }
+
+    .faq summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq summary::after {
+      content: "+";
+      position: absolute;
+      top: 11px;
+      right: 4px;
+      color: var(--rose);
+      font-family: Georgia, serif;
+      font-size: 27px;
+      font-weight: 400;
+    }
+
+    .faq details[open] summary::after {
+      content: "−";
+    }
+
+    .faq details p {
+      margin: -3px 0 19px;
+      color: var(--muted);
+    }
+
+    .site-footer {
+      padding: 0 20px 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 640px) {
+      html,
+      body {
+        background: #fffefa;
+      }
+
+      .site-header {
+        width: calc(100% - 32px);
+        min-height: 66px;
+      }
+
+      .brand-mark {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+      }
+
+      .page-shell {
+        width: 100%;
+        padding: 0;
+      }
+
+      .document {
+        padding: 38px 20px 48px;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .document-header {
+        margin-bottom: 30px;
+        padding-bottom: 28px;
+      }
+
+      h1 {
+        font-size: clamp(34px, 10vw, 44px);
+      }
+
+      .lede {
+        margin-top: 18px;
+      }
+
+      .meta {
+        display: grid;
+        gap: 3px;
+      }
+
+      .meta span + span::before {
+        content: none;
+      }
+
+      .document section + section {
+        margin-top: 34px;
+        padding-top: 30px;
+      }
+
+      .notice {
+        margin-bottom: 30px;
+        padding: 16px;
+      }
+
+      .data-table,
+      .data-table tbody,
+      .data-table tr,
+      .data-table td {
+        display: block;
+      }
+
+      .data-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+      }
+
+      .data-table tr {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .data-table td {
+        padding: 4px 0;
+        border: 0;
+      }
+
+      .data-table td::before {
+        content: attr(data-label) "：";
+        color: var(--green);
+        font-weight: 650;
+      }
+
+      .steps li {
+        padding-left: 56px;
+      }
+
+      .site-footer {
+        padding: 24px 20px 32px;
+        border-top: 1px solid var(--line);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    @media print {
+      html,
+      body {
+        background: white;
+      }
+
+      .site-header,
+      .site-footer {
+        display: none;
+      }
+
+      .page-shell {
+        width: 100%;
+        padding: 0;
+      }
+
+      .document {
+        padding: 0;
+        border: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand" aria-label="析肤AI"><span class="brand-mark" aria-hidden="true">析</span><span>析肤AI</span></div>
+  </header>
+
+  <main class="page-shell">
+    <article class="document">
+      <header class="document-header">
+        <p class="eyebrow">Privacy policy</p>
+        <h1>隐私政策</h1>
+        <p class="lede">我们希望把数据从哪里来、为什么使用、保存多久，以及如何删除，说得清楚而具体。</p>
+        <div class="meta"><span>适用产品：析肤AI</span><span>更新日期：2026年8月25日</span><span>生效日期：2026年8月25日</span></div>
+      </header>
+
+      <p class="notice"><strong>先说重点：</strong>只有在你主动选择图片并发起分析时，析肤AI才会上传图片。分析结果仅用于日常护肤参考，不构成医疗诊断。公开政策页面本身不要求登录，也不设置 Cookie 或浏览器本地存储。</p>
+
+      <section id="scope">
+        <h2>1. 适用范围</h2>
+        <p>本政策适用于析肤AI iOS、HarmonyOS 应用及其配套在线服务。析肤AI由运营方提供；本政策中的“我们”指析肤AI运营方。</p>
+        <p>使用图片分析、账号和云端同步功能前，请阅读本政策。你可以拒绝提供非必需信息；但缺少完成特定功能所必需的信息时，对应功能可能无法使用。</p>
+      </section>
+
+      <section id="collection">
+        <h2>2. 我们收集和处理的信息</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>信息类别</th><th>具体内容</th><th>用途</th></tr></thead>
+            <tbody>
+              <tr><td data-label="信息类别">账号信息</td><td data-label="具体内容">手机号或邮箱、用户名、加密后的密码、性别；你主动填写时还可能包括年龄、生理周期信息</td><td data-label="用途">注册登录、身份核验、账号管理与个性化展示</td></tr>
+              <tr><td data-label="信息类别">你主动提交的图片</td><td data-label="具体内容">面部皮肤图片、护肤产品图片</td><td data-label="用途">生成肌肤分析，识别产品文字或辅助成分分析</td></tr>
+              <tr><td data-label="信息类别">护肤与分析数据</td><td data-label="具体内容">肤质、皮肤状态、评分、AI建议、产品与成分记录、成分冲突、护肤方案、打卡记录和历史分析</td><td data-label="用途">提供核心功能、保存历史、展示趋势与方案</td></tr>
+              <tr><td data-label="信息类别">反馈信息</td><td data-label="具体内容">反馈标题、类别、文字内容及你主动提供的相关说明</td><td data-label="用途">处理问题、改进产品和人工复核结果</td></tr>
+              <tr><td data-label="信息类别">安全与运行信息</td><td data-label="具体内容">请求时间、IP地址、接口状态、错误日志及必要的设备/网络信息</td><td data-label="用途">防止滥用、排查故障和保障服务安全</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>相册图片通过系统图片选择器由你明确选择；拍照或选图不会授权我们浏览你的整个相册。请不要上传无权处理的他人照片、证件、密码、验证码或无关敏感信息。</p>
+      </section>
+
+      <section id="use">
+        <h2>3. 信息如何使用</h2>
+        <ul>
+          <li>创建和维护账号，验证登录状态，并将记录关联到你的账号。</li>
+          <li>按照你的操作处理图片，生成肌肤、产品成分、冲突与护肤方案等 AI 辅助结果。</li>
+          <li>保存历史记录，以便你再次查看、修改或删除。</li>
+          <li>处理反馈、排查错误、保障接口和账号安全。</li>
+          <li>履行适用法律法规要求。未经另行说明与同意，我们不会将个人信息出售给第三方，也不会将面部图片用于广告画像。</li>
+        </ul>
+        <p>AI 输出可能存在错误、遗漏或时效性限制，只能作为一般护肤信息参考。涉及疾病、持续不适或治疗决策时，请咨询合格医生。</p>
+      </section>
+
+      <section id="storage">
+        <h2>4. 保存位置、期限与删除</h2>
+        <h3>账号和结构化业务数据</h3>
+        <p>账号信息、分析结果、产品记录、方案、冲突分析和反馈保存在云端主数据库中，通常保存至你主动删除相应记录或成功注销账号。密码仅以不可逆哈希形式保存，客户端登录凭证保存在你的设备上。</p>
+        <h3>图片</h3>
+        <p>你提交的图片会先短暂落盘到服务器，随后上传至阿里云对象存储，用于完成展示、文字识别或通义千问模型分析；服务器临时文件在处理后删除。当前生产版本会在业务记录中保存对象存储图片链接。</p>
+        <p class="notice warning"><strong>当前版本的重要说明：</strong>应用内注销成功时，主数据库中的账号及关联业务记录会立即删除；但历史版本上传至对象存储的图片并不保证随数据库记录自动清除。若要删除关联图片，请发送邮件至 <a href="mailto:abc1567849@gmail.com?subject=%E6%9E%90%E8%82%A4AI%E5%9B%BE%E7%89%87%E5%88%A0%E9%99%A4%E8%AF%B7%E6%B1%82">abc1567849@gmail.com</a>。完成账号归属核验后，我们将在15个工作日内处理。我们不会要求你提供密码或验证码。</p>
+        <h3>日志与依法保留</h3>
+        <p>安全和运行日志在排障、安全审计所需的合理期限内保存。法律法规要求留存，或为处理争议、防止欺诈确有必要的信息，可能在法定或必要期限内隔离保存，期限届满后删除或匿名化。</p>
+      </section>
+
+      <section id="sharing">
+        <h2>5. 第三方处理与共享</h2>
+        <p>为完成你主动请求的功能，我们使用下列云服务：</p>
+        <ul>
+          <li><strong>阿里云对象存储 OSS：</strong>保存你主动上传的面部或产品图片，并生成供展示或分析使用的图片地址。</li>
+          <li><strong>阿里云通义千问 / 百炼服务：</strong>接收完成相应任务所需的图片或文字内容，生成肌肤分析、成分识别、冲突分析或护肤方案。</li>
+        </ul>
+        <p>除完成服务、保障安全、遵守法律或取得你另行同意所必需的情形外，我们不会向无关第三方共享你的个人信息。我们不会在公开政策页面部署广告或第三方分析脚本。</p>
+      </section>
+
+      <section id="rights">
+        <h2>6. 你的权利</h2>
+        <ul>
+          <li><strong>查询和更正：</strong>在应用“我的”页面查看或更新账号资料。</li>
+          <li><strong>删除单条记录：</strong>在相应记录页面使用删除功能（如该版本提供）。</li>
+          <li><strong>撤回图片处理：</strong>不选择图片或在提交前取消；撤回不影响此前基于同意进行的处理。</li>
+          <li><strong>注销账号：</strong>在 App 内依次进入“我的 → 注销账户 → 确定注销”。</li>
+          <li><strong>投诉或提出请求：</strong>通过联系邮箱提交。为保护账号，我们可能进行必要的身份核验。</li>
+        </ul>
+      </section>
+
+      <section id="children">
+        <h2>7. 未成年人保护</h2>
+        <p>析肤AI不是专门面向未满14周岁儿童的服务。若你未满14周岁，请在监护人同意和指导下使用。监护人发现儿童信息被不当处理时，可通过下方邮箱联系我们删除。</p>
+      </section>
+
+      <section id="updates">
+        <h2>8. 政策更新</h2>
+        <p>当数据处理方式、功能或适用规则发生重要变化时，我们会更新本政策并修改页面日期；涉及你的重要权利时，会通过应用内提示等适当方式告知。</p>
+      </section>
+
+      <section id="contact">
+        <h2>9. 联系我们</h2>
+        <p>如需咨询、投诉、访问或删除个人信息，请通过以下邮箱联系。一般问题会在15个工作日内答复。</p>
+        <div class="contact-card"><p>析肤AI 隐私与支持邮箱</p><p><a href="mailto:abc1567849@gmail.com">abc1567849@gmail.com</a></p></div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="site-footer">© 2026 析肤AI</footer>
+</body>
+</html>

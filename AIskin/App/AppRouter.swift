@@ -10,7 +10,6 @@ final class AppRouter {
     private(set) var homePath: [AppRoute] = []
     private(set) var productsPath: [AppRoute] = []
     private(set) var skinAnalysisPath: [AppRoute] = []
-    private(set) var profilePath: [AppRoute] = []
 
     /// Incremented only for an explicit conflict-selection launch so the
     /// legacy ProductView receives a fresh state container for that flow.
@@ -63,7 +62,6 @@ final class AppRouter {
         homePath.removeAll()
         productsPath.removeAll()
         skinAnalysisPath.removeAll()
-        profilePath.removeAll()
     }
 
     func selectedTabBinding() -> Binding<AppTab> {
@@ -105,7 +103,6 @@ final class AppRouter {
         case .home: homePath
         case .products: productsPath
         case .skinAnalysis: skinAnalysisPath
-        case .profile: profilePath
         }
     }
 
@@ -114,7 +111,6 @@ final class AppRouter {
         case .home: homePath = path
         case .products: productsPath = path
         case .skinAnalysis: skinAnalysisPath = path
-        case .profile: profilePath = path
         }
     }
 }

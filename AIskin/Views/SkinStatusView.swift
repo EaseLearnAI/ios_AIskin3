@@ -59,27 +59,16 @@ struct SkinStatusView: View {
     private var contentView: some View {
         ScrollView {
             VStack(spacing: 0) {
-                headerView
                 mainContentView
             }
         }
     }
     
-    private var headerView: some View {
-        SkinAnalysisHeader(
-            onShowHistory: {
-                store.isHistoryPresented = true
-            },
-            onBack: {
-                // Return to welcome view (reset to initial state)
-                store.reset()
-            }
-        )
-    }
-    
     @ViewBuilder
     private var mainContentView: some View {
         VStack(spacing: 16) {
+            skinActionsView
+
             switch store.flow {
             case .welcome, .analyzing, .failed:
                 welcomeContentView
@@ -88,6 +77,29 @@ struct SkinStatusView: View {
             }
         }
         .padding(.horizontal, 8)
+    }
+
+    private var skinActionsView: some View {
+        HStack(spacing: 12) {
+            if case .result = store.flow {
+                Button(action: store.reset) {
+                    Label("重新检测", systemImage: "arrow.counterclockwise")
+                }
+            }
+
+            Spacer()
+
+            Button {
+                store.isHistoryPresented = true
+            } label: {
+                Label("历史记录", systemImage: "clock")
+            }
+        }
+        .font(AISkinTypography.callout)
+        .foregroundStyle(AISkinColor.brand)
+        .frame(minHeight: 44)
+        .padding(.horizontal, 8)
+        .padding(.top, 4)
     }
     
     @ViewBuilder

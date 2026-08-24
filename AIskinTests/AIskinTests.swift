@@ -21,6 +21,13 @@ import XCTest
 /// - AuthServiceTests.swift: 认证服务测试
 /// - IntegrationTests.swift: 综合集成测试
 class AIskinTests: XCTestCase {
+
+    @MainActor
+    func testMainNavigationContainsExactlyThreeTabs() {
+        XCTAssertEqual(AppTab.allCases, [.home, .products, .skinAnalysis])
+        XCTAssertEqual(AppTab.allCases.map(\.title), ["首页", "产品分析", "肌肤检测"])
+        XCTAssertNil(AppTab(legacyIndex: 3))
+    }
     
     /// 示例测试方法
     func testExample() async {
