@@ -9,11 +9,8 @@ import SwiftUI
 
 struct ProductView: View {
     var initialConflictMode: Bool = false
-    @State private var products: [Product] = []
+    @StateObject private var store = ProductsStore()
     @State private var showAddModal = false
-    @State private var conflictMode = false
-    @State private var selectedProductIds: Set<String> = []
-    @State private var selectedCategory: String = "all"
     @State private var showIngredientViewForProduct: String?
     @State private var selectedImage: UIImage?
     @State private var isLoading = false
@@ -38,6 +35,7 @@ struct ProductView: View {
                     title: "护肤产品库",
                     icon: "pawprint.fill"
                 )
+                .lookinName("product.header")
                 
                 ScrollView {
                     VStack(spacing: 16) {
@@ -45,26 +43,24 @@ struct ProductView: View {
                         AddProduct(
                             showUploadModal: $showAddModal,
                             onEnableConflictMode: {
-                                conflictMode = true
-                                selectedProductIds.removeAll()
+                                store.beginConflictSelection()
                             }
                         )
                             .padding(.horizontal, 20)
                             .padding(.top, 16)
                         
                         // Conflict Mode Header
-                        if conflictMode {
+                        if store.isSelectingConflicts {
                             ConflictModeHeader(
-                                selectedCount: selectedProductIds.count,
+                                selectedCount: store.selectedProductIDs.count,
                                 onAnalyze: {
                                     // Navigate to conflict analysis
-                                    if selectedProductIds.count >= 2 {
+                                    if store.selectedProductIDs.count >= 2 {
                                         analyzeConflict()
                                     }
                                 },
                                 onCancel: {
-                                    conflictMode = false
-                                    selectedProductIds.removeAll()
+                                    store.cancelConflictSelection()
                                 }
                             )
                             .padding(.horizontal, 20)
@@ -72,33 +68,31 @@ struct ProductView: View {
                         
                         // Product List
                         ProductList(
-                            products: products,
+                            products: store.products,
                             categories: ProductCategory.defaultCategories,
-                            selectedCategory: $selectedCategory,
-                            selectionMode: $conflictMode,
-                            selectedProductIds: $selectedProductIds,
+                            selectedCategory: $store.selectedCategory,
+                            selectionMode: $store.isSelectingConflicts,
+                            selectedProductIds: $store.selectedProductIDs,
                             onProductSelected: { product in
                                 showIngredientViewForProduct = product.id
                             },
                             onToggleSelection: { productId in
-                                if selectedProductIds.contains(productId) {
-                                    selectedProductIds.remove(productId)
-                                            } else {
-                                    selectedProductIds.insert(productId)
-                                }
+                                store.toggleConflictSelection(productID: productId)
                             },
                             onDeleteProduct: { productId in
-                                deleteProduct(productId: productId)
+                                Task { await store.delete(productID: productId) }
                             }
                         )
                         .padding(.bottom, 80)
                     }
                 }
+                .lookinName("product.content-scroll")
             }
         }
         .overlay {
             if showAddModal {
                 AddProductModal(
+                    store: store,
                     selectedImage: $selectedImage,
                     isLoading: $isLoading,
                     currentStep: $currentStep,
@@ -110,7 +104,7 @@ struct ProductView: View {
                         showAddModal = false
                         resetAddProductState()
                         // Reload products list after adding new product
-                        loadProducts()
+                        store.load()
                     },
                     onDismiss: {
                         showAddModal = false
@@ -127,7 +121,7 @@ struct ProductView: View {
                 if !$0 { 
                     showIngredientViewForProduct = nil
                     // 确保返回到产品分析页面时刷新产品列表
-                    loadProducts()
+                    store.load()
                 }
             }
         )) {
@@ -154,13 +148,12 @@ struct ProductView: View {
                     
                     print("\n📱 步骤3: 重置冲突模式相关状态")
                     let oldShowConflictView = showConflictView
-                    let oldConflictMode = conflictMode
-                    let oldSelectedCount = selectedProductIds.count
+                    let oldConflictMode = store.isSelectingConflicts
+                    let oldSelectedCount = store.selectedProductIDs.count
                     let oldConflictIdsCount = conflictProductIds.count
                     
                     showConflictView = false
-                    conflictMode = false
-                    selectedProductIds.removeAll()
+                    store.cancelConflictSelection()
                     conflictProductIds = []
                     
                     print("   - showConflictView: \(oldShowConflictView) -> false")
@@ -178,7 +171,7 @@ struct ProductView: View {
                     DispatchQueue.main.async {
                         print("\n📱 步骤5: 在主线程上确认状态")
                         print("   - showConflictView当前值: \(showConflictView)")
-                        print("   - conflictMode当前值: \(conflictMode)")
+                        print("   - conflictMode当前值: \(store.isSelectingConflicts)")
                         print("   - ProductView应该已经完全显示")
                     }
                     
@@ -215,12 +208,11 @@ struct ProductView: View {
             // 如果从核心功能页面跳转过来需要启用冲突模式
             if initialConflictMode {
                 print("📱 检测到需要启用冲突模式")
-                conflictMode = true
-                selectedProductIds.removeAll()
+                store.beginConflictSelection()
             }
             
             print("============================================================\n")
-            loadProducts()
+            store.load()
         }
         .onDisappear {
             print("\n============================================================")
@@ -229,34 +221,7 @@ struct ProductView: View {
             print("⚠️ ProductView已隐藏")
             print("============================================================\n")
         }
-    }
-    
-    private func loadProducts() {
-        print("\n===== 📚 加载用户产品列表 ======")
-        
-        guard let userId = AuthService.shared.currentUser?.id else {
-            print("❌ 错误: 未找到当前用户ID")
-            return
-        }
-        
-        print("📊 用户ID: \(userId)")
-        
-        Task {
-            do {
-                let userProducts = try await ProductApiService.shared.getUserProducts(userId: userId)
-                
-                await MainActor.run {
-                    self.products = userProducts
-                    print("✅ 产品列表加载成功，共\(userProducts.count)个产品")
-                }
-            } catch {
-                print("❌ 加载产品列表失败: \(error.localizedDescription)")
-                await MainActor.run {
-                    // 保持空列表，显示空状态
-                    self.products = []
-                }
-            }
-        }
+        .lookinName("product.screen")
     }
     
     private func resetAddProductState() {
@@ -271,36 +236,18 @@ struct ProductView: View {
         ]
     }
     
-    private func deleteProduct(productId: String) {
-        print("\n===== 🗑️ 删除产品 ======")
-        print("📊 产品ID: \(productId)")
-        
-        Task {
-            do {
-                try await ProductApiService.shared.deleteProduct(productId: productId)
-                print("✅ 产品删除成功")
-                
-                await MainActor.run {
-                    products.removeAll { $0.id == productId }
-                }
-            } catch {
-                print("❌ 删除产品失败: \(error.localizedDescription)")
-            }
-        }
-    }
-    
     private func analyzeConflict() {
         print("\n============================================================")
         print("🔘 ProductView: 用户点击'分析冲突'按钮")
         print("============================================================\n")
         
-        guard selectedProductIds.count >= 2 else {
+        guard store.selectedProductIDs.count >= 2 else {
             print("❌ 错误: 至少需要选择2个产品")
-            print("📊 当前选择的产品数量: \(selectedProductIds.count)")
+            print("📊 当前选择的产品数量: \(store.selectedProductIDs.count)")
             return
         }
         
-        let productIdsArray = Array(selectedProductIds)
+        guard let productIdsArray = store.consumeConflictSelection() else { return }
         print("📊 准备分析的产品列表:")
         for (index, productId) in productIdsArray.enumerated() {
             print("   \(index + 1). 产品ID: \(productId)")
@@ -312,8 +259,6 @@ struct ProductView: View {
         
         // 立即显示ConflictView，让加载动画立即出现
         conflictProductIds = productIdsArray
-        conflictMode = false
-        selectedProductIds.removeAll()
         showConflictView = true
         
         print("✅ ConflictView已显示，用户应该立即看到加载动画")
@@ -341,6 +286,7 @@ struct ConflictModeHeader: View {
                 Button("取消", action: onCancel)
                     .font(.system(size: 14))
                     .foregroundColor(.gray)
+                    .lookinName("product.conflict-selection.cancel")
             }
             
             HStack {
@@ -358,6 +304,7 @@ struct ConflictModeHeader: View {
                         .cornerRadius(8)
                 }
                 .disabled(selectedCount < 2)
+                .lookinName("product.conflict-selection.analyze")
                 
                 Spacer()
                 
@@ -370,10 +317,12 @@ struct ConflictModeHeader: View {
         .background(Color.white)
         .cornerRadius(12)
         .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
+        .lookinName("product.conflict-selection")
     }
 }
 
 struct AddProductModal: View {
+    @ObservedObject var store: ProductsStore
     @Environment(\.dismiss) var dismiss
     @Binding var selectedImage: UIImage?
     @Binding var isLoading: Bool
@@ -411,6 +360,7 @@ struct AddProductModal: View {
                 .onTapGesture {
                     onDismiss()
                 }
+                .lookinName("product.add-modal.backdrop")
             
             // Modal Container - matches image: white rounded rectangle, centered, floating
             VStack(spacing: 0) {
@@ -445,7 +395,9 @@ struct AddProductModal: View {
                     }
                     .padding(.top, 20)
                     .padding(.trailing, 20)
+                    .lookinName("product.add-modal.close")
                 }
+                .lookinName("product.add-modal.header")
                 
                 // Modal Content - matches image: image upload area with dashed border
                 ScrollViewReader { proxy in
@@ -466,6 +418,7 @@ struct AddProductModal: View {
                                 .background(Color(red: 1.0, green: 0.922, blue: 0.933))
                                 .cornerRadius(12)
                                 .padding(.horizontal, 24)
+                                .lookinName("product.add-modal.error")
                             }
                             
                             // Image Upload Area - matches image: dashed border, green icon
@@ -516,6 +469,7 @@ struct AddProductModal: View {
                                 .cornerRadius(16)
                                 .padding(.horizontal, 24)
                                 .id("progressSteps")
+                                .lookinName("product.add-modal.progress")
                             }
                         }
                         .padding(.bottom, 20)
@@ -530,6 +484,7 @@ struct AddProductModal: View {
                             }
                         }
                     }
+                    .lookinName("product.add-modal.content-scroll")
                 }
                 
                 // Modal Footer - matches image: gradient button at bottom
@@ -565,6 +520,7 @@ struct AddProductModal: View {
                     }
                     .disabled(!canSubmit || isLoading || isExtracting || isAnalyzing)
                     .opacity((!canSubmit || isLoading || isExtracting || isAnalyzing) ? 0.7 : 1.0)
+                    .lookinName("product.add-modal.submit")
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 24)
@@ -575,10 +531,12 @@ struct AddProductModal: View {
             .background(Color.white)
             .cornerRadius(24)
             .shadow(color: Color.black.opacity(0.15), radius: 20, x: 0, y: 8)
+            .lookinName("product.add-modal.container")
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .zIndex(9999)
         .allowsHitTesting(true)
+        .lookinName("product.add-modal")
     }
     
     private func submitProduct() {
@@ -593,104 +551,37 @@ struct AddProductModal: View {
         currentStep = 1
         
         Task {
-            do {
-                // Step 1: Create product
-                await MainActor.run {
-                    stepStatus["create"] = "创建中..."
-                }
-                
-                print("📦 步骤1: 创建产品")
-                let product = try await ProductApiService.shared.createProduct(
-                    name: "未命名产品",
-                    description: "这是一个用于成分分析的产品",
-                    label: nil,
-                    openingDate: nil
-                )
-                
-                let productId = product.id
-                print("✅ 产品创建成功，产品ID: \(productId)")
-                
-                await MainActor.run {
-                    stepStatus["create"] = "创建成功"
-                    currentStep = 2
-                    stepStatus["upload"] = "上传中..."
-                }
-                
-                // Step 2: Upload product image
-                print("📷 步骤2: 上传产品图片")
-                let imageUrl = try await ProductApiService.shared.uploadProductImage(
-                    productId: productId,
-                    image: image
-                )
-                print("✅ 图片上传成功，图片URL: \(imageUrl)")
-                
-                await MainActor.run {
-                    stepStatus["upload"] = "上传成功"
-                    currentStep = 3
-                    isExtracting = true
-                    stepStatus["extract"] = "提取中..."
-                }
-                
-                // Step 3: Extract ingredients
-                print("🔬 步骤3: 提取产品成分")
-                let (extractedName, ingredients) = try await ProductApiService.shared.extractIngredients(productId: productId)
-                print("✅ 成分提取成功")
-                print("   - 产品名称: \(extractedName)")
-                print("   - 成分数量: \(ingredients.count)")
-                print("   - 成分列表: \(ingredients.joined(separator: ", "))")
-                
-                await MainActor.run {
-                    isExtracting = false
-                    stepStatus["extract"] = "提取成功，识别到\(ingredients.count)种成分"
-                    currentStep = 4
-                    isAnalyzing = true
-                    stepStatus["analyze"] = "分析中..."
-                }
-                
-                // Step 4: Analyze ingredients
-                print("🧪 步骤4: 分析产品成分")
-                let analysis = try await IngredientAnalysisApiService.shared.analyzeIngredients(productId: productId)
-                print("✅ 成分分析成功")
-                print("   - 安全性指数: \(analysis.safetyIndex)")
-                print("   - 功效评分: \(analysis.efficacyScore)")
-                print("   - 整体评级: \(analysis.overallRating)/5.0")
-                
-                await MainActor.run {
-                    isAnalyzing = false
-                    stepStatus["analyze"] = "分析成功"
-                    currentStep = 5
-                    isLoading = false
-                }
-                
-                print("🎉 产品提交流程完成！")
-                
-                // Notify parent to reload products list
-                await MainActor.run {
-                    onProductAdded(productId)
-                }
-                
-            } catch {
-                print("❌ 产品提交失败: \(error.localizedDescription)")
-                
-                await MainActor.run {
-                    hasError = true
-                    errorMessage = error.localizedDescription
-                    isLoading = false
-                    isExtracting = false
-                    isAnalyzing = false
-                    
-                    // Update step status based on error
-                    if currentStep == 1 {
-                        stepStatus["create"] = "创建失败"
-                    } else if currentStep == 2 {
-                        stepStatus["upload"] = "上传失败"
-                    } else if currentStep == 3 {
-                        stepStatus["extract"] = "提取失败"
-                    } else if currentStep == 4 {
-                        stepStatus["analyze"] = "分析失败"
-                    }
-                }
+            stepStatus["create"] = "创建中..."
+            let productID = await store.addProduct(from: image)
+
+            switch store.addStep {
+            case .completed:
+                stepStatus["create"] = "创建成功"
+                stepStatus["upload"] = "上传成功"
+                stepStatus["extract"] = "提取成功"
+                stepStatus["analyze"] = "分析成功"
+                currentStep = 5
+                isLoading = false
+                isExtracting = false
+                isAnalyzing = false
+                onProductAdded(productID)
+            default:
+                hasError = true
+                errorMessage = store.addError ?? "产品处理失败，请重试"
+                isLoading = false
+                isExtracting = false
+                isAnalyzing = false
+                stepStatus[stepKey(for: currentStep)] = "处理失败"
             }
+        }
+    }
+
+    private func stepKey(for step: Int) -> String {
+        switch step {
+        case 2: return "upload"
+        case 3: return "extract"
+        case 4: return "analyze"
+        default: return "create"
         }
     }
 }
@@ -729,6 +620,7 @@ struct ProgressStepRow: View {
             Spacer()
         }
         .opacity(isActive || isComplete ? 1.0 : 0.5)
+        .lookinName("product.add-modal.progress-step.\(step)")
     }
     
     private var stepNumberBackground: LinearGradient {

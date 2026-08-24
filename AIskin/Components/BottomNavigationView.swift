@@ -51,6 +51,7 @@ struct BottomNavigationView: View {
                 .foregroundColor(Color.gray.opacity(0.2)),
             alignment: .top
         )
+        .lookinName("navigation.bottom")
     }
 }
 
@@ -71,6 +72,21 @@ struct TabButton: View {
             .foregroundColor(isSelected ? Color(red: 0.905, green: 0.298, blue: 0.235) : Color(red: 0.557, green: 0.557, blue: 0.576))
             .frame(maxWidth: .infinity)
         }
+        .lookinName(lookinName)
+    }
+
+    private var lookinName: String {
+        switch label {
+        case "首页":
+            return "navigation.tab.home"
+        case "产品分析":
+            return "navigation.tab.product"
+        case "肌肤检测":
+            return "navigation.tab.skin-analysis"
+        case "我的":
+            return "navigation.tab.profile"
+        default:
+            return "navigation.tab.\(label)"
+        }
     }
 }
-

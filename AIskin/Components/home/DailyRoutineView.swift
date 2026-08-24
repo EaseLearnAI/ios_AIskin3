@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DailyRoutineView: View {
+    @ObservedObject var planStore: PlanStore
     var planId: String = ""
     @Binding var morningRoutine: [RoutineItem]
     @Binding var eveningRoutine: [RoutineItem]
@@ -121,59 +122,34 @@ struct DailyRoutineView: View {
         
         // 调用API更新后端状态
         Task {
-            do {
-                print("📡 发起API请求: PATCH /api/plans/\(planId)/step")
-                print("📋 请求体: { period: \"\(period)\", step: \(stepNumber), completed: \(newCompletedStatus) }")
+            print("📡 发起API请求: PATCH /api/plans/\(planId)/step")
+            print("📋 请求体: { period: \"\(period)\", step: \(stepNumber), completed: \(newCompletedStatus) }")
+            await planStore.toggleStep(period: period, index: index)
+            guard let updatedPlan = planStore.currentPlan else { return }
                 
-                let updatedPlan = try await PlanApiService.shared.updateStepCompleted(
-                    planId: planId,
-                    period: period,
-                    step: stepNumber,
-                    completed: newCompletedStatus
-                )
-                
-                print("✅ API响应成功")
-                print("📦 返回的方案数据:")
-                print("   - 方案ID: \(updatedPlan.id)")
-                print("   - 早晨步骤数: \(updatedPlan.morning.count)")
-                print("   - 晚间步骤数: \(updatedPlan.evening.count)")
+            print("✅ API响应成功")
+            print("📦 返回的方案数据:")
+            print("   - 方案ID: \(updatedPlan.id)")
+            print("   - 早晨步骤数: \(updatedPlan.morning.count)")
+            print("   - 晚间步骤数: \(updatedPlan.evening.count)")
                 
                 // 使用后端返回的最新数据更新UI
-                await MainActor.run {
-                    self.morningRoutine = updatedPlan.morning
-                    self.eveningRoutine = updatedPlan.evening
-                    self.recommendations = updatedPlan.recommendations
-                }
+            self.morningRoutine = updatedPlan.morning
+            self.eveningRoutine = updatedPlan.evening
+            self.recommendations = updatedPlan.recommendations
                 
-                print("✅ UI已更新为最新数据")
-                print("===== ✅ 更新完成 =====\n")
+            print("✅ UI已更新为最新数据")
+            print("===== ✅ 更新完成 =====\n")
                 
                 // 检查是否所有任务都完成
-                let allMorningDone = updatedPlan.morning.allSatisfy { $0.completed == true }
-                let allEveningDone = updatedPlan.evening.allSatisfy { $0.completed == true }
+            let allMorningDone = updatedPlan.morning.allSatisfy { $0.completed == true }
+            let allEveningDone = updatedPlan.evening.allSatisfy { $0.completed == true }
                 
-                if allMorningDone && allEveningDone {
-                    print("🎉 所有任务已完成，触发自动打卡")
-                    onAutoCheckin?()
-                }
-                
-                onSaveRoutine?()
-            } catch {
-                print("❌ API更新失败: \(error.localizedDescription)")
-                print("🔄 回滚本地状态")
-                
-                // 回滚本地状态
-                await MainActor.run {
-                    item.completed = !newCompletedStatus
-                    if period == "morning" {
-                        self.morningRoutine[index] = item
-                    } else {
-                        self.eveningRoutine[index] = item
-                    }
-                }
-                
-                print("===== ❌ 更新失败 =====\n")
+            if allMorningDone && allEveningDone {
+                print("🎉 所有任务已完成，触发自动打卡")
+                onAutoCheckin?()
             }
+            onSaveRoutine?()
         }
     }
 }
@@ -334,4 +310,3 @@ struct RecommendationItemView: View {
         .cornerRadius(10)
     }
 }
-

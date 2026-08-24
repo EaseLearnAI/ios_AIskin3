@@ -1,10 +1,47 @@
 # AIskin 架构设计与迁移基线
 
-> - 文档状态：T0 基线（只记录现状与迁移边界，不包含业务代码重构）
+> - 文档状态：架构重构已落地；下文保留 T0 基线作为迁移审计记录
 > - 基线日期：2026-08-25
 > - 基线分支：`codex/architecture-baseline`
 > - 基线提交：`fb5f2f1f0342275f03559bb83f569748cd10f6b8`（与当时的 `main`、`origin/main` 一致）
 > - 工程：`AIskin.xcodeproj` / Scheme：`AIskin` / App Bundle ID：`personal.AIskin`
+
+## 0. 当前已落地架构（2026-08-25）
+
+```text
+AIskin/
+├── App/                  # AppRootView、四个 Tab、类型化路由、依赖组合根
+├── DesignSystem/         # 颜色/字体/间距等 Token 与通用 UI 状态组件
+├── Core/
+│   ├── Networking/       # APIRequest、HTTPClient、错误映射、multipart
+│   └── Authentication/   # SessionStore、CredentialStore、Keychain 迁移
+├── Features/             # Home/Plans、Products、SkinAnalysis、Profile 的 Store 与适配层
+├── Models/               # 后端数据模型（API 合约保持不变）
+├── Services/             # 旧 Service 兼容层，供尚未移除的调用方平滑过渡
+├── Views/                # 现有页面外观与交互入口
+└── Components/           # 现有业务组件；跨 Feature 的视觉基础逐步由 DesignSystem 接管
+```
+
+当前依赖方向固定为：
+
+```text
+App → Features → Core
+App → DesignSystem
+Features → DesignSystem / Core / Models
+Core 与 DesignSystem 不依赖任何 Feature
+```
+
+落地规则：
+
+- 四个一级入口统一由原生 `TabView` 和每 Tab 独立 `NavigationStack` 管理，跨 Tab 跳转只通过 `AppRouter`。
+- `AppDependencies` 是唯一依赖组合根；页面使用注入的 Store/Client，不自行创建新全局状态。
+- 登录态只有一个 `SessionStore`；Token 由 `CredentialStore` 存入 Keychain，并兼容迁移旧 UserDefaults 数据。
+- 网络请求统一经 `HTTPClient + APIRequest`；旧 Service 保留为兼容边界，后端 URL、路径与 JSON 合约不变。
+- Home 与个性化方案共享 `PlanStore`；产品、成分、冲突、肌肤检测和 Profile 均有独立 Store/流程状态。
+- 只有无业务语义的视觉基础（颜色、间距、Card 外壳、Loading/Empty/Error）进入 DesignSystem；业务组件留在对应 Feature。
+- 原工作区的 LookinServer 依赖、调试标记和 Xcode 工程修改全部保留。
+
+新增 Feature 时，在 `Features/<FeatureName>/` 内优先放置 `Store`、Client 协议/适配器和 Feature 私有组件；由 `AppDependencies` 注入依赖，并由 `AppRouter` 暴露跨 Feature 入口。禁止让 DesignSystem/Core 反向引用 Feature，也禁止页面新增 Service singleton 直连。
 
 ## 1. 目的与边界
 

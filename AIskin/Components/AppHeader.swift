@@ -72,6 +72,7 @@ struct AppHeader: View {
                 endPoint: .trailing
             )
         )
+        .lookinName("shared.header.\(title)")
     }
 }
 
@@ -100,6 +101,6 @@ struct SearchBar: View {
         .background(Color.white)
         .cornerRadius(10)
         .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
+        .lookinName("shared.search-bar")
     }
 }
-

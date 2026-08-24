@@ -10,12 +10,19 @@ import SwiftUI
 struct HomeView: View {
     @Binding var selectedTab: Int
     @Binding var shouldEnableConflictMode: Bool
+    @ObservedObject var planStore: PlanStore
     @State private var morningRoutine: [RoutineItem] = []
     @State private var eveningRoutine: [RoutineItem] = []
     @State private var recommendations: [String] = []
     @State private var loading = true
     @State private var hasPlan = false
     @State private var planId = ""
+
+    init(selectedTab: Binding<Int>, shouldEnableConflictMode: Binding<Bool>, planStore: PlanStore) {
+        self._selectedTab = selectedTab
+        self._shouldEnableConflictMode = shouldEnableConflictMode
+        self.planStore = planStore
+    }
     
     var body: some View {
         NavigationView {
@@ -35,7 +42,11 @@ struct HomeView: View {
                         // Main Content
                         VStack(spacing: 16) {
                             // Core Features
-                            CoreFeaturesView(selectedTab: $selectedTab, shouldEnableConflictMode: $shouldEnableConflictMode)
+                            CoreFeaturesView(
+                                selectedTab: $selectedTab,
+                                shouldEnableConflictMode: $shouldEnableConflictMode,
+                                planStore: planStore
+                            )
                                 .padding(.horizontal, 16)
                                 .padding(.top, 16)
                             
@@ -52,6 +63,7 @@ struct HomeView: View {
                                     .padding(.top, 40)
                             } else if hasPlan {
                                 DailyRoutineView(
+                                    planStore: planStore,
                                     planId: planId,
                                     morningRoutine: $morningRoutine,
                                     eveningRoutine: $eveningRoutine,
@@ -78,85 +90,37 @@ struct HomeView: View {
             .navigationBarHidden(true)
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        .onAppear {
-            fetchRoutine()
+        .task {
+            await fetchRoutine()
         }
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("PlanSaved"))) { notification in
-            // 当方案保存后，刷新数据
-            print("\n📢 收到方案保存通知，刷新数据...")
-            fetchRoutine()
+        .onReceive(planStore.$currentPlan) { plan in
+            guard let plan else {
+                hasPlan = false
+                return
+            }
+            planId = plan.id
+            morningRoutine = plan.morning
+            eveningRoutine = plan.evening
+            recommendations = plan.recommendations
+            hasPlan = true
+            loading = false
         }
     }
     
     /// 从API获取最新的护肤方案
-    private func fetchRoutine() {
-        print("\n===== 📥 获取用户护肤方案 ======")
+    private func fetchRoutine() async {
         loading = true
-        
-        Task {
-            do {
-                print("📡 发起API请求: GET /api/plans")
-                
-                // 获取用户的所有方案列表
-                let plans = try await PlanApiService.shared.getUserPlans()
-                
-                print("✅ API响应成功")
-                print("📦 返回数据:")
-                print("   - 方案总数: \(plans.count)")
-                
-                if let latestPlan = plans.first {
-                    print("   - 最新方案ID: \(latestPlan.id)")
-                    print("   - 最新方案名称: \(latestPlan.name)")
-                    print("   - 早晨步骤数: \(latestPlan.morning.count)")
-                    print("   - 晚间步骤数: \(latestPlan.evening.count)")
-                    
-                    // 获取方案详情（包含完整的步骤信息）
-                    print("\n📡 获取方案详情: GET /api/plans/\(latestPlan.id)")
-                    let planDetail = try await PlanApiService.shared.getPlan(planId: latestPlan.id)
-                    
-                    print("✅ 方案详情获取成功")
-                    print("📦 方案详情:")
-                    print("   - 方案ID: \(planDetail.id)")
-                    print("   - 方案名称: \(planDetail.name)")
-                    print("   - 早晨步骤:")
-                    for (index, step) in planDetail.morning.enumerated() {
-                        print("     \(index + 1). \(step.product ?? "未知产品") - \(step.completed == true ? "✅" : "⭕")")
-                    }
-                    print("   - 晚间步骤:")
-                    for (index, step) in planDetail.evening.enumerated() {
-                        print("     \(index + 1). \(step.product ?? "未知产品") - \(step.completed == true ? "✅" : "⭕")")
-                    }
-                    print("   - 推荐建议数: \(planDetail.recommendations.count)")
-                    
-                    await MainActor.run {
-                        self.planId = planDetail.id
-                        self.morningRoutine = planDetail.morning
-                        self.eveningRoutine = planDetail.evening
-                        self.recommendations = planDetail.recommendations
-                        self.hasPlan = true
-                        self.loading = false
-                    }
-                    
-                    print("✅ UI已更新")
-                } else {
-                    print("⚠️ 用户暂无护肤方案")
-                    await MainActor.run {
-                        self.hasPlan = false
-                        self.loading = false
-                    }
-                }
-                
-                print("===== ✅ 获取完成 =====\n")
-            } catch {
-                print("❌ 获取方案失败: \(error.localizedDescription)")
-                print("===== ❌ 获取失败 =====\n")
-                
-                await MainActor.run {
-                    self.hasPlan = false
-                    self.loading = false
-                }
-            }
+        await planStore.load()
+        if let plan = planStore.currentPlan {
+            planId = plan.id
+            morningRoutine = plan.morning
+            eveningRoutine = plan.evening
+            recommendations = plan.recommendations
+            hasPlan = true
+        } else {
+            hasPlan = false
         }
+        loading = false
     }
     
     private func handleAutoCheckin() {

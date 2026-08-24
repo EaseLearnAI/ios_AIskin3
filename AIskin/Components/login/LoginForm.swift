@@ -16,7 +16,7 @@ struct LoginForm: View {
     @State private var errorMessage: String?
     @State private var validationErrors: [String: String] = [:]
     
-    @EnvironmentObject var authService: AuthService
+    @EnvironmentObject var sessionStore: SessionStore
     var onLoginSuccess: ((User) -> Void)?
     
     var body: some View {
@@ -226,10 +226,10 @@ struct LoginForm: View {
             do {
                 // 使用手机号作为email字段（如果API支持）或直接使用phone
                 // 这里假设API接受phone作为登录凭证
-                try await authService.login(phone: phone, password: password)
+                try await sessionStore.login(phone: phone, password: password)
                 
                 await MainActor.run {
-                    if let user = authService.currentUser {
+                    if let user = sessionStore.currentUser {
                         onLoginSuccess?(user)
                     }
                     isLoading = false
@@ -254,8 +254,7 @@ struct ForgotPasswordView: View {
 
 #Preview {
     LoginForm()
-        .environmentObject(AuthService.shared)
+        .environmentObject(AppDependencies.preview.sessionStore)
         .padding()
         .background(Color(red: 1.0, green: 0.976, blue: 0.984))
 }
-

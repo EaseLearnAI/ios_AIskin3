@@ -44,6 +44,7 @@ struct ProductList: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 12)
             }
+            .lookinName("product.category-filter")
             
             // Products List
             if filteredProducts.isEmpty {
@@ -71,8 +72,10 @@ struct ProductList: View {
                     .padding(.horizontal, 20)
                     .padding(.bottom, 100)
                 }
+                .lookinName("product.cards-scroll")
             }
         }
+        .lookinName("product.library")
     }
 }
 
@@ -117,6 +120,7 @@ struct CategoryButton: View {
             .background(isActive ? Color(red: 0.973, green: 0.741, blue: 0.816) : Color.white)
             .cornerRadius(20)
         }
+        .lookinName("product.category.\(category.id)")
     }
 }
 
@@ -234,6 +238,7 @@ struct ProductCard: View {
             )
         }
         .buttonStyle(PlainButtonStyle())
+        .lookinName("product.card.\(product.id)")
     }
 }
 
@@ -277,6 +282,7 @@ struct ProductTagView: View {
             .padding(.vertical, 2)
             .background(style.backgroundColor)
             .cornerRadius(8)
+            .lookinName("product.tag.\(text)")
     }
 }
 
@@ -293,9 +299,9 @@ struct EmptyStateView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 60)
+        .lookinName("product.empty-state")
     }
 }
-
 
 
 

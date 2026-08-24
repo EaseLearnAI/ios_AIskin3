@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RegisterView: View {
-    @EnvironmentObject var authService: AuthService
+    @EnvironmentObject var sessionStore: SessionStore
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -57,7 +57,6 @@ struct RegisterView: View {
 #Preview {
     NavigationView {
         RegisterView()
-            .environmentObject(AuthService.shared)
+            .environmentObject(AppDependencies.preview.sessionStore)
     }
 }
-
