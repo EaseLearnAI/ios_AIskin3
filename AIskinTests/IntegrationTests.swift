@@ -10,6 +10,7 @@ import XCTest
 
 /// 综合集成测试
 /// 测试前后端完整连接流程，验证整个系统的集成
+@MainActor
 class IntegrationTests: XCTestCase {
     
     var authService: AuthService!
@@ -78,8 +79,10 @@ class IntegrationTests: XCTestCase {
                 password: testPassword
             )
             
-            XCTAssertTrue(authService.isAuthenticated, "注册后应该已认证")
-            XCTAssertNotNil(authService.currentUser, "应该有当前用户")
+            let isAuthenticated = authService.isAuthenticated
+            let currentUser = authService.currentUser
+            XCTAssertTrue(isAuthenticated, "注册后应该已认证")
+            XCTAssertNotNil(currentUser, "应该有当前用户")
             print("   ✅ 用户注册成功")
         } catch {
             XCTFail("用户注册失败: \(error.localizedDescription)")
@@ -92,7 +95,8 @@ class IntegrationTests: XCTestCase {
         print("📝 步骤2: 刷新用户信息")
         do {
             try await authService.refreshCurrentUser()
-            XCTAssertNotNil(authService.currentUser, "应该有当前用户")
+            let currentUser = authService.currentUser
+            XCTAssertNotNil(currentUser, "应该有当前用户")
             print("   ✅ 用户信息刷新成功")
         } catch {
             XCTFail("刷新用户信息失败: \(error.localizedDescription)")
@@ -152,8 +156,10 @@ class IntegrationTests: XCTestCase {
         print("📝 步骤7: 用户登出")
         do {
             try await authService.logout()
-            XCTAssertFalse(authService.isAuthenticated, "登出后应该未认证")
-            XCTAssertNil(authService.currentUser, "应该清除当前用户")
+            let isAuthenticated = authService.isAuthenticated
+            let currentUser = authService.currentUser
+            XCTAssertFalse(isAuthenticated, "登出后应该未认证")
+            XCTAssertNil(currentUser, "应该清除当前用户")
             print("   ✅ 用户登出成功")
         } catch {
             XCTFail("用户登出失败: \(error.localizedDescription)")
@@ -345,7 +351,6 @@ class IntegrationTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 15.0)
     }
 }
-
 
 
 

@@ -6,16 +6,15 @@
 //
 
 import SwiftUI
-import SwiftData
 
 @main
 struct AIskinApp: App {
-    @StateObject private var authService = AuthService.shared
+    private let dependencies = AppDependencies.live
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(authService)
+                .environmentObject(dependencies.sessionStore)
         }
     }
 }

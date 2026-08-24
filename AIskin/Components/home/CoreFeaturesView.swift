@@ -10,6 +10,7 @@ import SwiftUI
 struct CoreFeaturesView: View {
     @Binding var selectedTab: Int
     @Binding var shouldEnableConflictMode: Bool
+    @ObservedObject var planStore: PlanStore
     @State private var showPersonalizedRoutineModal = false
     
     var body: some View {
@@ -97,7 +98,7 @@ struct CoreFeaturesView: View {
                 .stroke(Color(red: 0.953, green: 0.957, blue: 0.969), lineWidth: 1)
         )
         .sheet(isPresented: $showPersonalizedRoutineModal) {
-            PersonalizedRoutineModalView()
+            PersonalizedRoutineModalView(planStore: planStore)
         }
     }
 }
@@ -156,6 +157,7 @@ struct FeatureCardView: View {
 
 struct PersonalizedRoutineModalView: View {
     @Environment(\.dismiss) var dismiss
+    @ObservedObject var planStore: PlanStore
     @State private var loadingPlan = false
     @State private var planError: String?
     @State private var generatedPlan: SkinPlan?
@@ -233,26 +235,9 @@ struct PersonalizedRoutineModalView: View {
     /// 加载最新的皮肤分析
     private func loadLatestSkinAnalysis() async {
         isLoadingAnalysis = true
-        do {
-            if let analysis = try await SkinAnalysisApiService.shared.getLatestAnalysis() {
-                // 转换为 SkinAnalysisData 格式
-                let skinType = analysis.skinType?.type ?? "未知"
-                let healthScore = Int(analysis.overallAssessment?.healthScore ?? 0)
-                let skinCondition = analysis.overallAssessment?.skinCondition ?? "未知"
-                let createdAt = analysis.createdAt ?? Date()
-                
-                await MainActor.run {
-                    self.latestSkinAnalysis = SkinAnalysisData(
-                        skinType: skinType,
-                        healthScore: healthScore,
-                        skinCondition: skinCondition,
-                        createdAt: createdAt
-                    )
-                }
-            }
-        } catch {
-            print("⚠️ 获取最新皮肤分析失败: \(error.localizedDescription)")
-            // 不显示错误，允许用户继续使用
+        await planStore.loadLatestSkinAnalysis()
+        if let analysis = planStore.latestSkinAnalysis {
+            self.latestSkinAnalysis = analysis
         }
         isLoadingAnalysis = false
     }
@@ -273,30 +258,22 @@ struct PersonalizedRoutineModalView: View {
         planError = nil
         
         Task {
-            do {
-                // 构建需求描述
-                let concernLabels = selectedConcerns.map { concern in
-                    skinConcerns.first(where: { $0.value == concern })?.label ?? concern
-                }
-                let requirement = concernLabels.joined(separator: "、")
-                
-                // 调用API生成方案
-                let plan = try await PlanApiService.shared.createPlan(
-                    requirement: requirement,
-                    userAge: age,
-                    skinConcerns: Array(selectedConcerns),
-                    customRequirements: customRequirements.isEmpty ? nil : customRequirements
-                )
-                
-                await MainActor.run {
-                    self.generatedPlan = plan
-                    self.loadingPlan = false
-                }
-            } catch {
-                await MainActor.run {
-                    self.planError = error.localizedDescription
-                    self.loadingPlan = false
-                }
+            let concernLabels = selectedConcerns.map { concern in
+                skinConcerns.first(where: { $0.value == concern })?.label ?? concern
+            }
+            let requirement = concernLabels.joined(separator: "、")
+            await planStore.generate(
+                requirement: requirement,
+                age: age,
+                concerns: Array(selectedConcerns),
+                customRequirements: customRequirements.isEmpty ? nil : customRequirements
+            )
+            if let plan = planStore.generatedPlan {
+                self.generatedPlan = plan
+                self.loadingPlan = false
+            } else {
+                self.planError = planStore.generationError ?? "生成方案失败，请重试"
+                self.loadingPlan = false
             }
         }
     }
@@ -316,13 +293,7 @@ struct PersonalizedRoutineModalView: View {
         print("   - 早晨步骤数: \(plan.morning.count)")
         print("   - 晚间步骤数: \(plan.evening.count)")
         
-        // 方案已经通过API生成并保存到后端，这里只需要通知刷新
-        // 发送通知让 HomeView 刷新数据
-        NotificationCenter.default.post(
-            name: NSNotification.Name("PlanSaved"),
-            object: nil,
-            userInfo: ["planId": plan.id]
-        )
+        planStore.acceptGeneratedPlan(plan)
         
         print("✅ 方案保存成功，已通知刷新")
         print("===== ✅ 保存完成 =====\n")
@@ -672,4 +643,3 @@ extension SkinPlan {
         )
     }
 }
-

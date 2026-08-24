@@ -80,15 +80,20 @@ class SkinAnalysisApiServiceTests: XCTestCase {
             // Assert: 验证分析结果
             XCTAssertFalse(analysis.id.isEmpty, "分析ID不应该为空")
             XCTAssertNotNil(analysis.overallAssessment, "应该有整体评估")
-            XCTAssertGreaterThanOrEqual(analysis.overallAssessment.healthScore, 0, "健康评分应该在0-100之间")
-            XCTAssertLessThanOrEqual(analysis.overallAssessment.healthScore, 100, "健康评分应该在0-100之间")
             XCTAssertNotNil(analysis.skinType, "应该有皮肤类型")
+            guard let assessment = analysis.overallAssessment,
+                  let skinType = analysis.skinType else {
+                XCTFail("分析结果缺少整体评估或皮肤类型")
+                return
+            }
+            XCTAssertGreaterThanOrEqual(assessment.healthScore, 0, "健康评分应该在0-100之间")
+            XCTAssertLessThanOrEqual(assessment.healthScore, 100, "健康评分应该在0-100之间")
             
             print("✅ 皮肤分析成功")
             print("   - 分析ID: \(analysis.id)")
-            print("   - 健康评分: \(analysis.overallAssessment.healthScore)")
-            print("   - 皮肤类型: \(analysis.skinType.type)")
-            print("   - 皮肤状况: \(analysis.overallAssessment.skinCondition)")
+            print("   - 健康评分: \(assessment.healthScore)")
+            print("   - 皮肤类型: \(skinType.type)")
+            print("   - 皮肤状况: \(assessment.skinCondition)")
             
             expectation.fulfill()
         } catch {
@@ -120,7 +125,7 @@ class SkinAnalysisApiServiceTests: XCTestCase {
             }
             
             for analysis in analyses {
-                print("     • 分析ID: \(analysis.id), 健康评分: \(analysis.overallAssessment.healthScore)")
+                print("     • 分析ID: \(analysis.id), 健康评分: \(analysis.overallAssessment?.healthScore ?? 0)")
             }
             
             expectation.fulfill()
@@ -159,11 +164,16 @@ class SkinAnalysisApiServiceTests: XCTestCase {
             XCTAssertEqual(analysis.id, analysisId, "分析ID应该匹配")
             XCTAssertNotNil(analysis.overallAssessment, "应该有整体评估")
             XCTAssertNotNil(analysis.skinType, "应该有皮肤类型")
+            guard let assessment = analysis.overallAssessment,
+                  let skinType = analysis.skinType else {
+                XCTFail("分析详情缺少整体评估或皮肤类型")
+                return
+            }
             
             print("✅ 获取分析详情成功")
             print("   - 分析ID: \(analysis.id)")
-            print("   - 健康评分: \(analysis.overallAssessment.healthScore)")
-            print("   - 皮肤类型: \(analysis.skinType.type)")
+            print("   - 健康评分: \(assessment.healthScore)")
+            print("   - 皮肤类型: \(skinType.type)")
             if let moisture = analysis.moisture {
                 print("   - 水分: \(moisture)")
             }
@@ -196,7 +206,7 @@ class SkinAnalysisApiServiceTests: XCTestCase {
                 XCTAssertFalse(analysis.id.isEmpty, "分析ID不应该为空")
                 print("✅ 获取最新分析成功")
                 print("   - 分析ID: \(analysis.id)")
-                print("   - 健康评分: \(analysis.overallAssessment.healthScore)")
+                print("   - 健康评分: \(analysis.overallAssessment?.healthScore ?? 0)")
                 print("   - 创建时间: \(analysis.createdAt?.description ?? "未知")")
             } else {
                 print("⚠️ 暂无分析记录")
@@ -288,4 +298,3 @@ class SkinAnalysisApiServiceTests: XCTestCase {
         return nil
     }
 }
-

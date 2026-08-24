@@ -166,9 +166,14 @@ class RealImageTests: XCTestCase {
             // Assert: 验证分析结果
             XCTAssertFalse(analysis.id.isEmpty, "分析ID不应该为空")
             XCTAssertNotNil(analysis.overallAssessment, "应该有整体评估")
-            XCTAssertGreaterThanOrEqual(analysis.overallAssessment.healthScore, 0, "健康评分应该在0-100之间")
-            XCTAssertLessThanOrEqual(analysis.overallAssessment.healthScore, 100, "健康评分应该在0-100之间")
             XCTAssertNotNil(analysis.skinType, "应该有皮肤类型")
+            guard let assessment = analysis.overallAssessment,
+                  let skinType = analysis.skinType else {
+                XCTFail("分析结果缺少整体评估或皮肤类型")
+                return
+            }
+            XCTAssertGreaterThanOrEqual(assessment.healthScore, 0, "健康评分应该在0-100之间")
+            XCTAssertLessThanOrEqual(assessment.healthScore, 100, "健康评分应该在0-100之间")
             
             print("")
             print(String(repeating: "=", count: 60))
@@ -177,13 +182,13 @@ class RealImageTests: XCTestCase {
             print("📊 分析结果:")
             print("   - 分析ID: \(analysis.id)")
             print("   - 处理时间: \(String(format: "%.2f", duration))秒")
-            print("   - 健康评分: \(analysis.overallAssessment.healthScore)/100")
-            print("   - 皮肤类型: \(analysis.skinType.type)")
-            if let subtype = analysis.skinType.subtype {
+            print("   - 健康评分: \(assessment.healthScore)/100")
+            print("   - 皮肤类型: \(skinType.type)")
+            if let subtype = skinType.subtype {
                 print("   - 子类型: \(subtype)")
             }
-            print("   - 皮肤状况: \(analysis.overallAssessment.skinCondition)")
-            print("   - 总结: \(analysis.overallAssessment.summary)")
+            print("   - 皮肤状况: \(assessment.skinCondition)")
+            print("   - 总结: \(assessment.summary)")
             
             if let moisture = analysis.moisture {
                 print("   - 水分: \(String(format: "%.1f", moisture))%")
@@ -207,7 +212,7 @@ class RealImageTests: XCTestCase {
             }
             
             // 打印建议
-            if let recommendations = analysis.overallAssessment.recommendations, !recommendations.isEmpty {
+            if let recommendations = assessment.recommendations, !recommendations.isEmpty {
                 print("")
                 print("💡 护肤建议:")
                 for (index, recommendation) in recommendations.enumerated() {
@@ -455,4 +460,3 @@ class RealImageTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 30.0)
     }
 }
-

@@ -10,10 +10,7 @@ import SwiftUI
 struct IngredientView: View {
     let productId: String
     @Environment(\.dismiss) var dismiss
-    @State private var product: Product?
-    @State private var analysis: IngredientAnalysis?
-    @State private var loading = true
-    @State private var errorMessage: String?
+    @StateObject private var store = IngredientAnalysisStore()
     @State private var showTagModal = false
     @State private var showDeleteModal = false
     
@@ -22,14 +19,14 @@ struct IngredientView: View {
             Color(red: 0.973, green: 0.973, blue: 0.980)
                 .ignoresSafeArea()
             
-            if loading {
+            if case .loading = store.state {
                 ProgressView("加载中...")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else if let error = errorMessage {
+            } else if case let .failed(error) = store.state {
                 ErrorStateView(message: error) {
-                    loadData()
+                    Task { await store.load(productID: productId) }
                 }
-            } else if let product = product, let analysis = analysis {
+            } else if case let .loaded(product, analysis) = store.state {
                 ScrollView {
                     VStack(spacing: 20) {
                         // Header
@@ -102,7 +99,7 @@ struct IngredientView: View {
                     alignment: .bottom
                 )
                 .sheet(isPresented: $showTagModal) {
-                    TagSelectorModal(product: product) {
+                    TagSelectorModal(product: product, store: store) {
                         showTagModal = false
                         // 保存成功后，延迟关闭整个IngredientView并返回产品分析页面
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -113,7 +110,9 @@ struct IngredientView: View {
                 .alert("确认删除", isPresented: $showDeleteModal) {
                     Button("取消", role: .cancel) {}
                     Button("确认删除", role: .destructive) {
-                        deleteProduct()
+                        Task {
+                            if await store.delete(productID: productId) { dismiss() }
+                        }
                     }
                 } message: {
                     Text("确定要删除这个分析结果吗？此操作无法撤销。")
@@ -121,119 +120,8 @@ struct IngredientView: View {
             }
         }
         .navigationBarHidden(true)
-        .onAppear {
-            loadData()
-        }
-    }
-    
-    private func loadData() {
-        print("\n===== 📋 加载产品成分分析 ======")
-        print("📊 产品ID: \(productId)")
-        
-        loading = true
-        errorMessage = nil
-        
-        Task {
-            do {
-                // Step 1: Get product details first
-                print("\n📦 步骤1: 获取产品详情")
-                let productData = try await ProductApiService.shared.getProduct(productId: productId)
-                
-                print("✅ 产品信息加载成功")
-                print("   - 产品名称: \(productData.name)")
-                print("   - 产品描述: \(productData.description ?? "无")")
-                print("   - 产品标签: \(productData.label ?? "未设置")")
-                print("   - 成分数量: \(productData.ingredients.count)")
-                print("   - 图片URL: \(productData.imageUrl ?? "无")")
-                
-                await MainActor.run {
-                    self.product = productData
-                }
-                
-                // Step 2: Try to get ingredient analysis
-                print("\n🧪 步骤2: 获取成分分析结果")
-                do {
-                    let (_, analysisData) = try await IngredientAnalysisApiService.shared.getIngredientAnalysis(productId: productId)
-                    
-                    print("✅ 成分分析加载成功")
-                    print("   - 安全性指数: \(analysisData.safetyIndex)")
-                    print("   - 功效评分: \(analysisData.efficacyScore)")
-                    print("   - 活性成分数: \(analysisData.activeIngredients)")
-                    print("   - 整体评级: \(analysisData.overallRating)/5.0")
-                    print("   - 痘痘风险: \(analysisData.acneRisk.level) (\(analysisData.acneRisk.percentage)%)")
-                    print("   - 刺激风险: \(analysisData.irritationRisk.level) (\(analysisData.irritationRisk.percentage)%)")
-                    print("   - 过敏风险: \(analysisData.allergyRisk.level) (\(analysisData.allergyRisk.percentage)%)")
-                    
-                    await MainActor.run {
-                        self.analysis = analysisData
-                        self.loading = false
-                    }
-                } catch {
-                    // If analysis doesn't exist, check if we can analyze
-                    print("⚠️ 成分分析不存在，检查是否可以分析")
-                    print("   - 错误信息: \(error.localizedDescription)")
-                    
-                    // If product has ingredients, try to analyze
-                    if !productData.ingredients.isEmpty {
-                        print("📊 产品有成分列表，尝试进行分析...")
-                        do {
-                            let analysisData = try await IngredientAnalysisApiService.shared.analyzeIngredients(productId: productId)
-                            
-                            print("✅ 成分分析成功")
-                            print("   - 安全性指数: \(analysisData.safetyIndex)")
-                            print("   - 功效评分: \(analysisData.efficacyScore)")
-                            print("   - 整体评级: \(analysisData.overallRating)/5.0")
-                            
-                            await MainActor.run {
-                                self.analysis = analysisData
-                                self.loading = false
-                            }
-                        } catch {
-                            print("❌ 成分分析失败: \(error.localizedDescription)")
-                            await MainActor.run {
-                                self.errorMessage = "产品成分分析失败: \(error.localizedDescription)"
-                                self.loading = false
-                            }
-                        }
-                    } else {
-                        print("⚠️ 产品没有成分列表，无法进行分析")
-                        await MainActor.run {
-                            self.errorMessage = "产品尚未提取成分，请先上传图片并提取成分"
-                            self.loading = false
-                        }
-                    }
-                }
-                
-            } catch {
-                print("❌ 加载产品信息失败: \(error.localizedDescription)")
-                
-                await MainActor.run {
-                    self.errorMessage = "加载产品信息失败: \(error.localizedDescription)"
-            self.loading = false
-                }
-            }
-        }
-    }
-    
-    private func deleteProduct() {
-        print("\n===== 🗑️ 删除产品 ======")
-        print("📊 产品ID: \(productId)")
-        
-        Task {
-            do {
-                try await ProductApiService.shared.deleteProduct(productId: productId)
-                print("✅ 产品删除成功")
-                
-                await MainActor.run {
-        dismiss()
-                }
-            } catch {
-                print("❌ 删除产品失败: \(error.localizedDescription)")
-                
-                await MainActor.run {
-                    errorMessage = "删除产品失败: \(error.localizedDescription)"
-                }
-            }
+        .task(id: productId) {
+            await store.load(productID: productId)
         }
     }
 }
@@ -279,6 +167,7 @@ struct ErrorStateView: View {
 
 struct TagSelectorModal: View {
     let product: Product
+    @ObservedObject var store: IngredientAnalysisStore
     let onDismiss: () -> Void
     @State private var selectedTag: String = ""
     @State private var openingDate: Date
@@ -287,8 +176,9 @@ struct TagSelectorModal: View {
     // 获取可用的标签列表（排除"全部产品"）
     private let availableTags = ProductCategory.defaultCategories.filter { $0.id != "all" }
     
-    init(product: Product, onDismiss: @escaping () -> Void) {
+    init(product: Product, store: IngredientAnalysisStore, onDismiss: @escaping () -> Void) {
         self.product = product
+        self.store = store
         self.onDismiss = onDismiss
         _selectedTag = State(initialValue: product.label ?? "")
         _openingDate = State(initialValue: product.openingDate ?? Date())
@@ -401,27 +291,11 @@ struct TagSelectorModal: View {
         isSaving = true
         
         Task {
-            do {
-                let updatedProduct = try await ProductApiService.shared.updateProduct(
-                    productId: product.id,
-                    name: nil,
-                    description: nil,
-                    label: selectedTag.isEmpty ? nil : selectedTag
-                )
-                
-                print("✅ 产品标签保存成功")
-                
-                await MainActor.run {
-                    isSaving = false
-                    // 调用onDismiss回调，父视图会处理关闭逻辑
-                    onDismiss()
-                }
-            } catch {
-                print("❌ 保存产品标签失败: \(error.localizedDescription)")
-                
-                await MainActor.run {
-                    isSaving = false
-                }
+            if await store.saveLabel(productID: product.id, label: selectedTag.isEmpty ? nil : selectedTag) {
+                isSaving = false
+                onDismiss()
+            } else {
+                isSaving = false
             }
         }
     }
@@ -466,4 +340,3 @@ struct CategoryTagButton: View {
         }
     }
 }
-

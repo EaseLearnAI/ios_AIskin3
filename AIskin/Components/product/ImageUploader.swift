@@ -25,6 +25,7 @@ struct ImageUploader: View {
                         .frame(height: 270)
                         .cornerRadius(12)
                         .clipped()
+                        .lookinName("product.add-modal.image-preview")
                     
                     HStack(spacing: 8) {
                         Button(action: {
@@ -39,6 +40,7 @@ struct ImageUploader: View {
                                         .frame(width: 36, height: 36)
                                 )
                         }
+                        .lookinName("product.add-modal.image-remove")
                     }
                     .padding(12)
                 }
@@ -61,6 +63,7 @@ struct ImageUploader: View {
                 .frame(maxWidth: .infinity)
                 .background(Color(red: 0.961, green: 0.961, blue: 0.969))
                 .cornerRadius(12)
+                .lookinName("product.add-modal.image-loading")
             } else {
                 // Placeholder
                 Button(action: { showImagePicker = true }) {
@@ -99,8 +102,10 @@ struct ImageUploader: View {
                             .foregroundColor(Color(red: 0.780, green: 0.780, blue: 0.800))
                     )
                 }
+                .lookinName("product.add-modal.image-picker")
             }
         }
+        .lookinName("product.add-modal.image-uploader")
         .sheet(isPresented: $showImagePicker) {
             ImagePicker(image: $selectedImage)
         }
@@ -144,7 +149,6 @@ struct ImagePicker: UIViewControllerRepresentable {
         }
     }
 }
-
 
 
 

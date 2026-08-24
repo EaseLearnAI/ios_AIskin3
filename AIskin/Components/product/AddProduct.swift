@@ -61,6 +61,7 @@ struct AddProduct: View {
                     .background(Color(red: 0.980, green: 0.953, blue: 0.984))
                     .cornerRadius(12)
                 }
+                .lookinName("product.action.add")
                 
                 // Conflict Detection Button
                 Button(action: onEnableConflictMode) {
@@ -97,15 +98,16 @@ struct AddProduct: View {
                     .background(Color(red: 0.980, green: 0.953, blue: 0.984))
                     .cornerRadius(12)
                 }
+                .lookinName("product.action.conflict")
             }
         }
         .padding(16)
         .background(Color.white)
         .cornerRadius(16)
         .shadow(color: Color(red: 1.0, green: 0.714, blue: 0.757).opacity(0.15), radius: 20, x: 0, y: 8)
+        .lookinName("product.add-panel")
     }
 }
-
 
 
 

@@ -11,11 +11,7 @@ struct ConflictView: View {
     let productIds: [String]?
     
     @State private var activeTab: ConflictTab = .overview
-    @State private var conflicts: [Conflict] = []
-    @State private var safeCombo: [SafeCombo] = []
-    @State private var recommendations: ConflictRecommendations?
-    @State private var loading = false
-    @State private var error: String?
+    @StateObject private var store = ConflictAnalysisStore()
     @Environment(\.dismiss) var dismiss
     
     init(productIds: [String]? = nil) {
@@ -71,31 +67,31 @@ struct ConflictView: View {
                 TabNavigationView(activeTab: $activeTab)
                 
                 // Content
-                if loading {
+                if case .loading = store.state {
                     LoadingView()
-                } else if let error = error {
+                } else if case let .failed(error) = store.state {
                     ErrorView(message: error)
-                } else {
+                } else if case let .loaded(data) = store.state {
                     ScrollViewReader { proxy in
                         ScrollView {
                             VStack(spacing: 20) {
                                 // Overview Section
-                                OverviewSection(conflicts: conflicts, safeCombo: safeCombo)
+                                OverviewSection(conflicts: data.conflicts ?? [], safeCombo: data.safeCombo ?? [])
                                     .id("overview")
                                     .padding(.horizontal, 20)
                                 
                                 // Conflicts Section
-                                ConflictsDetailSection(conflicts: conflicts)
+                                ConflictsDetailSection(conflicts: data.conflicts ?? [])
                                     .id("conflicts")
                                     .padding(.horizontal, 20)
                                 
                                 // Safe Combinations Section
-                                SafeCombinationsSection(safeCombo: safeCombo)
+                                SafeCombinationsSection(safeCombo: data.safeCombo ?? [])
                                     .id("safe")
                                     .padding(.horizontal, 20)
                                 
                                 // Recommendations Section
-                                RecommendationsDetailSection(recommendations: recommendations)
+                                RecommendationsDetailSection(recommendations: data.recommendations)
                                     .id("routine")
                                     .padding(.horizontal, 20)
                             }
@@ -117,147 +113,14 @@ struct ConflictView: View {
                             }
                         }
                     }
+                } else {
+                    Color.clear
                 }
             }
         }
         .navigationBarHidden(true)
-        .onAppear {
-            print("\n============================================================")
-            print("📱 ConflictView: onAppear 被调用")
-            print("============================================================\n")
-            
-            if let productIds = productIds, productIds.count >= 2 {
-                print("✅ 检测到有效的产品ID列表")
-                print("📊 产品数量: \(productIds.count)")
-                
-                // 立即设置loading状态，显示加载动画
-                print("📱 步骤3: 立即设置loading = true，显示加载动画")
-                loading = true
-                error = nil
-                
-                // 延迟一帧确保UI已更新，然后开始API调用
-                DispatchQueue.main.async {
-                    print("📱 步骤4: 开始调用analyzeConflict()")
-                    self.analyzeConflict(productIds: productIds)
-                }
-            } else {
-                print("❌ 错误: 未选择产品或产品数量不足")
-                print("📊 productIds: \(productIds?.description ?? "nil")")
-                print("📊 productIds.count: \(productIds?.count ?? 0)")
-                error = "未选择产品，请返回产品页面选择至少两个产品进行冲突分析"
-                loading = false
-            }
-        }
-    }
-    
-    private func analyzeConflict(productIds: [String]) {
-        print("\n============================================================")
-        print("📱 ConflictView: analyzeConflict() 方法被调用")
-        print("============================================================\n")
-        
-        print("📊 分析产品列表:")
-        for (index, productId) in productIds.enumerated() {
-            print("   \(index + 1). 产品ID: \(productId)")
-        }
-        
-        print("\n📱 步骤5: 确认loading状态")
-        print("   - loading: \(loading)")
-        print("   - error: \(error ?? "nil")")
-        
-        // 确保loading状态为true
-        if !loading {
-            print("⚠️ 警告: loading状态为false，重新设置为true")
-            loading = true
-        }
-        error = nil
-        
-        print("\n📱 步骤6: 创建Task，准备调用API")
-        print("⏳ 即将调用 ConflictApiService.shared.analyzeConflict()")
-        
-        Task {
-            do {
-                print("\n📱 步骤7: 进入Task闭包，开始异步API调用")
-                print("📡 调用 ConflictApiService.shared.analyzeConflict()")
-                print("⏳ 等待API响应...\n")
-                
-                // 调用API服务进行冲突分析
-                // API服务内部会打印详细的请求和响应日志
-                let conflictData = try await ConflictApiService.shared.analyzeConflict(productIds: productIds)
-                
-                print("\n📱 步骤8: API调用成功，收到响应数据")
-                
-                print("\n===== ConflictView: 处理API响应 ======")
-                print("✅ 收到冲突分析数据")
-                print("📋 数据摘要:")
-                print("   - 冲突记录ID: \(conflictData.conflictId ?? "未知")")
-                print("   - 发现冲突数: \(conflictData.conflicts?.count ?? 0)")
-                print("   - 安全组合数: \(conflictData.safeCombo?.count ?? 0)")
-                print("   - 涉及产品数: \(conflictData.products?.count ?? 0)")
-                print("   - 是否有使用建议: \(conflictData.recommendations != nil)")
-                
-                // 更新UI状态
-                await MainActor.run {
-                    self.conflicts = conflictData.conflicts ?? []
-                    self.safeCombo = conflictData.safeCombo ?? []
-                    self.recommendations = conflictData.recommendations
-                    self.loading = false
-                    
-                    print("✅ UI状态已更新:")
-                    print("   - conflicts数组: \(self.conflicts.count)项")
-                    print("   - safeCombo数组: \(self.safeCombo.count)项")
-                    print("   - recommendations: \(self.recommendations != nil ? "有" : "无")")
-                }
-                
-                print("===== ✅ ConflictView: 冲突分析完成 ======\n")
-                
-            } catch {
-                print("\n============================================================")
-                print("❌ ConflictView: API调用失败，捕获到错误")
-                print("============================================================\n")
-                print("📱 步骤9: 处理错误")
-                print("❌ 错误类型: \(type(of: error))")
-                print("❌ 错误信息: \(error.localizedDescription)")
-                
-                if let apiError = error as? APIError {
-                    print("📋 API错误详情:")
-                    switch apiError {
-                    case .unauthorized:
-                        print("   - 错误类型: 未授权 (401)")
-                        print("   - 建议: 请检查Token是否有效，可能需要重新登录")
-                    case .networkError(let underlyingError):
-                        print("   - 错误类型: 网络错误")
-                        print("   - 详细信息: \(underlyingError.localizedDescription)")
-                        print("   - 建议: 请检查网络连接")
-                    case .serverError(let message):
-                        print("   - 错误类型: 服务器错误")
-                        print("   - 错误消息: \(message)")
-                        print("   - 建议: 请稍后重试或联系技术支持")
-                    case .invalidURL:
-                        print("   - 错误类型: 无效的URL")
-                    case .decodingError:
-                        print("   - 错误类型: 数据解析错误")
-                    case .noData:
-                        print("   - 错误类型: 没有返回数据")
-                        print("   - 建议: 服务器未返回有效数据，请稍后重试")
-                    case .unknown:
-                        print("   - 错误类型: 未知错误")
-                    }
-                } else {
-                    print("📋 非API错误，原始错误: \(error)")
-                }
-                
-                print("\n📱 步骤10: 更新UI状态（显示错误信息）")
-                await MainActor.run {
-                    self.error = "分析产品冲突失败: \(error.localizedDescription)"
-                    self.loading = false
-                    print("   - error状态已设置")
-                    print("   - loading状态已设置为false")
-                }
-                
-                print("\n============================================================")
-                print("❌ ConflictView: 错误处理完成")
-                print("============================================================\n")
-            }
+        .task(id: productIds ?? []) {
+            await store.analyze(productIDs: productIds ?? [])
         }
     }
 }
@@ -779,4 +642,3 @@ struct RecommendationsDetailSection: View {
                (recommendations.routines?.evening?.isEmpty == false)
     }
 }
-

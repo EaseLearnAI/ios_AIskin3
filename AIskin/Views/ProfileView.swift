@@ -9,13 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject var authService: AuthService
-    @State private var showUsernameModal = false
-    @State private var showGenderModal = false
-    @State private var showFeedbackModal = false
-    @State private var showLogoutModal = false
-    @State private var showDeleteAccountModal = false
-    @State private var showDeleteAccountError = false
-    @State private var deleteAccountErrorMessage = ""
+    @ObservedObject var store: ProfileStore
     
     var user: User? {
         authService.currentUser
@@ -53,11 +47,11 @@ struct ProfileView: View {
                         
                         // Settings Menu
                         SettingsMenuSection(
-                            onUsernameEdit: { showUsernameModal = true },
-                            onGenderEdit: { showGenderModal = true },
-                            onFeedback: { showFeedbackModal = true },
-                            onLogout: { showLogoutModal = true },
-                            onDeleteAccount: { showDeleteAccountModal = true }
+                            onUsernameEdit: { store.sheet = .username },
+                            onGenderEdit: { store.sheet = .gender },
+                            onFeedback: { store.sheet = .feedback },
+                            onLogout: { store.confirmation = .logout },
+                            onDeleteAccount: { store.confirmation = .deleteAccount }
                         )
                     }
                     .padding(.horizontal, 16)
@@ -77,53 +71,41 @@ struct ProfileView: View {
                 }
             }
         }
-        .sheet(isPresented: $showUsernameModal) {
-            UsernameEditModal()
-                .environmentObject(authService)
-        }
-        .sheet(isPresented: $showGenderModal) {
-            GenderEditModal()
-                .environmentObject(authService)
-        }
-        .sheet(isPresented: $showFeedbackModal) {
-            FeedbackModal()
-        }
-        .alert("退出登录", isPresented: $showLogoutModal) {
-            Button("取消", role: .cancel) {}
-            Button("确定退出", role: .destructive) {
-                Task {
-                    do {
-                        try await authService.logout()
-                    } catch {
-                        print("❌ 登出失败: \(error.localizedDescription)")
-                    }
-                }
+        .sheet(item: $store.sheet) { destination in
+            switch destination {
+            case .username:
+                UsernameEditModal(store: store)
+            case .gender:
+                GenderEditModal(store: store)
+            case .feedback:
+                FeedbackModal()
             }
-        } message: {
-            Text("确定要退出登录吗？退出后需要重新登录才能使用完整功能")
         }
-        .alert("注销账户", isPresented: $showDeleteAccountModal) {
-            Button("取消", role: .cancel) {}
-            Button("确定注销", role: .destructive) {
-                Task {
-                    do {
-                        try await authService.deleteAccount()
-                        print("✅ 账号注销成功")
-                        // 注销成功后，用户状态已自动清除，应用会自动跳转到登录页
-                    } catch {
-                        print("❌ 注销账户失败: \(error.localizedDescription)")
-                        deleteAccountErrorMessage = error.localizedDescription
-                        showDeleteAccountError = true
-                    }
-                }
+        .alert(item: $store.confirmation) { action in
+            switch action {
+            case .logout:
+                Alert(
+                    title: Text("退出登录"),
+                    message: Text("确定要退出登录吗？退出后需要重新登录才能使用完整功能"),
+                    primaryButton: .destructive(Text("确定退出")) { Task { await store.confirm(.logout) } },
+                    secondaryButton: .cancel()
+                )
+            case .deleteAccount:
+                Alert(
+                    title: Text("注销账户"),
+                    message: Text("确定要注销账户吗？此操作将永久删除您的账户及所有相关数据，且无法恢复。请谨慎操作！"),
+                    primaryButton: .destructive(Text("确定注销")) { Task { await store.confirm(.deleteAccount) } },
+                    secondaryButton: .cancel()
+                )
             }
-        } message: {
-            Text("确定要注销账户吗？此操作将永久删除您的账户及所有相关数据，且无法恢复。请谨慎操作！")
         }
-        .alert("注销失败", isPresented: $showDeleteAccountError) {
+        .alert("操作失败", isPresented: Binding(
+            get: { store.errorMessage != nil },
+            set: { if !$0 { store.clearError() } }
+        )) {
             Button("确定", role: .cancel) {}
         } message: {
-            Text(deleteAccountErrorMessage.isEmpty ? "注销账户时发生错误，请稍后重试" : deleteAccountErrorMessage)
+            Text(store.errorMessage ?? "操作失败，请稍后重试")
         }
     }
 }
@@ -132,7 +114,7 @@ struct ProfileView: View {
 
 struct UsernameEditModal: View {
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var authService: AuthService
+    @ObservedObject var store: ProfileStore
     @State private var newUsername: String = ""
     
     var body: some View {
@@ -140,7 +122,7 @@ struct UsernameEditModal: View {
             VStack(spacing: 24) {
                 TextField("请输入新的用户名", text: $newUsername)
                     .onAppear {
-                        newUsername = authService.currentUser?.name ?? ""
+                        newUsername = store.user?.name ?? ""
                     }
                     .textFieldStyle(LoginTextFieldStyle())
                     .padding(.horizontal, 20)
@@ -150,11 +132,8 @@ struct UsernameEditModal: View {
                 
                 Button(action: {
                     Task {
-                        do {
-                            try await authService.updateUsername(name: newUsername)
+                        if await store.updateUsername(newUsername) {
                             dismiss()
-                        } catch {
-                            print("❌ 更新用户名失败: \(error.localizedDescription)")
                         }
                     }
                 }) {
@@ -194,7 +173,7 @@ struct UsernameEditModal: View {
 
 struct GenderEditModal: View {
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var authService: AuthService
+    @ObservedObject var store: ProfileStore
     @State private var selectedGender: String = ""
     
     var body: some View {
@@ -222,11 +201,8 @@ struct GenderEditModal: View {
                 
                 Button(action: {
                     Task {
-                        do {
-                            try await authService.updateGender(gender: selectedGender)
+                        if await store.updateGender(selectedGender) {
                             dismiss()
-                        } catch {
-                            print("❌ 更新性别失败: \(error.localizedDescription)")
                         }
                     }
                 }) {
@@ -363,4 +339,3 @@ struct RoundedCorner: Shape {
         return Path(path.cgPath)
     }
 }
-

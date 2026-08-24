@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @EnvironmentObject var authService: AuthService
+    @EnvironmentObject var sessionStore: SessionStore
     
     var body: some View {
         ZStack {
@@ -51,6 +51,6 @@ struct LoginView: View {
 #Preview {
     NavigationView {
         LoginView()
-            .environmentObject(AuthService.shared)
+            .environmentObject(AppDependencies.preview.sessionStore)
     }
 }

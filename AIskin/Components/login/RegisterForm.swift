@@ -20,7 +20,7 @@ struct RegisterForm: View {
     @State private var errorMessage: String?
     @State private var validationErrors: [String: String] = [:]
     
-    @EnvironmentObject var authService: AuthService
+    @EnvironmentObject var sessionStore: SessionStore
     var onRegisterSuccess: ((User) -> Void)?
     
     var body: some View {
@@ -457,10 +457,10 @@ struct RegisterForm: View {
         Task {
             do {
                 // 使用手机号注册，如果API需要email，可以使用phone作为email
-                try await authService.register(name: name, phone: phone, password: password, gender: gender)
+                try await sessionStore.register(name: name, phone: phone, password: password, gender: gender)
                 
                 await MainActor.run {
-                    if let user = authService.currentUser {
+                    if let user = sessionStore.currentUser {
                         onRegisterSuccess?(user)
                     }
                     isLoading = false
@@ -477,8 +477,7 @@ struct RegisterForm: View {
 
 #Preview {
     RegisterForm()
-        .environmentObject(AuthService.shared)
+        .environmentObject(AppDependencies.preview.sessionStore)
         .padding()
         .background(Color(red: 1.0, green: 0.976, blue: 0.984))
 }
-
