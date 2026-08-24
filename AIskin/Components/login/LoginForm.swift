@@ -128,7 +128,9 @@ struct LoginForm: View {
                     
                     Spacer()
                     
-                    NavigationLink(destination: ForgotPasswordView()) {
+                    NavigationLink {
+                        ForgotPasswordView(initialPhone: phone)
+                    } label: {
                         Text("忘记密码？")
                             .font(.system(size: 14))
                             .foregroundColor(Color(red: 0.973, green: 0.733, blue: 0.816))
@@ -241,14 +243,6 @@ struct LoginForm: View {
                 }
             }
         }
-    }
-}
-
-// 占位视图 - 忘记密码页面
-struct ForgotPasswordView: View {
-    var body: some View {
-        Text("忘记密码功能")
-            .navigationTitle("忘记密码")
     }
 }
 

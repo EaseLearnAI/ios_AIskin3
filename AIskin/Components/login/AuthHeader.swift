@@ -40,17 +40,6 @@ struct AuthHeader: View {
     
     var body: some View {
         ZStack {
-            // 粉色渐变背景
-            LinearGradient(
-                gradient: Gradient(colors: [
-                    Color(red: 0.973, green: 0.733, blue: 0.816), // #F8BBD0
-                    Color(red: 0.882, green: 0.745, blue: 0.906)  // #E1BEE7
-                ]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea(edges: .top)
-            
             VStack(spacing: 0) {
                 // 返回按钮
                 if showBackButton {
@@ -70,17 +59,7 @@ struct AuthHeader: View {
                 }
                 
                 VStack(spacing: 8) {
-                    // Logo
-                    ZStack {
-                        Circle()
-                            .fill(Color.white)
-                            .frame(width: 56, height: 56)
-                            .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 3)
-                        
-                        Image(systemName: "pawprint.fill")
-                            .font(.system(size: 28))
-                            .foregroundColor(Color(red: 0.973, green: 0.733, blue: 0.816))
-                    }
+                    AISkinLogoMark(size: 60)
                     .padding(.top, showBackButton ? 4 : 16)
                     
                     // App名称
@@ -105,10 +84,18 @@ struct AuthHeader: View {
                 .padding(.bottom, 20)
             }
         }
+        .frame(maxWidth: .infinity)
         .frame(height: showBackButton ? 180 : 200)
-        .clipShape(
+        // The background is one continuous shape that extends behind the
+        // status bar. Keeping the clipping on the background (instead of the
+        // whole header) removes the visible safe-area color seam.
+        .background(alignment: .bottom) {
             BottomRoundedRectangle(cornerRadius: 30)
-        )
+                .fill(AISkinAuthStyle.gradient)
+                .frame(maxWidth: .infinity)
+                .frame(height: (showBackButton ? 180 : 200) + 100)
+                .ignoresSafeArea(edges: .top)
+        }
     }
 }
 
@@ -122,4 +109,3 @@ struct AuthHeader: View {
         Spacer()
     }
 }
-

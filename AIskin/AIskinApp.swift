@@ -11,6 +11,14 @@ import SwiftUI
 struct AIskinApp: App {
     private let dependencies = AppDependencies.live
 
+    init() {
+#if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("-uiTestingResetSession") {
+            dependencies.sessionStore.resetForTesting()
+        }
+#endif
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()

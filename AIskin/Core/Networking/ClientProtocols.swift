@@ -6,6 +6,8 @@ protocol AuthClient {
     func register(name: String, phone: String, password: String, gender: String?) async throws -> (token: String, user: User)
     func login(email: String, password: String) async throws -> (token: String, user: User)
     func login(phone: String, password: String) async throws -> (token: String, user: User)
+    func requestPasswordReset(phone: String) async throws -> String
+    func resetPassword(phone: String, verificationCode: String, newPassword: String) async throws
     func getCurrentUser() async throws -> User
     func updateUsername(name: String) async throws -> User
     func updateGender(gender: String) async throws -> User
@@ -114,6 +116,8 @@ final class UnavailableServiceClients:
     func register(name: String, phone: String, password: String, gender: String?) async throws -> (token: String, user: User) { try unavailable() }
     func login(email: String, password: String) async throws -> (token: String, user: User) { try unavailable() }
     func login(phone: String, password: String) async throws -> (token: String, user: User) { try unavailable() }
+    func requestPasswordReset(phone: String) async throws -> String { try unavailable() }
+    func resetPassword(phone: String, verificationCode: String, newPassword: String) async throws { throw APIError.serverError(reason) }
     func getCurrentUser() async throws -> User { try unavailable() }
     func updateUsername(name: String) async throws -> User { try unavailable() }
     func updateGender(gender: String) async throws -> User { try unavailable() }
