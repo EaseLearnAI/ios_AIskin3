@@ -36,6 +36,23 @@ struct LoginRequest: Codable {
     var password: String
 }
 
+/// 请求发送找回密码验证码
+struct PasswordResetCodeRequest: Codable {
+    var phone: String
+}
+
+/// 使用短信验证码确认账号归属并设置新密码
+struct PasswordResetConfirmRequest: Codable {
+    var phone: String
+    var verificationCode: String
+    var newPassword: String
+}
+
+struct PasswordResetResponse: Codable {
+    var success: Bool
+    var message: String?
+}
+
 /// 更新用户名请求
 struct UpdateUsernameRequest: Codable {
     var name: String
@@ -65,9 +82,11 @@ struct IdeaCategory: Codable {
 /// 用户API服务
 class UserApiService {
     static let shared = UserApiService()
-    private let apiClient = APIClient.shared
+    private let apiClient: APIClient
     
-    private init() {}
+    init(apiClient: APIClient = .shared) {
+        self.apiClient = apiClient
+    }
     
     /// 用户注册（使用邮箱）
     func register(name: String, email: String, password: String) async throws -> (token: String, user: User) {
@@ -180,6 +199,42 @@ class UserApiService {
         print("   - 手机号: \(user.phone ?? "未设置")")
         
         return (token, user)
+    }
+
+    /// 发送找回密码短信验证码。服务端应始终返回中性提示，避免泄露手机号是否已注册。
+    func requestPasswordReset(phone: String) async throws -> String {
+        let response: PasswordResetResponse = try await apiClient.post(
+            endpoint: "/users/password-reset/request",
+            body: PasswordResetCodeRequest(phone: phone),
+            requiresAuth: false
+        )
+
+        guard response.success else {
+            throw APIError.serverError(response.message ?? "验证码发送失败")
+        }
+
+        return response.message ?? "验证码已发送，请注意查收"
+    }
+
+    /// 验证短信验证码并设置新密码
+    func resetPassword(
+        phone: String,
+        verificationCode: String,
+        newPassword: String
+    ) async throws {
+        let response: PasswordResetResponse = try await apiClient.post(
+            endpoint: "/users/password-reset/confirm",
+            body: PasswordResetConfirmRequest(
+                phone: phone,
+                verificationCode: verificationCode,
+                newPassword: newPassword
+            ),
+            requiresAuth: false
+        )
+
+        guard response.success else {
+            throw APIError.serverError(response.message ?? "密码修改失败")
+        }
     }
     
     /// 获取当前用户信息
@@ -352,7 +407,5 @@ class UserApiService {
 }
 
 struct EmptyRequest: Codable {}
-
-
 
 

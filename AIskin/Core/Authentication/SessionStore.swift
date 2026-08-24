@@ -55,6 +55,22 @@ final class SessionStore: ObservableObject {
         try establishSession(token: credentials.token, user: credentials.user)
     }
 
+    func requestPasswordReset(phone: String) async throws -> String {
+        try await authClient.requestPasswordReset(phone: phone)
+    }
+
+    func resetPassword(
+        phone: String,
+        verificationCode: String,
+        newPassword: String
+    ) async throws {
+        try await authClient.resetPassword(
+            phone: phone,
+            verificationCode: verificationCode,
+            newPassword: newPassword
+        )
+    }
+
     func login(token: String, user: User) {
         do {
             try establishSession(token: token, user: user)

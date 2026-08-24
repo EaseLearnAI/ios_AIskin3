@@ -32,6 +32,31 @@ final class AIskinUITests: XCTestCase {
     }
 
     @MainActor
+    func testForgotPasswordFlowShowsCompleteResetForm() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-uiTestingResetSession"]
+        app.launch()
+
+        XCTAssertTrue(app.staticTexts["欢迎回来"].waitForExistence(timeout: 5))
+
+        let forgotPasswordButton = app.buttons["忘记密码？"]
+        XCTAssertTrue(forgotPasswordButton.exists)
+        forgotPasswordButton.tap()
+
+        XCTAssertTrue(app.staticTexts["找回密码"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.textFields["请输入注册手机号"].exists)
+        XCTAssertTrue(app.textFields["6位短信验证码"].exists)
+        XCTAssertTrue(app.buttons["获取验证码"].exists)
+        XCTAssertTrue(app.buttons["确认修改密码"].exists)
+
+        app.buttons["确认修改密码"].tap()
+        XCTAssertTrue(app.staticTexts["请输入手机号"].exists)
+        XCTAssertTrue(app.staticTexts["请输入6位短信验证码"].exists)
+        XCTAssertTrue(app.staticTexts["密码长度至少6个字符"].exists)
+        XCTAssertTrue(app.staticTexts["请再次输入新密码"].exists)
+    }
+
+    @MainActor
     func testLaunchPerformance() throws {
         // This measures how long it takes to launch your application.
         measure(metrics: [XCTApplicationLaunchMetric()]) {

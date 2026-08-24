@@ -14,15 +14,8 @@ struct RegisterView: View {
     var body: some View {
         ZStack {
             // 背景渐变
-            LinearGradient(
-                gradient: Gradient(colors: [
-                    Color(red: 1.0, green: 0.976, blue: 0.984), // #fff9fb
-                    Color.white
-                ]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
+            AISkinAuthStyle.pageGradient
+                .ignoresSafeArea()
             
             VStack(spacing: 0) {
                 // 头部组件
