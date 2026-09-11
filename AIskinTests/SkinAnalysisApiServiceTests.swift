@@ -86,8 +86,9 @@ class SkinAnalysisApiServiceTests: XCTestCase {
                 XCTFail("分析结果缺少整体评估或皮肤类型")
                 return
             }
-            XCTAssertGreaterThanOrEqual(assessment.healthScore, 0, "健康评分应该在0-100之间")
-            XCTAssertLessThanOrEqual(assessment.healthScore, 100, "健康评分应该在0-100之间")
+            let healthScore = try XCTUnwrap(assessment.healthScore, "真实分析应该提供健康评分")
+            XCTAssertGreaterThanOrEqual(healthScore, 0, "健康评分应该在0-100之间")
+            XCTAssertLessThanOrEqual(healthScore, 100, "健康评分应该在0-100之间")
             
             print("✅ 皮肤分析成功")
             print("   - 分析ID: \(analysis.id)")

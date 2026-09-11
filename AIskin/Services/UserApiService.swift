@@ -87,6 +87,17 @@ class UserApiService {
     init(apiClient: APIClient = .shared) {
         self.apiClient = apiClient
     }
+
+    func loginWithApple(_ request: AppleLoginRequest) async throws -> (token: String, user: User) {
+        let response: UserResponse = try await apiClient.post(
+            endpoint: "/users/apple", body: request, requiresAuth: false
+        )
+        guard response.success, let token = response.token, !token.isEmpty,
+              let user = response.data?.user else {
+            throw APIError.serverError(response.message ?? "Apple 登录失败")
+        }
+        return (token, user)
+    }
     
     /// 用户注册（使用邮箱）
     func register(name: String, email: String, password: String) async throws -> (token: String, user: User) {
@@ -407,5 +418,4 @@ class UserApiService {
 }
 
 struct EmptyRequest: Codable {}
-
 

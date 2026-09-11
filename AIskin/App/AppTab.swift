@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// The three stable, top-level destinations in AIskin.
+/// The stable, top-level destinations in AIskin.
 enum AppTab: Int, CaseIterable, Hashable, Identifiable {
     case home
     case products
@@ -11,7 +11,7 @@ enum AppTab: Int, CaseIterable, Hashable, Identifiable {
     var title: String {
         switch self {
         case .home: "首页"
-        case .products: "产品分析"
+        case .products: "护肤柜"
         case .skinAnalysis: "肌肤检测"
         }
     }
@@ -37,9 +37,4 @@ enum AppTab: Int, CaseIterable, Hashable, Identifiable {
         Label(title, systemImage: selectedSystemImage)
     }
 
-    init?(legacyIndex: Int) {
-        self.init(rawValue: legacyIndex)
-    }
-
-    var legacyIndex: Int { rawValue }
 }

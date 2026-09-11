@@ -13,6 +13,7 @@ enum APIError: Error, LocalizedError {
     case noData
     case decodingError
     case serverError(String)
+    case notFound(message: String, code: String?)
     case unauthorized
     case networkError(Error)
     case unknown
@@ -27,6 +28,8 @@ enum APIError: Error, LocalizedError {
             return "数据解析错误"
         case .serverError(let message):
             return "服务器错误: \(message)"
+        case .notFound(let message, _):
+            return message
         case .unauthorized:
             return "未授权，请重新登录"
         case .networkError(let error):
@@ -46,16 +49,29 @@ final class APIClient {
     init(httpClient: (any HTTPClient)? = nil) {
         if let httpClient {
             self.httpClient = httpClient
-        } else {
-            let configuration = URLSessionConfiguration.default
-            configuration.timeoutIntervalForRequest = 120
-            configuration.timeoutIntervalForResource = 120
-            let session = URLSession(configuration: configuration)
-            self.httpClient = URLSessionHTTPClient(
-                session: session,
-                tokenProvider: { KeychainCredentialStore.shared.readToken() }
-            )
+            return
         }
+#if DEBUG
+        if AppBackendConfiguration.mode == .mock {
+            self.httpClient = MockBackendHTTPClient()
+            print("🧪 AISkin 使用完整 UI Mock 后端（添加 -AISkinUseLiveBackend 可切换真实接口）")
+            return
+        }
+#endif
+
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 120
+        configuration.timeoutIntervalForResource = 120
+#if DEBUG && !targetEnvironment(simulator)
+        // The first LAN request can wait while the user answers iOS's
+        // local-network permission prompt, within the existing 120s limit.
+        configuration.waitsForConnectivity = true
+#endif
+        let session = URLSession(configuration: configuration)
+        self.httpClient = URLSessionHTTPClient(
+            session: session,
+            tokenProvider: { AppBackendConfiguration.credentialStore.readToken() }
+        )
     }
 
     func get<T: Codable>(

@@ -5,7 +5,8 @@ import Combine
 final class SessionStore: ObservableObject {
     static let shared = SessionStore(
         authClient: UserApiService.shared,
-        credentialStore: KeychainCredentialStore.shared
+        credentialStore: AppBackendConfiguration.credentialStore,
+        userKey: AppBackendConfiguration.currentUserKey
     )
 
     // internal setter 暂时保留给旧测试；业务页面只应读取，由 SessionStore 方法写入。
@@ -52,6 +53,11 @@ final class SessionStore: ObservableObject {
 
     func login(phone: String, password: String) async throws {
         let credentials = try await authClient.login(phone: phone, password: password)
+        try establishSession(token: credentials.token, user: credentials.user)
+    }
+
+    func loginWithApple(_ request: AppleLoginRequest) async throws {
+        let credentials = try await authClient.loginWithApple(request)
         try establishSession(token: credentials.token, user: credentials.user)
     }
 
@@ -109,6 +115,20 @@ final class SessionStore: ObservableObject {
 
     func updateGender(gender: String) async throws {
         let user = try await authClient.updateGender(gender: gender)
+        setCurrentUser(user)
+    }
+
+    func updateAge(age: Int) async throws {
+        guard User.ageRange.contains(age) else {
+            throw APIError.serverError("请输入 13–120 的年龄")
+        }
+        guard let userID = currentUser?.id else { throw APIError.unauthorized }
+        let user = try await authClient.updateAge(age: age)
+        // A late response must not restore a logged-out or different account.
+        guard currentUser?.id == userID, user.id == userID else { throw APIError.unauthorized }
+        guard user.age == age else {
+            throw APIError.serverError("年龄未保存成功，请重试")
+        }
         setCurrentUser(user)
     }
 

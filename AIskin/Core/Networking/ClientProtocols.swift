@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 
 protocol AuthClient {
+    func loginWithApple(_ request: AppleLoginRequest) async throws -> (token: String, user: User)
     func register(name: String, email: String, password: String) async throws -> (token: String, user: User)
     func register(name: String, phone: String, password: String, gender: String?) async throws -> (token: String, user: User)
     func login(email: String, password: String) async throws -> (token: String, user: User)
@@ -15,6 +16,12 @@ protocol AuthClient {
     func getUserStats() async throws -> UserStats
     func logout() async throws
     func deleteAccount() async throws
+}
+
+extension AuthClient {
+    func loginWithApple(_ request: AppleLoginRequest) async throws -> (token: String, user: User) {
+        throw APIError.serverError("当前认证客户端未配置 Apple 登录")
+    }
 }
 
 protocol ProductClient {

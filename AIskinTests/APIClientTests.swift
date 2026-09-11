@@ -129,6 +129,8 @@ class APIClientIntegrationTests: XCTestCase {
             
             // Assert: 如果能到达这里说明连接成功（即使返回404）
             print("✅ 服务器连接成功")
+        } catch APIError.notFound {
+            // A reachable server may not expose the API root.
         } catch APIError.serverError(let message) {
             // 404错误也是可以接受的，说明服务器在运行
             if message.contains("404") || message.contains("端点不存在") {
@@ -167,6 +169,9 @@ class APIClientIntegrationTests: XCTestCase {
             XCTAssertLessThan(duration, 5.0, "API响应应该在5秒内完成")
             print("✅ API响应时间: \(String(format: "%.2f", duration))秒")
             expectation.fulfill()
+        } catch APIError.notFound {
+            XCTAssertLessThan(Date().timeIntervalSince(startTime), 5.0)
+            expectation.fulfill()
         } catch APIError.serverError(let message) {
             // 404错误也是可以接受的，说明服务器在运行
             if message.contains("404") || message.contains("端点不存在") {
@@ -184,4 +189,3 @@ class APIClientIntegrationTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 10.0)
     }
 }
-

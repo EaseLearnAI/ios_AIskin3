@@ -45,41 +45,15 @@ class SkinAnalysisApiService {
         print("✅ 皮肤分析成功")
         print("📋 分析结果:")
         print("   - 分析ID: \(data.analysisId ?? "未知")")
-        print("   - 健康评分: \(data.overallAssessment?.healthScore ?? 0)")
+        print("   - 健康评分: \(data.overallAssessment?.healthScore.map { String($0) } ?? "未提供")")
         print("   - 皮肤类型: \(data.skinType?.type ?? "未知")")
         print("   - 皮肤状况: \(data.overallAssessment?.skinCondition ?? "未知")")
         
-        // 如果响应中已经包含完整数据，直接构建SkinAnalysis对象
-        if let analysisId = data.analysisId {
-            // 检查是否有完整数据
-            if data.blackheads != nil || data.acne != nil || data.pores != nil {
-                // 直接使用返回的数据构建SkinAnalysis
-                var skinAnalysis = SkinAnalysis(
-                    id: analysisId,
-                    imageUrl: data.imageUrl,
-                    imageName: nil,
-                    skinType: data.skinType,
-                    blackheads: data.blackheads,
-                    acne: data.acne,
-                    pores: data.pores,
-                    otherIssues: data.otherIssues,
-                    overallAssessment: data.overallAssessment,
-                    analysisConfig: data.analysisConfig,
-                    moisture: data.moisture,
-                    glossiness: data.glossiness,
-                    elasticity: data.elasticity,
-                    problemAreaScore: data.problemAreaScore,
-                    createdAt: Date(),
-                    updatedAt: Date()
-                )
-                return skinAnalysis
-            } else {
-                // 如果没有完整数据，获取详情
-                return try await getAnalysisDetail(analysisId: analysisId)
-            }
-        } else {
+        guard let analysisID = data.analysisId, !analysisID.isEmpty else {
             throw APIError.serverError("未返回分析ID")
         }
+        if let persisted = data.persistedAnalysis { return persisted }
+        return try await getAnalysisDetail(analysisId: analysisID)
     }
     
     /// 将SkinAnalysis转换为AnalysisResult（用于UI显示）
@@ -93,89 +67,112 @@ class SkinAnalysisApiService {
         
         // 转换数据格式
         return AnalysisResult(
-            healthScore: Int(analysis.overallAssessment?.healthScore ?? 0),
+            healthScore: analysis.overallAssessment?.healthScore.map { Int($0) },
             summary: analysis.overallAssessment?.summary,
             skinCondition: analysis.overallAssessment?.skinCondition,
             skinType: analysis.skinType != nil ? SkinTypeData(
                 type: analysis.skinType!.type,
-                subtype: analysis.skinType!.subtype
+                subtype: analysis.skinType!.subtype,
+                basis: analysis.skinType!.basis
             ) : nil,
             blackheads: analysis.blackheads != nil ? BlackheadsData(
-                exists: analysis.blackheads!.exists ?? false,
+                exists: analysis.blackheads!.exists,
                 severity: analysis.blackheads!.severity,
-                distribution: analysis.blackheads!.distribution
+                distribution: analysis.blackheads!.distribution,
+                description: analysis.blackheads!.description
             ) : nil,
             acne: analysis.acne != nil ? AcneData(
-                exists: analysis.acne!.exists ?? false,
+                exists: analysis.acne!.exists,
                 count: analysis.acne!.count,
                 types: analysis.acne!.types,
-                distribution: analysis.acne!.distribution
+                distribution: analysis.acne!.distribution,
+                severity: analysis.acne!.severity,
+                activity: analysis.acne!.activity,
+                description: analysis.acne!.description
             ) : nil,
             pores: analysis.pores != nil ? PoresData(
-                enlarged: analysis.pores!.enlarged ?? false,
+                enlarged: analysis.pores!.enlarged,
                 severity: analysis.pores!.severity,
-                distribution: analysis.pores!.distribution
+                distribution: analysis.pores!.distribution,
+                description: analysis.pores!.description
             ) : nil,
             skinToneEvenness: skinToneEvenness != nil ? SkinToneEvennessData(
                 score: skinToneEvenness!.score,
                 description: skinToneEvenness!.description
             ) : nil,
             redness: redness != nil ? RednessData(
-                exists: redness!.exists ?? false,
+                exists: redness!.exists,
                 severity: redness!.severity,
-                description: nil,
+                description: redness!.description,
                 distribution: redness!.distribution
             ) : nil,
             hyperpigmentation: hyperpigmentation != nil ? HyperpigmentationData(
-                exists: hyperpigmentation!.exists ?? false,
+                exists: hyperpigmentation!.exists,
                 severity: hyperpigmentation!.severity,
                 description: hyperpigmentation!.description,
                 types: hyperpigmentation!.types,
                 distribution: hyperpigmentation!.distribution
             ) : nil,
             fineLines: fineLines != nil ? FineLinesData(
-                exists: fineLines!.exists ?? false,
+                exists: fineLines!.exists,
                 severity: fineLines!.severity,
                 description: fineLines!.description,
                 distribution: fineLines!.distribution
             ) : nil,
             sensitivity: sensitivity != nil ? SensitivityData(
-                exists: sensitivity!.exists ?? false,
+                exists: sensitivity!.exists,
                 severity: sensitivity!.severity,
                 description: sensitivity!.description,
                 signs: sensitivity!.signs
             ) : nil,
-            oilLevel: calculateOilLevel(analysis: analysis), // 根据皮肤类型和pores计算
-            moistureLevel: calculateMoistureLevel(analysis: analysis), // 根据moisture值计算
-            poreLevel: analysis.pores?.severity ?? "正常", // 使用pores的severity作为poreLevel
+            oilLevel: nil, // The response has no direct oil measurement; skin type remains separate.
+            moistureLevel: calculateMoistureLevel(analysis: analysis),
+            poreLevel: analysis.pores?.severity,
             recommendations: analysis.overallAssessment?.recommendations,
-            createdAt: analysis.createdAt
+            createdAt: analysis.createdAt,
+            sourceID: analysis.id,
+            context: analysis.context,
+            additionalIssueDescriptions: analysis.otherIssues?.additionalDescriptions ?? [],
+            imageURL: analysis.imageUrl.flatMap(URL.init(string:)),
+            assessmentDetails: assessmentDetails(from: analysis)
         )
     }
-    
-    /// 计算油脂水平
-    private func calculateOilLevel(analysis: SkinAnalysis) -> String? {
-        // 根据皮肤类型判断
-        if let skinType = analysis.skinType?.type {
-            if skinType.contains("油") || skinType.contains("混油") {
-                return "偏高"
-            } else if skinType.contains("干") {
-                return "低"
-            }
+
+    private func assessmentDetails(from analysis: SkinAnalysis) -> [SkinIssueDescription] {
+        var rows: [SkinIssueDescription] = []
+        func add(_ title: String, _ values: [String?]) {
+            let texts = values.compactMap { $0 }.filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+            if !texts.isEmpty { rows.append(SkinIssueDescription(field: title, texts: texts)) }
         }
-        // 根据pores判断
-        if let pores = analysis.pores, pores.enlarged == true {
-            if pores.severity == "中度" || pores.severity == "严重" {
-                return "偏高"
-            }
+        add("肤质判断依据", [analysis.skinType?.subtype, analysis.skinType?.basis])
+        add("整体肤况", [analysis.overallAssessment?.skinCondition])
+        let metrics: [(String, Double?)] = [
+            ("综合评分原值", analysis.overallAssessment?.healthScore),
+            ("水分", analysis.moisture), ("光泽度", analysis.glossiness),
+            ("弹性", analysis.elasticity), ("问题区域评分", analysis.problemAreaScore)
+        ]
+        for (name, value) in metrics {
+            if let value { add(name, [String(value) + "（本次模型估计值）"]) }
         }
-        return "正常"
+        return rows
+    }
+
+    func updateContext(analysisID: String, condition: String?, light: String?, feelings: [String]?) async throws -> SkinAnalysis {
+        let response: SkinAnalysisDetailResponse = try await apiClient.patch(
+            endpoint: "/skin-analysis/\(analysisID)/context",
+            body: SkinAnalysisContext(condition: condition, light: light, feelings: feelings),
+            requiresAuth: true
+        )
+        guard response.success, let analysis = response.data?.analysis else {
+            throw APIError.serverError("保存检测备注失败")
+        }
+        return analysis
     }
     
     /// 计算水分水平
     private func calculateMoistureLevel(analysis: SkinAnalysis) -> String? {
         guard let moisture = analysis.moisture else {
-            return "正常"
+            return nil
         }
         if moisture >= 80 {
             return "高"
@@ -214,7 +211,7 @@ class SkinAnalysisApiService {
         print("   - 总数: \(response.data?.pagination?.total ?? 0)")
         print("   - 当前页数量: \(analyses.count)")
         for analysis in analyses {
-            let score = analysis.overallAssessment?.healthScore ?? 0
+            let score = analysis.overallAssessment?.healthScore.map { String($0) } ?? "未提供"
             print("     • 分析ID: \(analysis.id), 健康评分: \(score), 创建时间: \(analysis.createdAt?.description ?? "未知")")
         }
         
@@ -239,7 +236,7 @@ class SkinAnalysisApiService {
         print("✅ 获取分析详情成功")
         print("📋 分析详情:")
         print("   - 分析ID: \(analysis.id)")
-        print("   - 健康评分: \(analysis.overallAssessment?.healthScore ?? 0)")
+        print("   - 健康评分: \(analysis.overallAssessment?.healthScore.map { String($0) } ?? "未提供")")
         print("   - 皮肤类型: \(analysis.skinType?.type ?? "未知")")
         print("   - 皮肤状况: \(analysis.overallAssessment?.skinCondition ?? "未知")")
         print("   - 水分: \(analysis.moisture ?? 0)")
@@ -271,7 +268,7 @@ class SkinAnalysisApiService {
         print("✅ 获取最新分析成功")
         print("📋 最新分析信息:")
         print("   - 分析ID: \(analysis.id)")
-        print("   - 健康评分: \(analysis.overallAssessment?.healthScore ?? 0)")
+        print("   - 健康评分: \(analysis.overallAssessment?.healthScore.map { String($0) } ?? "未提供")")
         print("   - 创建时间: \(analysis.createdAt?.description ?? "未知")")
         
         return analysis
@@ -324,7 +321,3 @@ class SkinAnalysisApiService {
         print("✅ 删除分析记录成功")
     }
 }
-
-
-
-

@@ -11,6 +11,8 @@ final class AppDependencies {
     let skinAnalysisClient: any SkinAnalysisClient
     let conflictClient: any ConflictClient
     let ingredientAnalysisClient: any IngredientAnalysisClient
+    let paymentClient: any PaymentClient
+    let paymentLauncher: any PaymentSDKLaunching
     let sessionStore: SessionStore
 
     init(
@@ -22,7 +24,9 @@ final class AppDependencies {
         skinAnalysisClient: any SkinAnalysisClient,
         conflictClient: any ConflictClient,
         ingredientAnalysisClient: any IngredientAnalysisClient,
-        sessionStore: SessionStore? = nil
+        sessionStore: SessionStore? = nil,
+        paymentClient: (any PaymentClient)? = nil,
+        paymentLauncher: (any PaymentSDKLaunching)? = nil
     ) {
         self.httpClient = httpClient
         self.credentialStore = credentialStore
@@ -32,6 +36,8 @@ final class AppDependencies {
         self.skinAnalysisClient = skinAnalysisClient
         self.conflictClient = conflictClient
         self.ingredientAnalysisClient = ingredientAnalysisClient
+        self.paymentClient = paymentClient ?? PaymentApiService(httpClient: httpClient)
+        self.paymentLauncher = paymentLauncher ?? AlipayPaymentLauncher()
         self.sessionStore = sessionStore ?? SessionStore(
             authClient: authClient,
             credentialStore: credentialStore
@@ -40,7 +46,7 @@ final class AppDependencies {
 
     static let live = AppDependencies(
         httpClient: APIClient.shared.httpClient,
-        credentialStore: KeychainCredentialStore.shared,
+        credentialStore: AppBackendConfiguration.credentialStore,
         authClient: UserApiService.shared,
         productClient: ProductApiService.shared,
         planClient: PlanApiService.shared,

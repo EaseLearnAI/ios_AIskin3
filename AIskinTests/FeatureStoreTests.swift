@@ -63,6 +63,120 @@ final class FeatureStoreTests: XCTestCase {
             return XCTFail("加载失败应进入 failed 状态")
         }
     }
+
+    func testPlanGenerationRejectsDuplicateAndIgnoresCancelledCompletion() async {
+        let plan = SkinPlan(id: "generated", name: "方案", tags: [], morning: [], evening: [], recommendations: [])
+        let responses: [Result<SkinPlan, Error>] = [.success(plan), .failure(StoreTestError.expected)]
+        for response in responses {
+            let client = PlansClientMock()
+            let store = PlanStore(client: client)
+            let started = expectation(description: "Plan generation is in flight")
+            var pending: CheckedContinuation<SkinPlan, Error>?
+            client.generateHandler = {
+                try await withCheckedThrowingContinuation {
+                    pending = $0
+                    started.fulfill()
+                }
+            }
+            let operation = Task {
+                await store.generate(requirement: "补水", age: 28, concerns: ["补水"], customRequirements: nil)
+            }
+            await fulfillment(of: [started], timeout: 1)
+            await store.generate(requirement: "补水", age: 28, concerns: ["补水"], customRequirements: nil)
+            XCTAssertEqual(client.generationRequests, 1)
+            XCTAssertTrue(store.isGenerating)
+
+            operation.cancel()
+            pending?.resume(with: response)
+            await operation.value
+
+            XCTAssertNil(store.generatedPlan)
+            XCTAssertNil(store.generationError)
+            XCTAssertFalse(store.isGenerating)
+            client.generateHandler = { plan }
+            await store.generate(requirement: "补水", age: 28, concerns: ["补水"], customRequirements: nil)
+            XCTAssertEqual(store.generatedPlan?.id, "generated", "A fresh request after cancellation should succeed")
+            XCTAssertEqual(client.generationRequests, 2)
+        }
+    }
+
+    func testPlanGenerationCancellationErrorDoesNotShowFailure() async {
+        let client = PlansClientMock()
+        client.generateHandler = { throw CancellationError() }
+        let store = PlanStore(client: client)
+
+        await store.generate(requirement: "补水", age: 28, concerns: ["补水"], customRequirements: nil)
+
+        XCTAssertNil(store.generatedPlan)
+        XCTAssertNil(store.generationError)
+        XCTAssertFalse(store.isGenerating)
+    }
+
+    func testAlreadyCancelledGenerationDoesNotSubmit() async {
+        let client = PlansClientMock()
+        let store = PlanStore(client: client)
+        let operation = Task {
+            withUnsafeCurrentTask { $0?.cancel() }
+            await store.generate(requirement: "补水", age: 28, concerns: ["补水"], customRequirements: nil)
+        }
+        await operation.value
+        XCTAssertEqual(client.generationRequests, 0)
+        XCTAssertNil(store.generationError)
+        XCTAssertFalse(store.isGenerating)
+    }
+
+    func testConflictAnalysisRejectsDuplicateAndIgnoresCancelledCompletion() async {
+        let report = ConflictAnalysisData(conflictId: "result", conflicts: [], safeCombo: [], recommendations: nil, products: [])
+        let responses: [Result<ConflictAnalysisData, Error>] = [.success(report), .failure(StoreTestError.expected)]
+        for response in responses {
+            let client = ConflictClientMock()
+            let store = ConflictAnalysisStore(client: client)
+            let started = expectation(description: "Conflict analysis is in flight")
+            var pending: CheckedContinuation<ConflictAnalysisData, Error>?
+            client.analyzeHandler = {
+                try await withCheckedThrowingContinuation {
+                    pending = $0
+                    started.fulfill()
+                }
+            }
+            let operation = Task { await store.analyze(productIDs: ["one", "two"]) }
+            await fulfillment(of: [started], timeout: 1)
+            await store.analyze(productIDs: ["one", "two"])
+            XCTAssertEqual(client.analysisRequests, 1)
+
+            operation.cancel()
+            pending?.resume(with: response)
+            await operation.value
+
+            guard case .idle = store.state else { return XCTFail("Cancellation must end loading without showing a result or error") }
+            client.analyzeHandler = { report }
+            await store.analyze(productIDs: ["one", "two"])
+            guard case .loaded = store.state else { return XCTFail("A fresh request after cancellation should succeed") }
+            XCTAssertEqual(client.analysisRequests, 2)
+        }
+    }
+
+    func testConflictCancellationErrorReturnsToIdle() async {
+        let client = ConflictClientMock()
+        client.analyzeHandler = { throw CancellationError() }
+        let store = ConflictAnalysisStore(client: client)
+
+        await store.analyze(productIDs: ["one", "two"])
+
+        guard case .idle = store.state else { return XCTFail("Cancellation should not show a failure") }
+    }
+
+    func testAlreadyCancelledConflictAnalysisDoesNotSubmit() async {
+        let client = ConflictClientMock()
+        let store = ConflictAnalysisStore(client: client)
+        let operation = Task {
+            withUnsafeCurrentTask { $0?.cancel() }
+            await store.analyze(productIDs: ["one", "two"])
+        }
+        await operation.value
+        XCTAssertEqual(client.analysisRequests, 0)
+        guard case .idle = store.state else { return XCTFail("No request should have started") }
+    }
 }
 
 private enum StoreTestError: Error { case expected }
@@ -83,8 +197,12 @@ private final class ProductsClientMock: ProductsClient {
 @MainActor
 private final class ConflictClientMock: ConflictAnalysisClient {
     var shouldFail = false
+    var analysisRequests = 0
+    var analyzeHandler: (() async throws -> ConflictAnalysisData)?
 
     func analyze(productIDs: [String]) async throws -> ConflictAnalysisData {
+        analysisRequests += 1
+        if let analyzeHandler { return try await analyzeHandler() }
         if shouldFail { throw StoreTestError.expected }
         return ConflictAnalysisData(
             conflictId: "result",
@@ -99,6 +217,16 @@ private final class ConflictClientMock: ConflictAnalysisClient {
 @MainActor
 private final class PlansClientMock: PlansClient {
     var shouldFail = false
+    var generationRequests = 0
+    var generateHandler: (() async throws -> SkinPlan)?
+
+    func activePlan() async throws -> SkinPlan? {
+        if shouldFail { throw StoreTestError.expected }
+        return nil
+    }
+    func adopt(planID: String) async throws -> SkinPlan { throw StoreTestError.expected }
+    func daily(planID: String, date: String, timezone: String) async throws -> PlanDailyProgress { throw StoreTestError.expected }
+    func updateDailyStep(planID: String, date: String, timezone: String, period: String, step: Int, completed: Bool) async throws -> PlanDailyProgress { throw StoreTestError.expected }
 
     func plans() async throws -> [SkinPlan] {
         if shouldFail { throw StoreTestError.expected }
@@ -106,7 +234,11 @@ private final class PlansClientMock: PlansClient {
     }
 
     func plan(id: String) async throws -> SkinPlan { throw StoreTestError.expected }
-    func createPlan(requirement: String?, age: Int?, concerns: [String]?, customRequirements: String?) async throws -> SkinPlan { throw StoreTestError.expected }
+    func createPlan(requirement: String?, age: Int?, concerns: [String]?, customRequirements: String?) async throws -> SkinPlan {
+        generationRequests += 1
+        if let generateHandler { return try await generateHandler() }
+        throw StoreTestError.expected
+    }
     func updateStep(planID: String, period: String, step: Int, completed: Bool) async throws -> SkinPlan { throw StoreTestError.expected }
     func latestSkinAnalysis() async throws -> SkinAnalysis? { nil }
 }

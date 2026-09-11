@@ -28,7 +28,33 @@ struct SafeCombo: Codable {
     var description: String
 }
 
+struct ConflictAdvice: Codable {
+    var productIds: [String]
+    var title: String
+    var detail: String
+}
+
+enum ConflictPairStatus: String, Codable {
+    case compatible, caution, avoid, unknown
+
+    var title: String {
+        switch self {
+        case .compatible: return "未发现明确冲突"
+        case .caution: return "叠加需注意"
+        case .avoid: return "不建议同时使用"
+        case .unknown: return "暂时无法判断"
+        }
+    }
+}
+
+struct ConflictProductPair: Codable {
+    var productIds: [String]
+    var status: ConflictPairStatus
+    var explanation: String
+}
+
 struct ConflictRecommendations: Codable {
+    var advice: [ConflictAdvice]?
     var productPairings: ProductPairings?
     var routines: Routines?
 }

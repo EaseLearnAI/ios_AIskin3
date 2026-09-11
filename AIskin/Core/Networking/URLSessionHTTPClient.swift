@@ -1,9 +1,34 @@
 import Foundation
 
+@MainActor
 final class URLSessionHTTPClient: HTTPClient {
-    typealias Transport = @Sendable (URLRequest) async throws -> (Data, URLResponse)
+    // Keep the closure's executor explicit across the app/test module boundary.
+    // Both request construction and injected transports use the same isolation.
+    typealias Transport = @MainActor @Sendable (URLRequest) async throws -> (Data, URLResponse)
 
+    static let localBaseURL = URL(string: "http://127.0.0.1:5001/api")!
     static let productionBaseURL = URL(string: "https://www.lunzo.site/api")!
+
+    static let defaultBaseURL: URL = {
+#if DEBUG
+#if targetEnvironment(simulator)
+        return localBaseURL
+#else
+        // A physical iPhone cannot use the Mac's loopback address. Keep its
+        // development endpoint in the Debug build configuration.
+        guard let address = Bundle.main.object(forInfoDictionaryKey: "AISkinDeviceAPIBaseURL") as? String,
+              let url = URL(string: address),
+              url.scheme == "http" || url.scheme == "https",
+              let host = url.host, !host.isEmpty,
+              host != "127.0.0.1", host != "localhost", host != "::1" else {
+            preconditionFailure("Configure AISKIN_DEVICE_API_BASE_URL with the Mac's LAN address.")
+        }
+        return url
+#endif
+#else
+        return productionBaseURL
+#endif
+    }()
 
     private let baseURL: URL
     private let session: URLSession?
@@ -12,7 +37,7 @@ final class URLSessionHTTPClient: HTTPClient {
     private let decoder: JSONDecoder
 
     init(
-        baseURL: URL = URLSessionHTTPClient.productionBaseURL,
+        baseURL: URL = URLSessionHTTPClient.defaultBaseURL,
         session: URLSession? = nil,
         transport: Transport? = nil,
         tokenProvider: @escaping () -> String? = { nil },
@@ -25,7 +50,12 @@ final class URLSessionHTTPClient: HTTPClient {
         self.decoder = decoder
     }
 
+    // There is no actor-bound cleanup. Release stored references synchronously
+    // instead of scheduling an isolated deinit through the back-deployment shim.
+    nonisolated deinit {}
+
     func send<Response: Decodable>(_ request: APIRequest<Response>) async throws -> Response {
+        try Task.checkCancellation()
         let urlRequest = try makeURLRequest(for: request)
         let startedAt = Date()
 
@@ -38,6 +68,7 @@ final class URLSessionHTTPClient: HTTPClient {
             } else {
                 throw APIError.unknown
             }
+            try Task.checkCancellation()
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw APIError.unknown
             }
@@ -59,9 +90,15 @@ final class URLSessionHTTPClient: HTTPClient {
             } catch {
                 throw APIError.decodingError
             }
+        } catch is CancellationError {
+            throw CancellationError()
+        } catch let error as URLError where error.code == .cancelled {
+            throw CancellationError()
         } catch let error as APIError {
+            try Task.checkCancellation()
             throw error
         } catch {
+            try Task.checkCancellation()
             throw APIError.networkError(error)
         }
     }
@@ -110,6 +147,9 @@ final class URLSessionHTTPClient: HTTPClient {
 
         let envelope = try? decoder.decode(APIErrorEnvelope.self, from: data)
         let message = envelope?.message ?? envelope?.error ?? "HTTP \(statusCode)"
+        if statusCode == 404 {
+            return .notFound(message: message, code: envelope?.code)
+        }
         return .serverError(message)
     }
 
@@ -121,9 +161,13 @@ final class URLSessionHTTPClient: HTTPClient {
         duration: TimeInterval
     ) {
 #if DEBUG
-        let path = url?.path ?? "<invalid-url>"
+        let rawPath = url?.path ?? "<invalid-url>"
+        let path = rawPath.contains("/payments/orders/")
+            ? rawPath.replacingOccurrences(of: "(/payments/orders/)[^/]+", with: "$1<order>", options: .regularExpression)
+            : rawPath
+        let host = url?.host ?? "<invalid-host>"
         print(
-            "🌐 \(method.rawValue) \(path) → \(statusCode), \(byteCount) bytes, " +
+            "🌐 \(method.rawValue) \(host)\(path) → \(statusCode), \(byteCount) bytes, " +
             String(format: "%.2fs", duration)
         )
 #endif
@@ -133,4 +177,5 @@ final class URLSessionHTTPClient: HTTPClient {
 private struct APIErrorEnvelope: Decodable {
     let message: String?
     let error: String?
+    let code: String?
 }

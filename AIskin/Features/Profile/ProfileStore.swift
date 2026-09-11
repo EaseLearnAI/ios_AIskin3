@@ -41,6 +41,9 @@ final class ProfileStore: ObservableObject {
         self.client = client
     }
 
+    // No actor-bound cleanup is needed; avoid the isolated-deinit back-deployment path.
+    nonisolated deinit {}
+
     var user: User? { client.currentUser }
 
     func updateUsername(_ name: String) async -> Bool {

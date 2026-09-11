@@ -1,28 +1,73 @@
 import SwiftUI
 
+enum AISkinCardInset {
+    case none
+    case regular
+
+    fileprivate var value: CGFloat {
+        switch self {
+        case .none: 0
+        case .regular: AISkinSpacing.cardPadding
+        }
+    }
+}
+
+enum AISkinCardState {
+    case normal
+    case selected
+}
+
+enum AISkinCardRole {
+    case content, feature, routine, overlay, action
+    var radius: CGFloat {
+        switch self {
+        case .content, .overlay: AISkinRadius.card
+        case .feature: AISkinRadius.featureCard
+        case .routine: AISkinRadius.routineCard
+        case .action: AISkinRadius.actionCard
+        }
+    }
+    var surface: Color {
+        switch self {
+        case .content, .action: AISkinColor.surface
+        case .feature: AISkinColor.featureSurface
+        case .routine: AISkinColor.routineSurface
+        case .overlay: AISkinColor.surfaceElevated
+        }
+    }
+}
+
 struct AISkinCard<Content: View>: View {
-    private let padding: CGFloat
+    private let inset: AISkinCardInset
+    private let state: AISkinCardState
+    private let role: AISkinCardRole
     private let content: Content
 
     init(
-        padding: CGFloat = AISkinSpacing.medium,
+        inset: AISkinCardInset = .regular,
+        state: AISkinCardState = .normal,
+        role: AISkinCardRole = .content,
         @ViewBuilder content: () -> Content
     ) {
-        self.padding = padding
+        self.inset = inset
+        self.state = state
+        self.role = role
         self.content = content()
     }
 
     var body: some View {
         content
-            .padding(padding)
+            .padding(inset == .none ? 0 : (role == .content || role == .overlay) ? inset.value : AISkinSpacing.homeCardPadding)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(AISkinColor.surface)
-            .clipShape(RoundedRectangle(cornerRadius: AISkinRadius.large, style: .continuous))
-            .overlay {
-                RoundedRectangle(cornerRadius: AISkinRadius.large, style: .continuous)
-                    .stroke(AISkinColor.border, lineWidth: 1)
+            .background(state == .selected ? AISkinColor.surfaceSelected : role.surface)
+            .background {
+                if role == .overlay { Rectangle().fill(.regularMaterial) }
             }
-            .aiSkinShadow()
+            .clipShape(RoundedRectangle(cornerRadius: role.radius, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: role.radius, style: .continuous)
+                    .stroke(state == .selected ? AISkinColor.accent.opacity(0.38) : AISkinColor.border, lineWidth: AISkinLayout.hairline)
+            }
     }
 }
 

@@ -1,157 +1,93 @@
-//
-//  HistoryModal.swift
-//  AIskin
-//
-//  Created by terry on 2025/11/3.
-//
-
 import SwiftUI
 
-struct HistoryModal: View {
-    @Binding var isPresented: Bool
-    let historyList: [AnalysisResult]
-    let onSelectHistory: (AnalysisResult) -> Void
-    
+/// Shared native sheet for overview and independent reports.
+struct SkinHistorySheet: View {
+    @Environment(\.dismiss) private var dismiss
+    @ObservedObject var store: SkinAnalysisStore
+    var onSelect: ((AnalysisResult) -> Void)? = nil
+
     var body: some View {
-        ZStack {
-            // Overlay
-            Color.black.opacity(0.5)
-                .ignoresSafeArea()
-                .onTapGesture {
-                    isPresented = false
-                }
-            
-            // Modal Card
-            VStack(spacing: 0) {
-                // Header
-                HStack {
-                    Text("检测历史")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundColor(Color(red: 0.227, green: 0.227, blue: 0.235))
-                    
-                    Spacer()
-                    
-                    Button(action: { isPresented = false }) {
-                        Image(systemName: "xmark")
-                            .font(.system(size: 18))
-                            .foregroundColor(Color(red: 0.420, green: 0.451, blue: 0.502))
-                            .frame(width: 36, height: 36)
-                            .background(Color(red: 0.961, green: 0.961, blue: 0.961))
-                            .cornerRadius(18)
-                    }
-                }
-                .padding(20)
-                .overlay(
-                    Rectangle()
-                        .frame(height: 0.5)
-                        .foregroundColor(Color(red: 0.914, green: 0.918, blue: 0.933))
-                        .offset(y: 20),
-                    alignment: .bottom
-                )
-                
-                // Content
-                if historyList.isEmpty {
-                    VStack(spacing: 16) {
-                        Image(systemName: "magnifyingglass")
-                            .font(.system(size: 40))
-                            .foregroundColor(Color(red: 0.420, green: 0.451, blue: 0.502))
-                        
-                        Text("暂无检测历史")
-                            .font(.system(size: 16))
-                            .foregroundColor(Color(red: 0.420, green: 0.451, blue: 0.502))
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 60)
-                } else {
-                    ScrollView {
-                        VStack(spacing: 0) {
-                            ForEach(Array(historyList.enumerated()), id: \.offset) { index, history in
-                                HistoryItem(
-                                    history: history,
-                                    onTap: {
-                                        onSelectHistory(history)
-                                        isPresented = false
-                                    }
-                                )
-                                
-                                if index < historyList.count - 1 {
-                                    Divider()
-                                        .background(Color(red: 0.953, green: 0.957, blue: 0.969))
-                                }
-                            }
-                        }
-                    }
-                }
+        AISkinBottomSheet(title: "检测历史", closeLabel: "关闭检测历史", contentLayout: .embeddedScroll, onClose: { dismiss() }) {
+            SkinHistoryList(store: store) { result in
+                if let onSelect { onSelect(result) }
+                else { store.selectHistory(result) }
+                dismiss()
             }
-            .frame(maxWidth: 400)
-            .frame(maxHeight: 600)
-            .background(Color.white)
-            .cornerRadius(16)
-            .shadow(color: Color.black.opacity(0.15), radius: 40, x: 0, y: 20)
-            .padding(.horizontal, 40)
-        }
+        } footer: { EmptyView() }
+        .presentationDetents([.medium, .large])
+        .presentationDragIndicator(.visible)
     }
 }
 
-struct HistoryItem: View {
+/// The same history rows and loading states serve report sheets and the profile page.
+struct SkinHistoryList: View {
+    @ObservedObject var store: SkinAnalysisStore
+    var scope: SkinHistoryRow.Scope = .history
+    let onSelect: (AnalysisResult) -> Void
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: AISkinSpacing.small) {
+                if store.isLoadingHistory && store.history.isEmpty {
+                    AISkinStateView(content: .loading(message: "加载检测历史…"))
+                } else if store.history.isEmpty && store.historyError == nil {
+                    AISkinStateView(content: .empty(title: "暂无检测历史", message: "完成首次肌肤检测后，历史结果会显示在这里。", systemImage: "clock.arrow.circlepath"))
+                }
+                ForEach(Array(store.history.enumerated()), id: \.offset) { _, result in
+                    AISkinCard(inset: .none) {
+                        SkinHistoryRow(history: result, scope: scope) { onSelect(result) }
+                            .padding(.horizontal, AISkinSpacing.medium)
+                    }
+                }
+                if let error = store.historyError {
+                    AISkinStateView(content: .error(title: "加载检测历史失败", message: error), actionTitle: "重试", action: { Task { await store.retryHistory() } })
+                }
+                if store.hasMoreHistory {
+                    AISkinButton(variant: .secondary, isLoading: store.isLoadingHistory, action: { Task { await store.loadMoreHistory() } }) { Text("加载更早的记录") }
+                }
+            }
+            .padding(AISkinSpacing.screenEdge)
+        }
+        .refreshable { await store.loadHistory() }
+    }
+}
+
+struct SkinHistoryRow: View {
+    enum Scope {
+        case overview, history, profile
+
+        var accessibilityPrefix: String {
+            switch self {
+            case .overview: "skin.overview.history"
+            case .history: "skin.history.report"
+            case .profile: "profile.skin-report"
+            }
+        }
+    }
+
     let history: AnalysisResult
+    var scope: Scope = .history
     let onTap: () -> Void
-    
+
     var body: some View {
         Button(action: onTap) {
-            HStack(spacing: 16) {
-                // Score
-                Text("\(history.healthScore)")
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(Color(red: 0.388, green: 0.388, blue: 0.976))
-                    .frame(width: 50, alignment: .leading)
-                
-                // Info
-                VStack(alignment: .leading, spacing: 6) {
-                    if let date = history.createdAt {
-                        Text(formatDate(date))
-                            .font(.system(size: 14, weight: .medium))
-                            .foregroundColor(Color(red: 0.227, green: 0.227, blue: 0.235))
-                    }
-                    
-                    Text(history.summary ?? "无摘要")
-                        .font(.system(size: 12))
-                        .foregroundColor(Color(red: 0.420, green: 0.451, blue: 0.502))
-                        .lineLimit(1)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                
-                // Arrow
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 14))
-                    .foregroundColor(Color(red: 0.612, green: 0.612, blue: 0.624))
+            HStack(spacing: AISkinSpacing.small) {
+                Text(history.healthScore.map { String($0) } ?? "—")
+                    .font(AISkinSkinReportTokens.comparisonScore)
+                    .foregroundStyle(AISkinColor.accent)
+                    .frame(minWidth: AISkinLayout.minimumTapHeight, alignment: .leading)
+                VStack(alignment: .leading, spacing: AISkinSpacing.xxSmall) {
+                    Text(history.context?.reportStatus ?? "未记录状态")
+                        .font(AISkinSkinReportTokens.label).foregroundStyle(AISkinColor.textPrimary)
+                    Text(history.createdAt?.formatted(date: .abbreviated, time: .shortened) ?? "日期未记录")
+                        .font(AISkinSkinReportTokens.footnote).foregroundStyle(AISkinColor.textSecondary)
+                }.frame(maxWidth: .infinity, alignment: .leading)
+                Image(systemName: "chevron.right").font(AISkinTypography.iconChevron).foregroundStyle(AISkinColor.textSecondary)
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 16)
+            .padding(.vertical, AISkinSpacing.medium)
+            .contentShape(Rectangle())
         }
-        .buttonStyle(PlainButtonStyle())
-    }
-    
-    private func formatDate(_ date: Date) -> String {
-        let calendar = Calendar.current
-        let now = Date()
-        
-        if calendar.isDateInToday(date) {
-            return "今天"
-        } else if calendar.isDateInYesterday(date) {
-            return "昨天"
-        } else {
-            let days = calendar.dateComponents([.day], from: date, to: now).day ?? 0
-            if days <= 7 {
-                return "\(days)天前"
-            } else {
-                let formatter = DateFormatter()
-                formatter.dateStyle = .medium
-                formatter.locale = Locale(identifier: "zh_CN")
-                return formatter.string(from: date)
-            }
-        }
+        .buttonStyle(AISkinPressableStyle())
+        .accessibilityIdentifier("\(scope.accessibilityPrefix).\(history.sourceID ?? "unknown")")
     }
 }
-
-
