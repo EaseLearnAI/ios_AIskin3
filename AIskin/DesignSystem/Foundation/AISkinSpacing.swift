@@ -10,4 +10,13 @@ enum AISkinSpacing {
     static let xLarge: CGFloat = 24
     static let xxLarge: CGFloat = 32
     static let xxxLarge: CGFloat = 40
+
+    static let screenEdge: CGFloat = 24
+    static let sectionGap: CGFloat = 18
+    static let cardPadding: CGFloat = 20
+    static let homeCardPadding: CGFloat = 20
+    static let cabinetCardPadding = medium
+    static let cabinetCardGap = small
+    static let cabinetTextGap: CGFloat = 6
+    static let routineRowPadding: CGFloat = 14
 }

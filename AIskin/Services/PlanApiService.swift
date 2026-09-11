@@ -59,6 +59,35 @@ class PlanApiService {
     private let apiClient = APIClient.shared
     
     private init() {}
+
+    func getActivePlan() async throws -> SkinPlan? {
+        let response: ActivePlanResponse = try await apiClient.get(endpoint: "/plans/active")
+        guard response.success, let data = response.data else { throw APIError.serverError("获取当前方案失败") }
+        return data.plan
+    }
+
+    func adoptPlan(planID: String) async throws -> SkinPlan {
+        struct Request: Codable { var planId: String }
+        let response: ActivePlanResponse = try await apiClient.put(endpoint: "/plans/active", body: Request(planId: planID))
+        guard response.success, let plan = response.data?.plan else { throw APIError.serverError("采用方案失败") }
+        return plan
+    }
+
+    func getDailyProgress(planID: String, date: String, timezone: String) async throws -> PlanDailyProgress {
+        let response: DailyProgressResponse = try await apiClient.get(endpoint: "/plans/\(planID)/daily", queryParams: ["date": date, "timezone": timezone])
+        guard response.success, let daily = response.data?.daily else { throw APIError.serverError("获取今日进度失败") }
+        return daily
+    }
+
+    func updateDailyStep(planID: String, date: String, timezone: String, period: String, step: Int, completed: Bool) async throws -> PlanDailyProgress {
+        struct Request: Codable { var date: String; var timezone: String; var period: String; var step: Int; var completed: Bool }
+        let response: DailyProgressResponse = try await apiClient.put(
+            endpoint: "/plans/\(planID)/daily/steps",
+            body: Request(date: date, timezone: timezone, period: period, step: step, completed: completed)
+        )
+        guard response.success, let daily = response.data?.daily else { throw APIError.serverError("保存今日进度失败") }
+        return daily
+    }
     
     /// 生成个性化护肤方案
     func createPlan(
@@ -251,6 +280,17 @@ class PlanApiService {
     }
 }
 
+private struct ActivePlanResponse: Codable {
+    struct Payload: Codable { var plan: SkinPlan? }
+    var success: Bool
+    var data: Payload?
+}
+
+private struct DailyProgressResponse: Codable {
+    struct Payload: Codable { var daily: PlanDailyProgress }
+    var success: Bool
+    var data: Payload?
+}
 
 
 

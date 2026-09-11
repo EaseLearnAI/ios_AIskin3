@@ -5,45 +5,123 @@ import SwiftUI
 @MainActor
 @Observable
 final class AppRouter {
+    enum PlanEntryAction {
+        case products, skinAnalysis, retry
+
+        var title: String {
+            switch self {
+            case .products: "添加产品"
+            case .skinAnalysis: "肌肤检测"
+            case .retry: "重新检查"
+            }
+        }
+
+        var systemImage: String {
+            switch self {
+            case .products: "shippingbox"
+            case .skinAnalysis: "faceid"
+            case .retry: "arrow.clockwise"
+            }
+        }
+    }
+
     var selectedTab: AppTab
+    var isAtRoot: Bool { path(for: selectedTab).isEmpty }
 
     private(set) var homePath: [AppRoute] = []
     private(set) var productsPath: [AppRoute] = []
     private(set) var skinAnalysisPath: [AppRoute] = []
+    private(set) var requestedProductEntry: ProductEntry?
+    private(set) var planEntryToast: String?
+    private(set) var planEntryToastTitle = "暂时无法检查资料"
+    private(set) var planEntryToastID = UUID()
+    private(set) var planEntryActions: [PlanEntryAction] = []
+    @ObservationIgnored private var planEntryTask: Task<Void, Never>?
+    @ObservationIgnored private let planPreparationClient: any PlanPreparationClient
 
-    /// Incremented only for an explicit conflict-selection launch so the
-    /// legacy ProductView receives a fresh state container for that flow.
-    private(set) var productPresentationID = 0
-    private(set) var requestsConflictSelection = false
-
-    init(selectedTab: AppTab = .home) {
+    init(selectedTab: AppTab = .home, planPreparationClient: (any PlanPreparationClient)? = nil) {
         self.selectedTab = selectedTab
+        self.planPreparationClient = planPreparationClient ?? LivePlanPreparationClient()
     }
 
+    // There is no actor-bound teardown. Avoid the isolated-deinit back-deploy
+    // path that crashes in the Swift 6.2.4 / iOS 26.3 simulator runtime.
+    nonisolated deinit {}
+
     func select(_ tab: AppTab) {
-        if tab == .products, requestsConflictSelection {
-            productPresentationID += 1
-        }
         selectedTab = tab
     }
 
     func showProducts() {
-        requestsConflictSelection = false
-        selectedTab = .products
+        showProductEntry(.library)
     }
 
-    func showConflictSelection() {
-        requestsConflictSelection = true
-        productPresentationID += 1
-        selectedTab = .products
+    func showProductCapture() {
+        showProductEntry(.capture)
+    }
+
+    func showConflictSelection(productID: String? = nil) {
+        showProductEntry(.conflictSelection(productID: productID))
     }
 
     func showSkinAnalysis() {
         selectedTab = .skinAnalysis
     }
 
-    func didPresentProductLaunchRequest() {
-        requestsConflictSelection = false
+    func showPersonalizedPlan() {
+        guard planEntryTask == nil, path(for: selectedTab).last != .personalizedPlan else { return }
+        planEntryTask = Task {
+            defer { planEntryTask = nil }
+            await validateAndShowPersonalizedPlan()
+        }
+    }
+
+    func validateAndShowPersonalizedPlan() async {
+        let originTab = selectedTab
+        let originPath = path(for: originTab)
+        guard originPath.last != .personalizedPlan else { return }
+        dismissPlanEntryToast()
+        let prerequisites = PlanPreparationStore(client: planPreparationClient)
+        await prerequisites.refresh()
+        guard !Task.isCancelled, selectedTab == originTab, path(for: originTab) == originPath else { return }
+        if prerequisites.canCreatePlan {
+            navigate(to: .personalizedPlan, in: originTab)
+        } else {
+            if case .failed(let message) = prerequisites.state {
+                planEntryToastTitle = "暂时无法检查资料"
+                planEntryToast = message + "，请稍后重试。"
+                planEntryActions = [.retry]
+            } else {
+                planEntryToastTitle = prerequisites.entryNoticeTitle
+                planEntryToast = prerequisites.entryNoticeMessage
+                planEntryActions = []
+                if !prerequisites.hasSkinReport { planEntryActions.append(.skinAnalysis) }
+                if !prerequisites.hasEnoughProducts { planEntryActions.append(.products) }
+            }
+            planEntryToastID = UUID()
+        }
+    }
+
+    func dismissPlanEntryToast() {
+        planEntryToast = nil
+        planEntryActions = []
+    }
+
+    func performPlanEntryAction(_ action: PlanEntryAction) {
+        dismissPlanEntryToast()
+        switch action {
+        case .products: showProducts()
+        case .skinAnalysis:
+            popToRoot(in: .skinAnalysis)
+            showSkinAnalysis()
+        case .retry: showPersonalizedPlan()
+        }
+    }
+
+    private func showProductEntry(_ entry: ProductEntry) {
+        requestedProductEntry = entry
+        productsPath.removeAll()
+        selectedTab = .products
     }
 
     func navigate(to route: AppRoute, in tab: AppTab? = nil) {
@@ -57,8 +135,10 @@ final class AppRouter {
     }
 
     func reset() {
+        planEntryTask?.cancel()
+        planEntryToast = nil
         selectedTab = .home
-        requestsConflictSelection = false
+        requestedProductEntry = nil
         homePath.removeAll()
         productsPath.removeAll()
         skinAnalysisPath.removeAll()
@@ -78,23 +158,11 @@ final class AppRouter {
         )
     }
 
-    /// Compatibility bridge for existing feature views. New code should call
-    /// the strongly typed routing methods directly.
-    func legacyTabBinding() -> Binding<Int> {
+    /// The feature consumes each entry once, keeping its existing store alive.
+    func productEntryBinding() -> Binding<ProductEntry?> {
         Binding(
-            get: { self.selectedTab.legacyIndex },
-            set: { newValue in
-                guard let tab = AppTab(legacyIndex: newValue) else { return }
-                self.select(tab)
-            }
-        )
-    }
-
-    /// Compatibility bridge for HomeView's existing conflict-mode handoff.
-    func legacyConflictModeBinding() -> Binding<Bool> {
-        Binding(
-            get: { self.requestsConflictSelection },
-            set: { self.requestsConflictSelection = $0 }
+            get: { self.requestedProductEntry },
+            set: { self.requestedProductEntry = $0 }
         )
     }
 

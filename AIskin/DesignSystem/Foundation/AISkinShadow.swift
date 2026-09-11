@@ -7,27 +7,22 @@ struct AISkinShadowStyle {
     let y: CGFloat
 
     static let card = AISkinShadowStyle(
-        color: .black.opacity(0.08),
-        radius: 12,
+        color: AISkinColor.accent.opacity(0.10),
+        radius: 16,
         x: 0,
-        y: 4
+        y: 6
     )
 
     static let floating = AISkinShadowStyle(
-        color: .black.opacity(0.14),
-        radius: 18,
+        color: AISkinColor.primaryAction.opacity(0.15),
+        radius: 22,
         x: 0,
-        y: 8
+        y: 10
     )
 }
 
 extension View {
     func aiSkinShadow(_ style: AISkinShadowStyle = .card) -> some View {
-        shadow(
-            color: style.color,
-            radius: style.radius,
-            x: style.x,
-            y: style.y
-        )
+        shadow(color: style.color, radius: style.radius, x: style.x, y: style.y)
     }
 }

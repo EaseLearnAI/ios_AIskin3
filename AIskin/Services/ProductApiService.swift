@@ -75,6 +75,24 @@ class ProductApiService {
     private let apiClient = APIClient.shared
     
     private init() {}
+
+    func saveRegistration(productId: String, name: String, label: String, openingStatus: String, openingDate: Date?) async throws -> Product {
+        struct Registration: Codable {
+            let name: String
+            let label: String
+            let openingStatus: String
+            let openingDate: String?
+        }
+        let date = openingStatus == "opened" ? openingDate.map { ISO8601DateFormatter().string(from: $0) } : nil
+        let response: ProductResponse = try await apiClient.put(
+            endpoint: "/products/\(productId)",
+            body: Registration(name: name, label: label, openingStatus: openingStatus, openingDate: date)
+        )
+        guard response.success, let product = response.data?.product else {
+            throw APIError.serverError(response.message ?? "保存产品信息失败")
+        }
+        return product
+    }
     
     /// 创建产品
     func createProduct(
@@ -332,7 +350,6 @@ class ProductApiService {
         print("✅ 删除产品成功")
     }
 }
-
 
 
 

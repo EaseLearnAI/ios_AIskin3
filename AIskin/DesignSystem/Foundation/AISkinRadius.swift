@@ -1,9 +1,11 @@
 import CoreGraphics
 
 enum AISkinRadius {
-    static let small: CGFloat = 8
     static let medium: CGFloat = 12
-    static let large: CGFloat = 16
     static let xLarge: CGFloat = 24
-    static let capsule: CGFloat = 999
+    static let card: CGFloat = 23
+    static let actionCard: CGFloat = 17
+    static let featureCard: CGFloat = 24
+    static let routineCard: CGFloat = 28
+    static let control: CGFloat = 24
 }

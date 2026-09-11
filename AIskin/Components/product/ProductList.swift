@@ -16,63 +16,79 @@ struct ProductList: View {
     let onProductSelected: (Product) -> Void
     let onToggleSelection: (String) -> Void
     let onDeleteProduct: ((String) -> Void)?
-    
-    @State private var activeOptionsMenu: String?
-    
-    var filteredProducts: [Product] {
-        if selectedCategory == "all" {
-            return products
-        }
+    var onBeginConflict: ((String?) -> Void)? = nil
+    var onCancelConflict: (() -> Void)? = nil
+    var onAddProduct: (() -> Void)? = nil
+    var onEditProduct: ((Product) -> Void)? = nil
+
+    private var filteredProducts: [Product] {
+        guard selectedCategory != "all" else { return products }
         return products.filter { $0.label == selectedCategory }
     }
-    
+
     var body: some View {
-        VStack(spacing: 0) {
-            // Category Filters
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
-                    ForEach(categories, id: \.id) { category in
-                        CategoryButton(
-                            category: category,
-                            isActive: selectedCategory == category.id,
-                            action: {
-                                selectedCategory = category.id
-                            }
+        VStack(spacing: AISkinSpacing.xxSmall) {
+            AISkinUnderlineTabs(
+                items: categories.map(\.id),
+                selection: $selectedCategory,
+                title: { id in categories.first { $0.id == id }?.name ?? id },
+                size: .regular,
+                itemAccessibilityIdentifier: { "cabinet.category.\($0)" }
+            )
+            .overlay(alignment: .bottom) { AISkinDivider() }
+            .lookinName("product.category-filter")
+
+            HStack {
+                Text(selectionMode ? "已选 \(selectedProductIds.count) 件" : "共 \(filteredProducts.count) 件")
+                    .font(AISkinTypography.callout)
+                    .foregroundStyle(AISkinColor.textSecondary)
+                Spacer()
+                Button {
+                    if selectionMode { onCancelConflict?() } else { onBeginConflict?(nil) }
+                } label: {
+                    Label(selectionMode ? "取消检测" : "冲突检测", systemImage: "square.3.layers.3d")
+                        .font(AISkinTypography.callout)
+                        .foregroundStyle(AISkinColor.textSecondary)
+                        .frame(minHeight: AISkinLayout.regularUnderlineTabHeight)
+                }
+                .buttonStyle(AISkinPressableStyle())
+                .accessibilityIdentifier("cabinet.conflict-mode")
+            }
+            .padding(.bottom, AISkinSpacing.xSmall)
+
+            if filteredProducts.isEmpty {
+                AISkinCard {
+                    AISkinStateView(
+                        content: .empty(
+                            title: selectedCategory == "all" ? "还没有护肤产品" : "还没有\(selectedCategory)产品",
+                            message: "添加你的\(selectedCategory == "all" ? "护肤" : selectedCategory)产品，查看成分分析与搭配建议。",
+                            systemImage: "shippingbox"
+                        ),
+                        actionTitle: selectedCategory == "all" ? "添加产品" : "添加\(selectedCategory)产品",
+                        action: onAddProduct
+                    )
+                }
+            } else {
+                LazyVStack(spacing: AISkinSpacing.cabinetCardGap) {
+                    ForEach(filteredProducts) { product in
+                        ProductCard(
+                            product: product,
+                            isSelected: selectedProductIds.contains(product.id),
+                            isSelectionMode: selectionMode,
+                            onSelect: {
+                                if selectionMode {
+                                    onToggleSelection(product.id)
+                                } else {
+                                    onProductSelected(product)
+                                }
+                            },
+                            onDelete: onDeleteProduct,
+                            onConflict: { onBeginConflict?(product.id) },
+                            onEdit: onEditProduct.map { edit in { edit(product) } }
                         )
                     }
                 }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 12)
-            }
-            .lookinName("product.category-filter")
-            
-            // Products List
-            if filteredProducts.isEmpty {
-                EmptyStateView()
-            } else {
-                ScrollView {
-                    LazyVStack(spacing: 12) {
-                        ForEach(filteredProducts) { product in
-                            ProductCard(
-                                product: product,
-                                isSelected: selectedProductIds.contains(product.id),
-                                isSelectionMode: selectionMode,
-                                activeOptionsMenu: $activeOptionsMenu,
-                                onSelect: {
-                                    if selectionMode {
-                                        onToggleSelection(product.id)
-                                    } else {
-                                        onProductSelected(product)
-                                    }
-                                },
-                                onDelete: onDeleteProduct
-                            )
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 100)
-                }
-                .lookinName("product.cards-scroll")
+                .lookinName("product.cards-list")
             }
         }
         .lookinName("product.library")
@@ -82,226 +98,96 @@ struct ProductList: View {
 struct ProductCategory: Identifiable {
     let id: String
     let name: String
-    let color: Color?
-    
-    static let defaultCategories: [ProductCategory] = [
-        ProductCategory(id: "all", name: "全部产品", color: nil),
-        ProductCategory(id: "洁面", name: "洁面", color: Color(red: 0.129, green: 0.588, blue: 0.953)),
-        ProductCategory(id: "精华", name: "精华", color: Color(red: 1.0, green: 0.596, blue: 0.0)),
-        ProductCategory(id: "面膜", name: "面膜", color: Color(red: 0.612, green: 0.153, blue: 0.690)),
-        ProductCategory(id: "防晒", name: "防晒", color: Color(red: 0.957, green: 0.263, blue: 0.212)),
-        ProductCategory(id: "面霜", name: "面霜", color: Color(red: 0.298, green: 0.686, blue: 0.314)),
-        ProductCategory(id: "爽肤水", name: "爽肤水", color: Color(red: 0.012, green: 0.663, blue: 0.957)),
-        ProductCategory(id: "乳液", name: "乳液", color: Color(red: 0.545, green: 0.765, blue: 0.290)),
-        ProductCategory(id: "眼霜", name: "眼霜", color: Color(red: 0.404, green: 0.227, blue: 0.718))
-    ]
-}
 
-struct CategoryButton: View {
-    let category: ProductCategory
-    let isActive: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: 6) {
-                if let color = category.color {
-                    Circle()
-                        .fill(color)
-                        .frame(width: 8, height: 8)
-                }
-                
-                Text(category.name)
-                    .font(.system(size: 12))
-            }
-            .foregroundColor(isActive ? .white : Color(red: 0.380, green: 0.380, blue: 0.380))
-            .padding(.horizontal, 12)
-            .padding(.vertical, 6)
-            .background(isActive ? Color(red: 0.973, green: 0.741, blue: 0.816) : Color.white)
-            .cornerRadius(20)
-        }
-        .lookinName("product.category.\(category.id)")
-    }
+    static let defaultCategories: [ProductCategory] = [
+        ProductCategory(id: "all", name: "全部"),
+        ProductCategory(id: "精华", name: "精华"),
+        ProductCategory(id: "面霜", name: "面霜"),
+        ProductCategory(id: "防晒", name: "防晒"),
+        ProductCategory(id: "洁面", name: "洁面")
+    ]
+
+    static let registrationCategories = ["洁面", "精华", "面膜", "防晒", "面霜", "爽肤水", "乳液", "眼霜", "其他"]
+        .map { ProductCategory(id: $0, name: $0) }
 }
 
 struct ProductCard: View {
     let product: Product
     let isSelected: Bool
     let isSelectionMode: Bool
-    @Binding var activeOptionsMenu: String?
     let onSelect: () -> Void
     let onDelete: ((String) -> Void)?
-    
-    // 处理图片URL，将HTTP转换为HTTPS以符合ATS策略
-    private func safeImageUrl(_ urlString: String?) -> URL? {
-        guard let urlString = urlString else {
-            return URL(string: "https://images.unsplash.com/photo-1556228578-af63f552e1bc?w=200")
-        }
-        
-        // 将HTTP转换为HTTPS以符合iOS ATS策略
-        var processedUrlString = urlString
-        if processedUrlString.hasPrefix("http://") {
-            processedUrlString = processedUrlString.replacingOccurrences(of: "http://", with: "https://")
-        }
-        
-        return URL(string: processedUrlString)
-    }
-    
+    var onConflict: (() -> Void)? = nil
+    var onEdit: (() -> Void)? = nil
+
+    @State private var showsDeleteConfirmation = false
+
     var body: some View {
-        Button(action: onSelect) {
-            HStack(spacing: 12) {
-                // Checkbox (if in selection mode)
+        AISkinCard(inset: .none, state: isSelected && isSelectionMode ? .selected : .normal) {
+            AISkinProductRow(
+                title: product.name,
+                summary: product.description,
+                category: product.label,
+                imageURL: product.imageUrl.flatMap(URL.init(string:)),
+                accessibilityIdentifier: "cabinet.product.\(product.id)",
+                accessibilityValue: isSelectionMode ? (isSelected ? "已选择" : "未选择") : "查看成分分析",
+                onSelect: onSelect
+            ) {
                 if isSelectionMode {
-                    Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                        .font(.system(size: 24))
-                        .foregroundColor(isSelected ? Color(red: 0.973, green: 0.741, blue: 0.816) : Color.gray.opacity(0.3))
-                }
-                
-                // Product Image
-                AsyncImage(url: safeImageUrl(product.imageUrl)) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                            .frame(width: 64, height: 64)
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                    case .failure:
-                        Image(systemName: "photo")
-                            .font(.system(size: 24))
-                            .foregroundColor(.gray)
-                    @unknown default:
-                        EmptyView()
+                    Button(action: onSelect) {
+                        Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                            .font(AISkinTypography.iconMedium)
+                            .foregroundStyle(isSelected ? AISkinColor.accent : AISkinColor.textSecondary)
+                            .frame(width: AISkinLayout.minimumTapHeight, height: AISkinLayout.minimumTapHeight)
+                            .contentShape(Rectangle())
                     }
-                }
-                .frame(width: 64, height: 64)
-                .cornerRadius(8)
-                .background(Color.gray.opacity(0.1))
-                .clipped()
-                
-                // Product Info
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack {
-                        Text(product.name)
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundColor(Color(red: 0.133, green: 0.133, blue: 0.200))
-                            .lineLimit(2)
-                        
-                        Spacer()
-                        
-                        if !isSelectionMode {
-                            Menu {
-                                Button(role: .destructive, action: {
-                                    onDelete?(product.id)
-                                    activeOptionsMenu = nil
-                                }) {
-                                    Label("删除产品", systemImage: "trash")
-                                }
-                            } label: {
-                                Image(systemName: "ellipsis")
-                                    .font(.system(size: 14))
-                                    .foregroundColor(Color(red: 0.741, green: 0.741, blue: 0.741))
-                                    .padding(8)
-                            }
-                        }
-                    }
-                    
-                    if let description = product.description {
-                        Text(description)
-                            .font(.system(size: 12))
-                            .foregroundColor(Color(red: 0.459, green: 0.459, blue: 0.459))
-                            .lineLimit(2)
-                    }
-                    
-                    HStack(spacing: 6) {
-                        if let label = product.label, !label.isEmpty {
-                            ProductTagView(text: label, style: .category)
-                        }
-                        
-                        // Add other tags if needed
-                    }
-                }
-                
-                if !isSelectionMode {
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 12))
-                        .foregroundColor(.gray)
+                    .buttonStyle(AISkinPressableStyle())
+                    .accessibilityLabel(isSelected ? "取消选择\(product.name)" : "选择\(product.name)")
+                } else if onDelete != nil || onConflict != nil || onEdit != nil {
+                    optionsMenu
                 }
             }
-            .padding(16)
-            .background(isSelected && isSelectionMode ? Color(red: 0.973, green: 0.741, blue: 0.816).opacity(0.1) : Color.white)
-            .cornerRadius(12)
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(isSelected && isSelectionMode ? Color(red: 0.973, green: 0.741, blue: 0.816) : Color.clear, lineWidth: 2)
-            )
         }
-        .buttonStyle(PlainButtonStyle())
         .lookinName("product.card.\(product.id)")
-    }
-}
-
-struct ProductTagView: View {
-    let text: String
-    let style: TagStyle
-    
-    enum TagStyle {
-        case category
-        case feature
-        case rating
-        
-        var backgroundColor: Color {
-            switch self {
-            case .category:
-                return Color(red: 0.890, green: 0.949, blue: 0.992)
-            case .feature:
-                return Color(red: 1.0, green: 0.953, blue: 0.878)
-            case .rating:
-                return Color(red: 0.953, green: 0.898, blue: 0.961)
+        .confirmationDialog(
+            "删除产品？",
+            isPresented: $showsDeleteConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button("删除\(product.name)", role: .destructive) {
+                onDelete?(product.id)
             }
+            Button("取消", role: .cancel) {}
+        } message: {
+            Text("删除后将无法恢复该产品及其分析结果。")
         }
-        
-        var textColor: Color {
-            switch self {
-            case .category:
-                return Color(red: 0.098, green: 0.463, blue: 0.824)
-            case .feature:
-                return Color(red: 0.902, green: 0.318, blue: 0.0)
-            case .rating:
-                return Color(red: 0.612, green: 0.153, blue: 0.690)
+    }
+
+    private var optionsMenu: some View {
+        Menu {
+            if let onEdit {
+                Button("编辑产品", systemImage: "pencil", action: onEdit)
+                    .accessibilityIdentifier("cabinet.edit.\(product.id)")
             }
+            if let onConflict {
+                Button("冲突检测", systemImage: "square.3.layers.3d", action: onConflict)
+            }
+            if onDelete != nil {
+                Button(role: .destructive) {
+                    showsDeleteConfirmation = true
+                } label: {
+                    Label("删除产品", systemImage: "trash")
+                }
+            }
+        } label: {
+            Image(systemName: "ellipsis")
+                .font(AISkinTypography.iconSmall)
+                .foregroundStyle(AISkinColor.textSecondary)
+                .frame(width: AISkinLayout.minimumTapHeight, height: AISkinLayout.minimumTapHeight)
+                .contentShape(Rectangle())
         }
+        .accessibilityLabel("更多产品操作")
+        .accessibilityIdentifier("cabinet.more.\(product.id)")
     }
-    
-    var body: some View {
-        Text(text)
-            .font(.system(size: 10))
-            .foregroundColor(style.textColor)
-            .padding(.horizontal, 6)
-            .padding(.vertical, 2)
-            .background(style.backgroundColor)
-            .cornerRadius(8)
-            .lookinName("product.tag.\(text)")
-    }
+
 }
-
-struct EmptyStateView: View {
-    var body: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "tray")
-                .font(.system(size: 48))
-                .foregroundColor(Color(red: 0.741, green: 0.741, blue: 0.741))
-            
-            Text("暂无产品")
-                .font(.system(size: 16))
-                .foregroundColor(Color(red: 0.459, green: 0.459, blue: 0.459))
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 60)
-        .lookinName("product.empty-state")
-    }
-}
-
-
-

@@ -4,6 +4,4 @@
 /// testable and can later be used by deep links without changing the shell.
 enum AppRoute: Hashable {
     case personalizedPlan
-    case productDetail(productID: String)
-    case conflictAnalysis(productIDs: [String])
 }

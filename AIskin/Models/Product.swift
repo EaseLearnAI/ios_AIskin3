@@ -15,6 +15,7 @@ struct Product: Codable, Identifiable {
     var ingredients: [String]
     var label: String?
     var openingDate: Date?
+    var openingStatus: String? = nil
     var safetyScore: Double?
     var efficacyScore: Double?
     var overallRating: Double?
@@ -27,6 +28,7 @@ struct Product: Codable, Identifiable {
         case ingredients
         case label
         case openingDate
+        case openingStatus
         case safetyScore
         case efficacyScore
         case overallRating
@@ -66,6 +68,7 @@ struct Product: Codable, Identifiable {
         ingredients = try container.decodeIfPresent([String].self, forKey: .ingredients) ?? []
         label = try container.decodeIfPresent(String.self, forKey: .label)
         openingDate = try container.decodeIfPresent(Date.self, forKey: .openingDate)
+        openingStatus = try container.decodeIfPresent(String.self, forKey: .openingStatus)
         safetyScore = try container.decodeIfPresent(Double.self, forKey: .safetyScore)
         efficacyScore = try container.decodeIfPresent(Double.self, forKey: .efficacyScore)
         overallRating = try container.decodeIfPresent(Double.self, forKey: .overallRating)
@@ -80,6 +83,7 @@ struct Product: Codable, Identifiable {
         try container.encode(ingredients, forKey: .ingredients)
         try container.encodeIfPresent(label, forKey: .label)
         try container.encodeIfPresent(openingDate, forKey: .openingDate)
+        try container.encodeIfPresent(openingStatus, forKey: .openingStatus)
         try container.encodeIfPresent(safetyScore, forKey: .safetyScore)
         try container.encodeIfPresent(efficacyScore, forKey: .efficacyScore)
         try container.encodeIfPresent(overallRating, forKey: .overallRating)
@@ -104,4 +108,3 @@ struct RiskLevel: Codable {
     var level: String
     var percentage: Double
 }
-

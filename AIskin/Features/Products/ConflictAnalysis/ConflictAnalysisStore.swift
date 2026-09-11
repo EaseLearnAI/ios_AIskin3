@@ -30,6 +30,8 @@ final class ConflictAnalysisStore: ObservableObject {
     }
 
     func analyze(productIDs: [String]) async {
+        if case .loading = state { return }
+        do { try Task.checkCancellation() } catch { state = .idle; return }
         guard productIDs.count >= 2 else {
             state = .failed("未选择产品，请返回产品页面选择至少两个产品进行冲突分析")
             return
@@ -40,8 +42,10 @@ final class ConflictAnalysisStore: ObservableObject {
             try Task.checkCancellation()
             state = .loaded(result)
         } catch is CancellationError {
+            state = .idle
             return
         } catch {
+            guard !Task.isCancelled else { state = .idle; return }
             state = .failed("分析产品冲突失败：\(error.localizedDescription)")
         }
     }

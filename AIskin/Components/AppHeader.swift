@@ -1,147 +1,100 @@
-//
-//  AppHeader.swift
-//  AIskin
-//
-//  Created by terry on 2025/11/3.
-//
-
 import SwiftUI
 
-/// Shared header for the three main tabs. Its background matches the app shell,
-/// so the status-bar safe area and the visible header read as one surface.
 struct MainTabHeader: View {
     let title: String
     let onProfileTap: () -> Void
+    var trailingSystemImage: String? = nil
+    var trailingAccessibilityLabel: String? = nil
+    var onTrailingTap: (() -> Void)? = nil
 
     var body: some View {
-        ZStack {
+        AISkinHeader {
+            AISkinIconButton(
+                systemName: "person.crop.circle.fill",
+                accessibilityLabel: "我的",
+                variant: .surface,
+                action: onProfileTap
+            )
+            .accessibilityHint("打开个人中心")
+            .accessibilityIdentifier("app.header.profile")
+        } title: {
             Text(title)
                 .font(AISkinTypography.screenTitle)
                 .foregroundStyle(AISkinColor.textPrimary)
                 .lineLimit(1)
-
-            HStack {
-                Button(action: onProfileTap) {
-                    Image(systemName: "person.crop.circle.fill")
-                        .font(.system(size: 30, weight: .medium))
-                        .foregroundStyle(AISkinColor.textPrimary)
-                        .frame(width: 44, height: 44)
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("我的")
-                .accessibilityHint("打开个人中心")
-                .accessibilityIdentifier("app.header.profile")
-
-                Spacer()
-
-                // Mirror the leading control so the title remains optically centered.
-                Color.clear
-                    .frame(width: 44, height: 44)
-                    .accessibilityHidden(true)
+        } trailing: {
+            if let trailingSystemImage,
+               let trailingAccessibilityLabel,
+               let onTrailingTap {
+                AISkinIconButton(
+                    systemName: trailingSystemImage,
+                    accessibilityLabel: trailingAccessibilityLabel,
+                    variant: .surface,
+                    action: onTrailingTap
+                )
+                .accessibilityHint(trailingAccessibilityLabel)
+                .accessibilityIdentifier(trailingSystemImage == "plus" ? "app.header.add-product" : "app.header.skin-history")
+            } else {
+                Color.clear.accessibilityHidden(true)
             }
         }
-        .frame(minHeight: 56)
-        .padding(.horizontal, AISkinSpacing.medium)
-        .background(AISkinColor.background)
         .lookinName("shared.main-tab-header.\(title)")
     }
 }
 
 struct AppHeader: View {
     var title: String
+    var subtitle: String? = nil
+    var layout: AISkinHeaderLayout = .centered
     var icon: String? = nil
     var rightIcon: String? = nil
     var rightAction: (() -> Void)? = nil
+    var rightAccessibilityLabel: String? = nil
     var backAction: (() -> Void)? = nil
-    
-    var body: some View {
-        ZStack {
-            // Left and Right buttons
-            HStack {
-                if backAction != nil {
-                    Button(action: backAction!) {
-                        Image(systemName: "arrow.left")
-                            .font(.system(size: 18, weight: .semibold))
-                            .foregroundColor(.white)
-                            .frame(width: 36, height: 36)
-                    }
-                } else if rightIcon != nil {
-                    // Empty space for alignment when no back button
-                    Color.clear
-                        .frame(width: 36, height: 36)
-                }
-                
-                Spacer()
-                
-                if let rightIcon = rightIcon, let rightAction = rightAction {
-                    Button(action: rightAction) {
-                        Image(systemName: rightIcon)
-                            .font(.system(size: 18, weight: .semibold))
-                            .foregroundColor(.white)
-                            .frame(width: 36, height: 36)
-                    }
-                } else if backAction != nil {
-                    // Empty space for alignment when no right icon
-                    Color.clear
-                        .frame(width: 36, height: 36)
-                }
-            }
-            .padding(.horizontal, 20)
-            
-            // Centered Title
-            HStack(spacing: 8) {
-                if let icon = icon {
-                    Image(systemName: icon)
-                        .font(.system(size: 20))
-                        .foregroundColor(.white)
-                }
-                
-                Text(title)
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(.white)
-            }
-        }
-        .padding(.vertical, 16)
-        .background(
-            LinearGradient(
-                gradient: Gradient(colors: [
-                    Color(red: 0.972, green: 0.733, blue: 0.816),
-                    Color(red: 0.882, green: 0.745, blue: 0.906)
-                ]),
-                startPoint: .leading,
-                endPoint: .trailing
-            )
-        )
-        .lookinName("shared.header.\(title)")
-    }
-}
 
-struct SearchBar: View {
-    @Binding var text: String
-    var placeholder: String = "搜索..."
-    
     var body: some View {
-        HStack {
-            Image(systemName: "magnifyingglass")
-                .foregroundColor(.gray)
-                .padding(.leading, 12)
-            
-            TextField(placeholder, text: $text)
-                .font(.system(size: 15))
-            
-            if !text.isEmpty {
-                Button(action: { text = "" }) {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.gray)
+        AISkinHeader(layout: layout) {
+            if let backAction {
+                AISkinIconButton(
+                    systemName: "chevron.left",
+                    accessibilityLabel: "返回",
+                    variant: layout == .leadingTitleSubtitle ? .plain : .navigation,
+                    action: backAction
+                )
+            } else {
+                Color.clear.accessibilityHidden(true)
+            }
+        } title: {
+            VStack(alignment: .leading, spacing: AISkinSpacing.xxSmall) {
+             HStack(spacing: AISkinSpacing.xSmall) {
+                if let icon {
+                    Image(systemName: icon)
+                        .font(AISkinTypography.iconControl)
+                        .foregroundStyle(AISkinColor.accent)
                 }
-                .padding(.trailing, 8)
+
+                Text(title)
+                    .font(AISkinTypography.screenTitle)
+                    .foregroundStyle(AISkinColor.textPrimary)
+                    .lineLimit(1)
+             }
+             if let subtitle {
+                 Text(subtitle).font(AISkinTypography.caption).foregroundStyle(AISkinColor.textSecondary)
+             }
+            }
+        } trailing: {
+            if let rightIcon, let rightAction {
+                AISkinIconButton(
+                    systemName: rightIcon,
+                    accessibilityLabel: rightAccessibilityLabel ?? title,
+                    variant: .surface,
+                    action: rightAction
+                )
+                .accessibilityIdentifier("app.header.\(rightIcon)")
+            } else {
+                Color.clear.accessibilityHidden(true)
             }
         }
-        .frame(height: 36)
-        .background(Color.white)
-        .cornerRadius(10)
-        .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
-        .lookinName("shared.search-bar")
+        .lookinName("shared.header.\(title)")
     }
 }

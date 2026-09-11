@@ -64,6 +64,17 @@ final class ProductsStore: ObservableObject {
         case extracting = 3
         case analyzing = 4
         case completed = 5
+
+        var message: String {
+            switch self {
+            case .idle: "准备分析成分表"
+            case .creating: "正在准备产品信息…"
+            case .uploading: "正在上传成分表照片…"
+            case .extracting: "正在识别照片中的成分…"
+            case .analyzing: "正在分析成分与使用建议…"
+            case .completed: "成分分析已完成"
+            }
+        }
     }
 
     @Published private(set) var products: [Product] = []
@@ -73,6 +84,9 @@ final class ProductsStore: ObservableObject {
     @Published var selectedProductIDs: Set<String> = []
     @Published private(set) var addStep: AddStep = .idle
     @Published private(set) var addError: String?
+    @Published private var activeAddRequestID: UUID?
+
+    var isAdding: Bool { activeAddRequestID != nil }
 
     private let client: any ProductsClient
     private var loadTask: Task<Void, Never>?
@@ -107,6 +121,7 @@ final class ProductsStore: ObservableObject {
         } catch is CancellationError {
             return
         } catch {
+            guard !Task.isCancelled else { return }
             products = []
             loadState = .failed("加载产品失败：\(error.localizedDescription)")
         }
@@ -149,8 +164,14 @@ final class ProductsStore: ObservableObject {
     }
 
     func addProduct(from image: UIImage) async -> String? {
+        guard !isAdding, !Task.isCancelled else { return nil }
+        let requestID = UUID()
+        activeAddRequestID = requestID
         addError = nil
         addStep = .creating
+        defer {
+            if activeAddRequestID == requestID { activeAddRequestID = nil }
+        }
         do {
             let product = try await client.createProduct(
                 name: "未命名产品",
@@ -158,27 +179,40 @@ final class ProductsStore: ObservableObject {
                 label: nil,
                 openingDate: nil
             )
+            try checkAddRequest(requestID)
             addStep = .uploading
             _ = try await client.uploadImage(productID: product.id, image: image)
+            try checkAddRequest(requestID)
             addStep = .extracting
             _ = try await client.extractIngredients(productID: product.id)
+            try checkAddRequest(requestID)
             addStep = .analyzing
             _ = try await client.analyzeIngredients(productID: product.id)
+            try checkAddRequest(requestID)
             addStep = .completed
-            await loadProducts()
             return product.id
         } catch is CancellationError {
+            guard activeAddRequestID == requestID else { return nil }
             addStep = .idle
             return nil
         } catch {
-            addError = "产品处理失败：\(error.localizedDescription)"
+            guard activeAddRequestID == requestID else { return nil }
+            if !Task.isCancelled {
+                addError = "产品处理失败：\(error.localizedDescription)"
+            }
             addStep = .idle
             return nil
         }
     }
 
     func resetAddFlow() {
+        activeAddRequestID = nil
         addStep = .idle
         addError = nil
+    }
+
+    private func checkAddRequest(_ requestID: UUID) throws {
+        try Task.checkCancellation()
+        guard activeAddRequestID == requestID else { throw CancellationError() }
     }
 }

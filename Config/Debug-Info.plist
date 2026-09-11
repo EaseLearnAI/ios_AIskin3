@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AISkinDeviceAPIBaseURL</key>
+	<string>$(AISKIN_DEVICE_API_BASE_URL)</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>连接同一 Wi-Fi 下电脑上的 AIskin 开发服务，以使用本地账号和护肤数据。</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>personal.AIskin.alipay</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>aiskin-alipay</string>
+			</array>
+		</dict>
+	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>alipay</string>
+		<string>alipays</string>
+	</array>
+	<key>AISkinAlipayEnabled</key>
+	<true/>
+</dict>
+</plist>

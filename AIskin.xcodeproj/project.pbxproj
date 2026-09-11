@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+        A15C20260911000000000001 /* AlipaySDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A15C20260911000000000002; };
+        A15C20260911000000000003 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A15C20260911000000000004; };
+        A15C1E6A2026090900000001 /* terms.html in Resources */ = {isa = PBXBuildFile; fileRef = A15C1E6A2026090900000003 /* terms.html */; };
+        A15C1E6A2026090900000002 /* privacy.html in Resources */ = {isa = PBXBuildFile; fileRef = A15C1E6A2026090900000004 /* privacy.html */; };
 		8D7D0A9A2C0E4C3F9D6B2A13 /* LookinServer in Frameworks */ = {isa = PBXBuildFile; productRef = 8D7D0A9A2C0E4C3F9D6B2A12 /* LookinServer */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +32,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+        A15C20260911000000000002 /* AlipaySDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Vendor/AlipaySDK/15.8.30/AlipaySDK.xcframework; sourceTree = SOURCE_ROOT; };
+        A15C20260911000000000004 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.plug-in; path = Vendor/AlipaySDK/15.8.30/AlipaySDK.bundle; sourceTree = SOURCE_ROOT; };
+        A15C1E6A2026090900000003 /* terms.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "public-pages/terms.html"; sourceTree = SOURCE_ROOT; };
+        A15C1E6A2026090900000004 /* privacy.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "public-pages/privacy.html"; sourceTree = SOURCE_ROOT; };
 		DE4E1A172EB8576C006F59CE /* AIskin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AIskin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE4E1A262EB8576E006F59CE /* AIskinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AIskinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE4E1A302EB8576E006F59CE /* AIskinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AIskinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,6 +65,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D7D0A9A2C0E4C3F9D6B2A13 /* LookinServer in Frameworks */,
+                A15C20260911000000000001 /* AlipaySDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,8 +90,12 @@
 			isa = PBXGroup;
 			children = (
 				DE4E1A192EB8576C006F59CE /* AIskin */,
+                A15C20260911000000000002 /* AlipaySDK.xcframework */,
+                A15C20260911000000000004 /* AlipaySDK.bundle */,
 				DE4E1A292EB8576E006F59CE /* AIskinTests */,
 				DE4E1A332EB8576E006F59CE /* AIskinUITests */,
+                A15C1E6A2026090900000003 /* terms.html */,
+                A15C1E6A2026090900000004 /* privacy.html */,
 				DE4E1A182EB8576C006F59CE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -197,6 +210,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 				Base,
 			);
 			mainGroup = DE4E1A0E2EB8576C006F59CE;
@@ -221,6 +235,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                A15C1E6A2026090900000001 /* terms.html in Resources */,
+                A15C20260911000000000003 /* AlipaySDK.bundle in Resources */,
+                A15C1E6A2026090900000002 /* privacy.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,15 +417,18 @@
 		DE4E1A3B2EB8576E006F59CE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				AISKIN_DEVICE_API_BASE_URL = "http://MacBook-Pro-107.local:5001/api";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AIskin/AIskin.entitlements;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9CUS5VPDW7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "我们需要访问您的相机来拍摄面部照片进行AI皮肤分析";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "我们需要访问您的相册来选择照片进行AI皮肤分析";
+				INFOPLIST_FILE = "Config/Debug-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "用于拍摄产品成分表或面部照片，进行成分识别与肌肤分析";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "用于选择产品成分表或面部照片，进行成分识别与肌肤分析";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -421,6 +441,7 @@
 				);
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = personal.AIskin;
+                OTHER_LDFLAGS = "$(inherited) -ObjC -lc++ -lz -framework UIKit -framework Foundation -framework CFNetwork -framework SystemConfiguration -framework QuartzCore -framework CoreGraphics -framework CoreMotion -framework CoreTelephony -framework CoreText -framework WebKit";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -440,14 +461,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AIskin/AIskin.entitlements;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9CUS5VPDW7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "我们需要访问您的相机来拍摄面部照片进行AI皮肤分析";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "我们需要访问您的相册来选择照片进行AI皮肤分析";
+                INFOPLIST_FILE = "Config/Release-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "用于拍摄产品成分表或面部照片，进行成分识别与肌肤分析";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "用于选择产品成分表或面部照片，进行成分识别与肌肤分析";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -460,6 +483,7 @@
 				);
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = personal.AIskin;
+                OTHER_LDFLAGS = "$(inherited) -ObjC -lc++ -lz -framework UIKit -framework Foundation -framework CFNetwork -framework SystemConfiguration -framework QuartzCore -framework CoreGraphics -framework CoreMotion -framework CoreTelephony -framework CoreText -framework WebKit";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
